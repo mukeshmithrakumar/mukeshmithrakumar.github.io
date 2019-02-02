@@ -86,11 +86,34 @@ $(document).ready(function () {
                     charDrops[i]++;
                 }
             }
-
             setInterval(putPixel, 33);
 
-            // Testimonials  Title
 
+            /* -------------------------------------- CV Button -------------------------------------- */
+
+
+            $(window).ready(function () {
+                $(".cvbutton").wrapInner('<div class=cvbuttontext></div>');
+
+                $(".cvbuttontext").clone().appendTo($(".cvbutton"));
+
+                $(".cvbutton").append('<span class="cvbuttontwist"></span><span class="cvbuttontwist"></span><span class="cvbuttontwist"></span><span class="cvbuttontwist"></span>');
+
+                $(".cvbuttontwist").css("width", "25%").css("width", "+=3px");
+            });
+
+            /* -------------------------------------- HIRE Button -------------------------------------- */
+
+
+            $(window).ready(function () {
+                $(".hirebutton").wrapInner('<div class=hirebuttontext></div>');
+
+                $(".hirebuttontext").clone().appendTo($(".hirebutton"));
+
+                $(".hirebutton").append('<span class="hirebuttontwist"></span><span class="hirebuttontwist"></span><span class="hirebuttontwist"></span><span class="hirebuttontwist"></span>');
+
+                $(".hirebuttontwist").css("width", "25%").css("width", "+=3px");
+            });
 
 
         }
@@ -208,33 +231,6 @@ particlesJS("particles-js", {
         }
     },
     "retina_detect": true
-});
-
-
-/* -------------------------------------- CV Button -------------------------------------- */
-
-
-$(window).ready(function () {
-    $(".cvbutton").wrapInner('<div class=cvbuttontext></div>');
-
-    $(".cvbuttontext").clone().appendTo($(".cvbutton"));
-
-    $(".cvbutton").append('<span class="cvbuttontwist"></span><span class="cvbuttontwist"></span><span class="cvbuttontwist"></span><span class="cvbuttontwist"></span>');
-
-    $(".cvbuttontwist").css("width", "25%").css("width", "+=3px");
-});
-
-/* -------------------------------------- HIRE Button -------------------------------------- */
-
-
-$(window).ready(function () {
-    $(".hirebutton").wrapInner('<div class=hirebuttontext></div>');
-
-    $(".hirebuttontext").clone().appendTo($(".hirebutton"));
-
-    $(".hirebutton").append('<span class="hirebuttontwist"></span><span class="hirebuttontwist"></span><span class="hirebuttontwist"></span><span class="hirebuttontwist"></span>');
-
-    $(".hirebuttontwist").css("width", "25%").css("width", "+=3px");
 });
 
 
