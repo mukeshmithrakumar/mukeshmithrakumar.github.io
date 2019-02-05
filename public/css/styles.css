@@ -2823,6 +2823,13 @@ fieldset[disabled] .form-group .form-control {
 }
 
 
+@media screen and (max-width: 360px) {
+
+    .pTitle {
+        visibility: hidden
+    }
+}
+
 
 /* ------------------------------------------------------------------------------------------
 |                                    MOBILE SCREEN STYLES                                    |
@@ -2855,10 +2862,6 @@ fieldset[disabled] .form-group .form-control {
     /* Mukesh Mithrakumar Title */
     .text-animation {
         font-size: 40px;
-    }
-
-    .pTitle {
-        visibility: hidden
     }
 
     #particles-js {
