@@ -537,10 +537,10 @@ li {
 .profile {
     background: #7d0000;
 }
-
-/* @media (min-width: 360px) {
+/*
+@media (max-width: 560px) {
     .profile {
-        width: 90%;
+        width: 80%;
     }
 } */
 
@@ -2832,7 +2832,7 @@ fieldset[disabled] .form-group .form-control {
 @media screen and (max-width: 660px) {
 
     body {
-        width: 450px !important;
+        width: 360px !important;
     }
 
     /* ------------------------------- Navigation Toggle ----------------------------------------*/
@@ -2853,12 +2853,14 @@ fieldset[disabled] .form-group .form-control {
     /* ------------------------------- Home Page -------------------------------------------*/
     /* Mukesh Mithrakumar Title */
     .text-animation {
-        font-size: 50px;
+        font-size: 40px;
     }
 
     /* Mukesh Mithrakumar Title */
     .pTitle .title {
         top: 3.75em;
+        left: 5px !important;
+        font-size: 12px;
     }
 
     #particles-js {
@@ -2916,7 +2918,7 @@ fieldset[disabled] .form-group .form-control {
     }
 
     .work {
-        height: 1500px !important;
+        height: 1700px !important;
         background-color: #000;
     }
 
@@ -2939,7 +2941,7 @@ fieldset[disabled] .form-group .form-control {
     }
 
     .img-grid .card-container {
-        width: 45vmax !important;
+        width: 55vmax !important;
         padding-right: 25px;
     }
 
@@ -2981,7 +2983,7 @@ fieldset[disabled] .form-group .form-control {
 
     .blog-container {
         top: 75px !important;
-        left: 30% !important;
+        left: 20% !important;
     }
 
     .sign-wrap {
@@ -3082,11 +3084,11 @@ fieldset[disabled] .form-group .form-control {
     .contact-section-title {
         left: 50%;
         top: 100px;
-        width: 400px;
+        width: 325px;
     }
 
     .contact-section-title h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .contact-body p {
@@ -3099,6 +3101,10 @@ fieldset[disabled] .form-group .form-control {
         margin-right: 10px;
         margin-top: 20px;
         margin-bottom: 20px;
+    }
+
+    .direct-contact {
+        visibility: hidden
     }
 
     .contact-body {
