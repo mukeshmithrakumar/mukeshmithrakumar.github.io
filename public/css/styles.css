@@ -2823,7 +2823,7 @@ fieldset[disabled] .form-group .form-control {
 }
 
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 450px) {
 
     .pTitle {
         visibility: hidden
