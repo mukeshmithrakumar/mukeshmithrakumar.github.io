@@ -537,6 +537,7 @@ li {
 .profile {
     background: #7d0000;
 }
+
 /*
 @media (max-width: 560px) {
     .profile {
@@ -2856,11 +2857,8 @@ fieldset[disabled] .form-group .form-control {
         font-size: 40px;
     }
 
-    /* Mukesh Mithrakumar Title */
-    .pTitle .title {
-        top: 3.75em;
-        left: 5px !important;
-        font-size: 12px;
+    .pTitle {
+        visibility: hidden
     }
 
     #particles-js {
