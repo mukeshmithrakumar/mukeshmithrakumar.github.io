@@ -41,7 +41,6 @@ p {
     -moz-transition: .5s ease-in-out;
     -o-transition: .5s ease-in-out;
     transition: .5s ease-in-out;
-
 }
 
 #nav-toggle div {
@@ -165,7 +164,6 @@ li {
     vertical-align: middle;
     padding: 10px 0;
     font-family: 'Open Sans', sans-serif;
-
 }
 
 .itemMenu {
@@ -346,6 +344,7 @@ li {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 95%;
+    height: 100vh !important;
 
 }
 
@@ -371,11 +370,10 @@ li {
     text-align: center;
     align-content: center;
     margin-top: 60px;
-
 }
 
 .text-animation {
-    font-size: 5.625em;
+    font-size: 5.625vmax;
     font-family: 'Lora', serif;
     line-height: 1;
     position: relative;
@@ -384,14 +382,6 @@ li {
     text-transform: capitalize;
     text-decoration: none;
     color: #fff;
-}
-
-
-@media screen and (max-width: 760px) {
-    .text-animation {
-        font-size: 50px;
-
-    }
 }
 
 .text-animation .firstName {
@@ -471,17 +461,18 @@ li {
 .pTitle {
     text-transform: uppercase;
     letter-spacing: .5em;
-    position: absolute;
-    left: 55%;
-    width: 40em;
+    position: relative;
+    padding-left: 55vmax;
+    width: 100vmax;
     margin-left: -20em;
     margin-top: -4em;
 }
 
+
 .pTitle .title {
     position: relative;
     font-family: 'Open Sans', sans-serif;
-    font-size: 2em;
+    font-size: 2vmax;
     font-weight: bold;
     letter-spacing: 0;
     overflow: hidden;
@@ -513,7 +504,7 @@ li {
 \-------------------------------------------------------------------------------------------*/
 
 
-@media (min-width: 480px) {
+@media (min-width: 360px) {
     .split {
         height: 100%;
         display: flex;
@@ -530,14 +521,14 @@ li {
     min-height: 320px;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 360px) {
     .split .pane {
         align-self: center;
         min-height: 100vh;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     .split .pane {
         margin: 3vmax 0;
     }
@@ -547,20 +538,14 @@ li {
     background: #7d0000;
 }
 
-@media (min-width: 480px) {
+/* @media (min-width: 360px) {
     .profile {
-        width: 70%;
+        width: 90%;
     }
-}
+} */
 
 .profile .about-me {
     align-content: center;
-}
-
-@media (max-width: 480px) {
-    .profile .about-me {
-        margin-top: 3vmax;
-    }
 }
 
 .profile .avatar {
@@ -573,7 +558,7 @@ li {
 }
 
 .profile p.intro {
-    font-size: 1.0vmax;
+    font-size: 1rem;
     margin-left: .5rem;
     color: #d0d0d0;
     word-wrap: break-word;
@@ -593,6 +578,7 @@ li {
     color: white;
     margin: 0 0 1rem;
 }
+
 
 /* ------------------------------- Social section -------------------------------------------*/
 
@@ -660,6 +646,7 @@ li {
     width: 200px;
     height: 50px;
     margin: 50px auto;
+    margin-right: 15px;
     display: block;
     position: relative;
 }
@@ -828,7 +815,7 @@ li {
     text-align: center;
     line-height: 50px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 20px;
+    font-size: 1.25em;
     text-transform: uppercase;
 }
 
@@ -987,13 +974,11 @@ li {
     width: 100%;
 }
 
-
 .card-container {
     position: absolute;
     margin: 10px;
     width: 28%;
 }
-
 
 .section-title {
     text-align: center;
@@ -1003,24 +988,25 @@ li {
     top: 20px;
 }
 
+.img-grid .card {
+    width: 18vmax;
+}
 
 .img-grid .card-body p {
     margin-bottom: -0.5rem;
     font-family: 'Open Sans', sans-serif;
 }
 
-
 .img-grid {
     position: absolute !important;
     top: 240px;
-    width: 50%;
+    width: 100%;
     height: auto;
-    left: 27%;
+    left: 10vmax;
 }
 
 .img-grid .card-img-top {
     height: 8vw;
-
 }
 
 /* ----------------------------------- Title Styles ---------------------------------------- */
@@ -1030,13 +1016,15 @@ li {
     padding-bottom: 20px;
 }
 
+.work-title .pre-loader {
+    width: 100vmax;
+}
+
 .work-title ul.pre-loader {
     position: absolute;
     align-content: center;
-    right: -5%;
     transform: translate(-50%, -50%);
-    margin: 0;
-    padding: 0;
+    padding-left: 60vmax;
 }
 
 .work-title ul.pre-loader li {
@@ -1100,14 +1088,12 @@ li {
 }
 
 
-
 /* ----------------------------------- Button Styles ---------------------------------------- */
-
 
 #filter-btn {
     margin-bottom: 20px;
     margin-top: 60px;
-    margin-left: 200px;
+    margin-left: 3vmax;
 }
 
 #filter-btn ul {
@@ -1120,14 +1106,6 @@ li {
     margin-right: 20px;
 }
 
-@media screen and (max-width: 760px) {
-    #filter-btn li {
-        display: block;
-        margin-top: 10px;
-    }
-}
-
-
 .button-group ul {
     list-style-type: none;
     list-style: none;
@@ -1136,6 +1114,7 @@ li {
 .button-group li {
     display: inline-block;
     font-family: 'Open Sans', sans-serif;
+    font-size: 1vmax;
 }
 
 
@@ -1208,16 +1187,16 @@ li {
 
 }
 
+
 .blog-cards {
     position: absolute;
     top: 200px;
-    left: 25%;
     margin: 20px;
+    width: 80vmax;
 }
 
 .blog-cards .card-img-top {
-    height: 18vw;
-
+    height: 16vw;
 }
 
 .readMore {
@@ -1227,7 +1206,9 @@ li {
 
 .readMore:hover {
     background-color: #7d0000;
-    border-color: #7d0000;}
+    border-color: #7d0000;
+}
+
 
 /* ------------------------------- Blog Sign -------------------------------------------*/
 
@@ -1237,7 +1218,7 @@ li {
     position: absolute;
     top: 30px;
     align-items: center;
-    left: 40%;
+    left: 35vmax;
 }
 
 .sign-wrap {
@@ -1677,7 +1658,6 @@ li {
     background-color: black;
 }
 
-
 .feature-container {
     margin: auto;
     text-align: center;
@@ -1686,16 +1666,15 @@ li {
 
 /* ------------------------------- Title ---------------------------------------*/
 
-
 .testimonials-title {
     position: absolute;
-    left: 40%;
+    left: 32vmax;
     top: 10%;
     width: 40%;
     -webkit-transform: translate(-25%, -25%);
     transform: translate(-25%, -25%);
     text-align: center;
-    font-size: 5.625em;
+    font-size: 5.625vmax;
     font-family: 'Lora', serif;
     -webkit-animation: text-animation 5s linear infinite alternate;
     animation: text-animation 5s linear infinite alternate;
@@ -1732,9 +1711,9 @@ li {
 
 .testimonials .citem p {
     color: white;
-    font-size: 18px;
+    font-size: 1.75vmax;
     word-spacing: 2px;
-    margin-bottom: 15px;
+    margin-bottom: 1vmax;
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -2364,12 +2343,11 @@ li {
     background-color: black;
 }
 
-
 .contact-section-title {
     position: absolute;
     left: 50%;
     top: 15%;
-    width: 625px;
+    width: 40vmax;
     transform: translate(-50%, -50%);
     border: 5px solid #FFBD50;
     padding: 20px;
@@ -2378,7 +2356,7 @@ li {
 }
 
 .contact-section-title h2 {
-    font-size: 2.5em;
+    font-size: 2.5vmax;
     font-family: 'Lora', serif;
     font-weight: 300;
     color: #FFBD50;
@@ -2425,11 +2403,10 @@ li {
     color: white;
 }
 
-
 .contact-container {
-    margin-left: 350px;
-    margin-right: 350px;
-    margin-bottom: 150px;
+    margin-left: 15vmax;
+    margin-right: 15vmax;
+    margin-bottom: 5vmax;
     width: auto;
 }
 
@@ -2439,33 +2416,20 @@ li {
 
 .contact-p {
     margin-top: 0px !important;
-
 }
+
 
 /* ------------------------------- Robot Animation ---------------------------------------*/
 
-
 .robot svg {
     position: absolute;
-    top: 75%;
+    top: 38vh;
     display: block;
     transform: scale(0.6) translate(0, -100%);
     transform-origin: center;
     height: 800px;
     width: 600px;
-}
-
-.credit {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.3);
-}
-
-.credit a {
-    color: rgba(255, 255, 255, 0.6);
+    right: -5vmax;
 }
 
 @-webkit-keyframes robot_bounce {
@@ -2632,7 +2596,6 @@ li {
 
 /* ------------------------------- Contact Section ---------------------------------------*/
 
-
 .form-control,
 .form-group .form-control {
     border: 0;
@@ -2700,12 +2663,10 @@ fieldset[disabled] .form-group .form-control {
     resize: none
 }
 
-
 .form-group {
     padding-bottom: 7px;
     margin: 28px 0 0 0;
     font-size: 16px;
-
 }
 
 .form-group .form-control {
@@ -2753,7 +2714,6 @@ fieldset[disabled] .form-group .form-control {
     font-weight: 500;
     height: auto
 }
-
 
 
 /* ------------------------------- Send Button ---------------------------------------*/
@@ -2837,14 +2797,320 @@ fieldset[disabled] .form-group .form-control {
 }
 
 
-
-
 /* ------------------------------------------------------------------------------------------
-|                                    TABLET SCREEN STYLES                                    |
+|                                    CUSTOM SCREEN STYLES                                    |
 \-------------------------------------------------------------------------------------------*/
+
+@media screen and (max-width: 770px) {
+    .robot svg {
+        visibility: hidden;
+    }
+}
+
+
+@media screen and (max-width:520px) {
+    .pTitle {
+        padding-left: 45vmax;
+    }
+}
+
+
+@media screen and (max-width: 680px) {
+    .testimonials-title {
+        left: 28vmax !important;
+    }
+}
 
 
 
 /* ------------------------------------------------------------------------------------------
 |                                    MOBILE SCREEN STYLES                                    |
+|                   small devices (phones, up to 660px width and 320px height)               |
 \-------------------------------------------------------------------------------------------*/
+
+
+@media screen and (max-width: 660px) {
+
+    body {
+        width: 450px !important;
+    }
+
+    /* ------------------------------- Navigation Toggle ----------------------------------------*/
+    #nav-toggle {
+        visibility: hidden;
+    }
+
+    /* ------------------------------- Navigation List ----------------------------------------*/
+    .menu {
+        visibility: hidden;
+    }
+
+    /* ------------------------------- Mouse Animation ----------------------------------------*/
+    .mouse {
+        visibility: hidden;
+    }
+
+    /* ------------------------------- Home Page -------------------------------------------*/
+    /* Mukesh Mithrakumar Title */
+    .text-animation {
+        font-size: 50px;
+    }
+
+    /* Mukesh Mithrakumar Title */
+    .pTitle .title {
+        top: 3.75em;
+    }
+
+    #particles-js {
+        visibility: hidden;
+    }
+
+    /* ------------------------------- About Page -------------------------------------------*/
+    /* Profile Picture */
+    .profile .avatar {
+        width: 20vw;
+        margin-top: 20px;
+    }
+
+    /* About me and text */
+    .profile .about-me,
+    .profile h1 {
+        margin-top: 20px;
+    }
+
+    /* about me intro */
+    .profile p.intro {
+        font-size: 1.5vmax;
+    }
+
+    /* social wrapper */
+    .social-wrapper {
+        padding-top: 35% !important;
+    }
+
+    /* social icons */
+    #github,
+    #linkedin,
+    #email,
+    #twitter,
+    #instagram {
+        font-size: 1.5rem;
+    }
+
+    /* cv and hire button and text */
+    .cvbutton,
+    .hirebutton {
+        margin-top: 5px !important;
+        margin-right: 2px;
+    }
+
+    .cvbuttontext,
+    .hirebuttontext {
+        font-size: 0.75em !important;
+    }
+
+    /* ----------------------------------- Work Page ---------------------------------------- */
+    /* Disabled matrix animation */
+    #canvas {
+        visibility: hidden;
+    }
+
+    .work {
+        height: 1500px !important;
+        background-color: #000;
+    }
+
+    /* Work section title settings */
+    .section-title {
+        margin-bottom: 20px;
+        margin-top: 25px;
+        top: 50px;
+        left: 3%;
+    }
+
+    .work-title {
+        padding-top: 1px;
+        padding-bottom: 5px;
+    }
+
+    .work-title ul.pre-loader li {
+        font-size: 7vmax;
+        letter-spacing: 5px;
+    }
+
+    .img-grid .card-container {
+        width: 45vmax !important;
+        padding-right: 25px;
+    }
+
+    .img-grid .card {
+        width: 25vmax !important;
+
+    }
+
+    /* image grid styles */
+    .img-grid {
+        top: 150px;
+        left: 1px;
+    }
+
+    .img-grid .card-img-top {
+        height: 15vw;
+    }
+
+    .img-grid .card-body p,
+    h5 {
+        font-size: 14px;
+    }
+
+    /* Disabled filter buttons */
+    #filter-btn {
+        visibility: hidden;
+    }
+
+    .fa-github,
+    .fa-link {
+        font-size: 34px !important;
+    }
+
+    /* ----------------------------------- Blog Page ---------------------------------------- */
+    /* Blog title settings */
+    .blog {
+        height: 1300px !important;
+    }
+
+    .blog-container {
+        top: 75px !important;
+        left: 30% !important;
+    }
+
+    .sign-wrap {
+        margin-top: 1px;
+        padding: 2px;
+        border-radius: 2px;
+        box-shadow: 0px 25px 22.5px -7.5px rgba(0, 0, 0, 0.5), 0px 10px 5px -2.5px rgba(0, 0, 0, 0.5), 0px 2.5px 10px 0px rgba(0, 0, 0, 0.5), 0px 5px 15px rgba(0, 0, 0, 0.7) inset;
+        border: 1px solid #1f1f1f;
+        border-top: 1px solid black;
+        border-bottom: 1px solid #292929;
+    }
+
+    .sign {
+        display: inline-block;
+        padding: 2.5px 7.5px;
+        border-radius: 5px;
+        -webkit-filter: blur(0.75px);
+        box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 0.7), 0px 0px 0px 5px red, 0px 0px 0px 3px red inset, 0px 0px 15px rgba(255, 0, 0, 0.5), 0px 0px 15px rgba(255, 0, 0, 0.5) inset;
+        margin: auto;
+    }
+
+    .sign h1 {
+        font-size: 5rem !important;
+        font-weight: 800;
+        -webkit-text-stroke-width: 6px;
+        -webkit-text-stroke-color: #2b2b2b;
+        position: relative;
+        text-shadow: 0px 10px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Card settings */
+    .blog-cards {
+        position: relative !important;
+        top: 60px;
+        left: 1px;
+        width: auto;
+    }
+
+    .blog-cards .card-img-top {
+        height: 15vw;
+        width: 15vw;
+
+    }
+
+    .readMore {
+        font-size: 14px;
+    }
+
+    .blog-cards h5 {
+        font-size: 18px;
+    }
+
+    .blog-cards p {
+        font-size: 14px;
+        word-spacing: 2px;
+    }
+
+    .readMore:hover {
+        font-size: 14px;
+    }
+
+    /* Disable star field */
+    .star-field {
+        visibility: hidden;
+    }
+
+    /* ----------------------------------- Testimonials Page --------------------------------- */
+    /* Testimonials title */
+    .testimonials-title {
+        left: 30% !important;
+        top: 60px !important;
+        font-size: 3em !important;
+    }
+
+    /* Testimonials Content */
+    .testimonials .citem p {
+        font-size: 14px !important;
+        margin-top: 40px !important;
+        margin-bottom: 5px;
+    }
+
+    .testimonials .citem h5 {
+        font-size: 14px !important;
+    }
+
+    .testimonials .citem h6 {
+        font-size: 12px !important;
+    }
+
+    /* Disabled Rocket animations */
+    .bomb-rocket,
+    .normal-rocket {
+        visibility: hidden;
+    }
+
+    /* ----------------------------------- Contacts Page --------------------------------- */
+    /* Contacts title */
+    .contact-section-title {
+        left: 50%;
+        top: 100px;
+        width: 400px;
+    }
+
+    .contact-section-title h2 {
+        font-size: 1.5rem;
+    }
+
+    .contact-body p {
+        color: white;
+    }
+
+    /* Contacts Body */
+    .contact-container {
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .contact-body {
+        margin-top: 150px;
+    }
+
+    .contactButton {
+        margin-bottom: 15px !important;
+    }
+
+    /* Disabled Robot animations */
+    .robot svg {
+        visibility: hidden;
+    }
+}
