@@ -46,18 +46,15 @@ $(document).ready(function () {
         anchors: ['Home', 'About', 'Work', 'Blog', 'Testimonials', 'Contact'],
         menu: '.menu',
 
-        afterLoad: function (anchorLink, index) {
-            // $('#global-nav').show();
-        },
-        onLeave: function (anchorLink, index) {
-            // $('#global-nav').hide();
-        },
-
+        // For Work Mobile Screens
+        responsiveWidth: 661,
 
         // For Work Page Owl Carousal
         afterRender: function () {
             var $grid = $('.img-grid').isotope({
-                itemSelector: '.card-container'
+                itemSelector: '.card-container',
+                resizable: false, // disable normal resizing
+
             });
 
             var filterFns = {
@@ -102,10 +99,27 @@ $(document).ready(function () {
             }
             setInterval(putPixel, 33);
 
+            // https://stackoverflow.com/questions/8747714/how-to-make-the-browser-back-button-disregard-hash-tags
+            var counter = 0;
+            window.onhashchange = function () {
+                window.history.replaceState({
+                        visited: ++counter
+                    }, "visited page",
+
+                    window.location.search + window.location.hash);
+            }
+
+            window.onpopstate = function (event) {
+                if (event.state.visited && counter > event.state.visited) {
+                    counter -= 2;
+                    window.history.go(-1 * event.state.visited);
+                } else {
+                    counter = event.state.visited;
+                }
+            }
+
         }
     });
-
-
 
 });
 
@@ -217,7 +231,3 @@ particlesJS("particles-js", {
     },
     "retina_detect": true
 });
-
-
-
-/* -------------------------------------- Blog page -------------------------------------- */

@@ -571,7 +571,7 @@ li {
     font-family: 'Open Sans', sans-serif;
 }
 
-.profile h1 {
+.profile h2 {
     font-weight: 100;
     font-family: 'Lora', serif;
     word-wrap: break-word;
@@ -1210,6 +1210,10 @@ li {
     border-color: #7d0000;
 }
 
+.readMore:active {
+    background-color: #7d0000 !important;
+}
+
 
 /* ------------------------------- Blog Sign -------------------------------------------*/
 
@@ -1244,7 +1248,7 @@ li {
     margin: auto;
 }
 
-.sign h1 {
+.sign h2 {
     font-family: 'Lora', serif;
     font-size: 5.625em;
     line-height: 0px;
@@ -1257,7 +1261,7 @@ li {
     text-shadow: 0px 10px 3px rgba(0, 0, 0, 0.2);
 }
 
-.sign h1:before {
+.sign h2:before {
     content: "Blog";
     position: absolute;
     top: 0;
@@ -1271,7 +1275,7 @@ li {
     animation: flicker 20s linear infinite;
 }
 
-.sign h1:after {
+.sign h2:after {
     content: "Blog";
     position: absolute;
     top: 0;
@@ -2802,6 +2806,44 @@ fieldset[disabled] .form-group .form-control {
 |                                    CUSTOM SCREEN STYLES                                    |
 \-------------------------------------------------------------------------------------------*/
 
+@media screen and (max-width: 500px) {
+
+    body {
+        background: black;
+    }
+
+    .homepage {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+    .about {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+    .work {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+    .blog {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+    .testimonials {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+    .contact {
+        width: 410px !important;
+        overflow: hidden !important;
+    }
+
+}
+
 @media screen and (max-width: 770px) {
     .robot svg {
         visibility: hidden;
@@ -2823,13 +2865,6 @@ fieldset[disabled] .form-group .form-control {
 }
 
 
-@media screen and (max-width: 450px) {
-
-    .pTitle {
-        visibility: hidden
-    }
-}
-
 
 /* ------------------------------------------------------------------------------------------
 |                                    MOBILE SCREEN STYLES                                    |
@@ -2838,10 +2873,6 @@ fieldset[disabled] .form-group .form-control {
 
 
 @media screen and (max-width: 660px) {
-
-    body {
-        width: 360px !important;
-    }
 
     /* ------------------------------- Navigation Toggle ----------------------------------------*/
     #nav-toggle {
@@ -2877,7 +2908,7 @@ fieldset[disabled] .form-group .form-control {
 
     /* About me and text */
     .profile .about-me,
-    .profile h1 {
+    .profile h2 {
         margin-top: 20px;
     }
 
@@ -2919,8 +2950,9 @@ fieldset[disabled] .form-group .form-control {
     }
 
     .work {
-        height: 1700px !important;
-        background-color: #000;
+        height: 1500px !important;
+        background-color: black;
+        overflow: hidden;
     }
 
     /* Work section title settings */
@@ -2980,6 +3012,7 @@ fieldset[disabled] .form-group .form-control {
     /* Blog title settings */
     .blog {
         height: 1300px !important;
+        overflow: hidden;
     }
 
     .blog-container {
@@ -3006,7 +3039,7 @@ fieldset[disabled] .form-group .form-control {
         margin: auto;
     }
 
-    .sign h1 {
+    .sign h2 {
         font-size: 5rem !important;
         font-weight: 800;
         -webkit-text-stroke-width: 6px;
