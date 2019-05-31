@@ -3011,7 +3011,7 @@ fieldset[disabled] .form-group .form-control {
     /* ----------------------------------- Blog Page ---------------------------------------- */
     /* Blog title settings */
     .blog {
-        height: 1300px !important;
+        height: 1200px !important;
         overflow: hidden;
     }
 
@@ -3062,6 +3062,12 @@ fieldset[disabled] .form-group .form-control {
 
     }
 
+    .blog-cards .DLBook {
+        height: 30vw;
+        width: 65vw;
+
+    }
+
     .readMore {
         font-size: 14px;
     }
@@ -3095,7 +3101,6 @@ fieldset[disabled] .form-group .form-control {
     /* Testimonials Content */
     .testimonials .citem p {
         font-size: 14px !important;
-        margin-top: 40px !important;
         margin-bottom: 5px;
     }
 
