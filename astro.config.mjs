@@ -32,7 +32,7 @@ const expressiveCodeOptions = {
 };
 // https://astro.build/config
 export default defineConfig({
-	site: "https://quantum.cosmicthemes.com",
+	site: "https://www.mukeshmithrakumar.com/",
 	redirects: {
 	},
 	integrations: [

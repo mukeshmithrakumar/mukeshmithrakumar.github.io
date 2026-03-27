@@ -31,6 +31,7 @@ export interface SiteDataProps {
 	name: string;
 	title: string;
 	description: string;
+	googleSiteVerification?: string;
 	useViewTransitions?: boolean;
 	useAnimations?: boolean;
 	socialLinks: SocialLinkProps[];
@@ -48,45 +49,45 @@ export interface SiteDataProps {
 
 // Update this file with your site specific information
 const siteData: SiteDataProps = {
-	name: "Quantum",
-	// Your website's title and description (meta fields)
-	title: "Quantum - the tech portfolio theme crafted with Astro and Tailwind CSS",
+	name: "Mukesh Mithrakumar",
+	title: "Mukesh Mithrakumar - Machine Learning Engineer",
 	description:
-		"The perfect portfolio website theme for developers, designed using Astro and Tailwind CSS. Perfect for freelancers, developers, startups, and personal use.",
+		"Looking for a Machine Learning Engineer for freelancing or consulting? View Mukesh Mithrakumar's website to see some of his works.",
+	googleSiteVerification: "eC1HmS1z5BOVpsTd9QqC3BIhRvif2wgTUGWFKHt996c",
 	useViewTransitions: true,
 	useAnimations: true,
 
 	socialLinks: [
 		{
-			platform: "twitter",
-			link: "https://twitter.com/BowTiedWebReapr",
-		},
-		{
-			platform: "instagram",
-			link: "https://www.instagram.com/bowtiedwebreaper/",
+			platform: "linkedin",
+			link: "https://www.linkedin.com/in/mukesh-mithrakumar/",
 		},
 		{
 			platform: "github",
-			link: "https://github.com/Boston343",
+			link: "https://github.com/mukeshmithrakumar",
+		},
+		{
+			platform: "twitter",
+			link: "https://x.com/mithraics_",
 		},
 		{
 			// you should always at least have an email
 			platform: "email",
-			link: "mailto:creator@cosmicthemes.com",
+			link: "mailto:mukesh@mukeshmithrakumar.com",
 		},
 	],
 
 	// Your information for blog post purposes
 	author: {
 		name: "Mukesh Mithrakumar",
-		email: "creator@cosmicthemes.com",
-		twitter: "BowTiedWebReapr",
+		email: "mailto@mukeshmithrakumar.com",
+		twitter: "mithraics_",
 	},
 
 	// default image for meta tags if the page doesn't have an image already
 	defaultImage: {
-		src: "/images/cosmic-themes-logo.jpg",
-		alt: "Stellar logo",
+		src: "/images/astrum-logo-rectangle.png",
+		alt: "Astrum AI Logo",
 	},
 };
 

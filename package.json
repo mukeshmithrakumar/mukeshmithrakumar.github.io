@@ -8,7 +8,6 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"remove-keystatic": "node ./scripts/remove-keystatic.js",
 		"format": "prettier -w \"**/*\" --ignore-unknown --cache",
 		"lint": "eslint ."
 	},
