@@ -1,0 +1,11 @@
+---
+// components
+import SocialIcon from "@components/SocialIcon/SocialIcon.astro";
+
+// data
+import siteData from "@config/siteData.json";
+---
+
+<div class="flex gap-2">
+	{siteData.socialLinks.map((social) => <SocialIcon href={social.link} social={social.platform} />)}
+</div>

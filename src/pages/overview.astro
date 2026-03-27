@@ -1,0 +1,152 @@
+---
+// main layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import Button from "@components/Button/Button.astro";
+---
+
+<BaseLayout title="Recent Blog Posts" description="Recent Blog Posts Description">
+	<section class="site-container pt-36 md:pt-44">
+		<div class="mx-auto max-w-4xl">
+			<h1 class="h1">Overview</h1>
+			<p class="description mt-2">The various pages of Quantum</p>
+			<div class="xs:grid-cols-2 mx-auto mt-10 grid gap-4 md:grid-cols-3">
+				<!-- Landing pages -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Landing Pages</h3>
+					<a class="overview-link" href="/">Landing 1</a>
+					<a class="overview-link" href="/examples/landing2/">Landing 2</a>
+					<a class="overview-link" href="/examples/landing3/">Landing 3</a>
+				</div>
+
+				<!-- Blog Index Pages -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Blog Indexes</h3>
+					<a class="overview-link" href="/blog/">Blog Index 1</a>
+					<a class="overview-link" href="/examples/blog-index-2/">Blog Index 2</a>
+					<a class="overview-link" href="/examples/blog-index-3/">Blog Index 3</a>
+					<a class="overview-link" href="/tags/">Tags Index</a>
+				</div>
+
+				<!-- Blog Posts -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Blog Post Layouts</h3>
+					<a class="overview-link" href="/blog/tsconfig-paths-setup/">Blog Post 1</a>
+					<a class="overview-link" href="/examples/blog-post-2/">Blog Post 2</a>
+					<a class="overview-link" href="/examples/blog-post-3/">Blog Post 3</a>
+				</div>
+
+				<!-- Sections -->
+				<!-- <div class="flex flex-col">
+          <h3 class="overview-heading">Sections</h3>
+          <a class="overview-link" href="/examples/feature-services/"
+            >All Feature and Services Sections</a
+          >
+          <a class="overview-link" href="/examples/testimonial-faq/"
+            >All Testimonial and FAQ Sections</a
+          >
+          <a class="overview-link" href="/examples/hero-sections/"
+            >All Hero Sections</a
+          >
+        </div> -->
+
+				<!-- Site Elements -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Core Pages</h3>
+					<a class="overview-link" href="/elements/">MDX Pages</a>
+					<a class="overview-link" href="/projects/">Projects Page 1</a>
+					<a class="overview-link" href="/examples/projects-2/">Projects Page 2</a>
+					<a class="overview-link" href="/uses/">Uses</a>
+				</div>
+
+				<!-- Widgets -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Widgets and Forms</h3>
+					<a class="overview-link" href="/contact/">Contact Page</a>
+					<!-- CookieConsent component should be used in BaseLayout.astro if desired -->
+					<button id="test-consent-demo-btn" class="overview-link text-left">Cookie Consent</button>
+				</div>
+
+				<!-- Other -->
+				<div class="flex flex-col">
+					<h3 class="overview-heading">Other Pages</h3>
+					<a class="overview-link" href="/privacy-policy/">Privacy Policy</a>
+					<a class="overview-link" href="/terms/">Terms of Use</a>
+					<a class="overview-link" href="/not-a-link/">404</a>
+					<a class="overview-link" href="/rss.xml/" target="_blank" rel="noopener noreferrer"
+						>RSS Feed</a
+					>
+				</div>
+			</div>
+		</div>
+
+		<!-- CookieConsent component should be used in BaseLayout.astro if desired -->
+		<div id="test-banner" class="fixed inset-x-6 bottom-6 z-50 hidden justify-center">
+			<div
+				class="border-base-600 bg-base-800 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border p-4"
+			>
+				<div class="text-center">
+					<p class="text-sm lg:text-base">
+						We use cookies to improve your experience on this site. To learn more, see our <a
+							href="/privacy-policy/"
+							class="decoration-primary-600 hover:text-primary-600 underline transition"
+							>Privacy Policy</a
+						>.
+					</p>
+				</div>
+				<div class="z-10 mx-auto flex gap-2">
+					<Button variant="primary" type="button">Accept</Button>
+					<Button variant="ghost" type="button">Decline</Button>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	@import "tailwindcss/theme" theme(reference);
+	@import "@/styles/tailwind-theme.css" theme(reference);
+
+	.overview-heading {
+		@apply mt-6 mb-4 text-xl font-medium;
+	}
+	.overview-link {
+		@apply hover:text-primary-600 my-[.15rem] leading-snug transition;
+	}
+</style>
+
+<script>
+	//Script purely for demo of the CookieConsent component. Use the actual <CookieConsent /> component in BaseLayout.astro if desired.
+	function cookieConsentSetup() {
+		const cookieBanner = document.getElementById("test-banner");
+		const acceptButton = document.querySelector("#test-banner button:first-of-type");
+		const declineButton = document.querySelector("#test-banner button:last-of-type");
+		const cookieConsentDemoBtn = document.getElementById("test-consent-demo-btn");
+
+		cookieConsentDemoBtn?.addEventListener("click", () => {
+			cookieBanner?.classList.toggle("hidden");
+			cookieBanner?.classList.toggle("flex");
+		});
+
+		// If the user clicks the accept button, hide the banner and set a cookie
+		acceptButton?.addEventListener("click", () => {
+			console.log("cookies accepted example");
+			cookieBanner?.classList.toggle("hidden");
+			cookieBanner?.classList.toggle("flex");
+		});
+
+		// If the user clicks the decline button, hide the banner and set a cookie
+		declineButton?.addEventListener("click", () => {
+			console.log("cookies declined example");
+			cookieBanner?.classList.toggle("hidden");
+			cookieBanner?.classList.toggle("flex");
+		});
+	}
+
+	// runs on initial page load
+	cookieConsentSetup();
+
+	// runs on view transitions navigation
+	document.addEventListener("astro:after-swap", cookieConsentSetup);
+</script>

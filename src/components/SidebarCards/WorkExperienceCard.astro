@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+
+// components
+import BaseCard from "@components/SidebarCards/BaseCard.astro";
+import Button from "@components/Button/Button.astro";
+
+// data
+import workData from "@config/workData.json";
+---
+
+<BaseCard title="Work Experience" icon="tdesign:work-history">
+	<ul class="flex flex-col gap-4">
+		{
+			workData.map((job) => (
+				<li class="flex flex-col">
+					<h4>{job.company}</h4>
+					<div class="flex justify-between gap-2">
+						<p class="description text-sm">{job.title}</p>
+						<p class="description text-sm">{job.dateRange}</p>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+
+	<Button href="/ExampleResume.pdf" download="ExampleResume.pdf" variant="outline">
+		<div class="flex items-center gap-2">
+			<span>Download CV</span>
+			<Icon name="tdesign:download" aria-hidden="true" class="size-5" />
+		</div>
+	</Button>
+</BaseCard>

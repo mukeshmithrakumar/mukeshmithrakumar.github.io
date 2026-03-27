@@ -1,0 +1,92 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+// component imports
+import BaseHead from "@layouts/BaseHead.astro";
+import Nav from "@components/Nav/Nav.astro";
+import Footer from "@components/Footer/Footer.astro";
+import CookieConsent from "@components/CookieConsent/CookieConsent.astro";
+
+// style import
+import "@/styles/global.css";
+
+// data
+import siteData from "@config/siteData.json";
+
+// heroImage and authorData are defined on blog posts
+// authorData could also be defined on the about author page
+interface Props {
+	type?: "blog" | "general";
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	authorsData?: CollectionEntry<"authors">[];
+	postFrontmatter?: CollectionEntry<"blog">["data"];
+	noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
+}
+
+const {
+	type = "general",
+	title,
+	description,
+	image,
+	authorsData,
+	postFrontmatter,
+	noindex = false,
+} = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="en" transition:animate="fade" class="dark">
+	<head>
+		<BaseHead
+			type={type}
+			title={title}
+			description={description}
+			image={image ? image : undefined}
+			authors={authorsData ? authorsData : undefined}
+			postFrontmatter={postFrontmatter ? postFrontmatter : undefined}
+			noindex={noindex}
+		/>
+	</head>
+	<body
+		class:list={[
+			"dark overflow-y-scroll",
+			{
+				"use-animations": siteData.useAnimations === true ? true : false,
+			},
+		]}
+	>
+		<!-- put cookie consent first so it is seen first by screen readers -->
+		<!-- <CookieConsent /> -->
+		<div class="flex min-h-lvh flex-col justify-between">
+			<div>
+				<Nav />
+				<main>
+					<slot />
+				</main>
+			</div>
+			<Footer />
+		</div>
+
+		<!-- Scroll animations -->
+		<script>
+			import siteData from "@config/siteData.json";
+			import MOS from "motion-on-scroll";
+
+			if (siteData.useAnimations === true) {
+				// runs on initial page load
+				MOS.init({
+					once: true,
+					duration: 0.75,
+					distance: 15,
+					timeUnits: "s",
+					easing: "ease-out-cubic",
+				});
+
+				// runs on view transitions navigation
+				document.addEventListener("astro:after-swap", MOS.refreshHard);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+---
+/**
+ * * Homepage
+ * Displays recent posts and sidebar cards. You can customize the layout and sidebar cards to your liking.
+ * There are 4 sidebar cards: NewsletterCard, TagsCard, WorkExperienceCard, and SocialsCard.
+ */
+
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import HeroSideImage from "@components/Hero/HeroSideImage.astro";
+import HeroTinyImage from "@components/Hero/HeroTinyImage.astro";
+import PostCardBasic from "@components/PostCard/PostCardBasic.astro";
+import PostCardImage from "@components/PostCard/PostCardImage.astro";
+import Button from "@components/Button/Button.astro";
+import NewsletterCard from "@components/SidebarCards/NewsletterCard.astro";
+import TagsCard from "@components/SidebarCards/TagsCard.astro";
+import WorkExperienceCard from "@components/SidebarCards/WorkExperienceCard.astro";
+
+// utils
+import { formatPosts, getAllPosts } from "@js/blogUtils";
+
+// data
+import siteData from "@config/siteData.json";
+
+const posts = await getAllPosts();
+
+// get recent 3 posts to put on homepage
+const formattedPosts = formatPosts(posts, { limit: 4 });
+---
+
+<BaseLayout title={siteData.title} description={siteData.description}>
+	<HeroSideImage />
+	<!-- <HeroTinyImage /> -->
+
+	<div class="site-container mt-24 grid grid-cols-1 gap-8 md:grid-cols-5 lg:mt-36 lg:gap-12">
+		<div class="mx-auto max-w-lg md:col-span-3 md:ml-0 md:max-w-full">
+			<!-- Recent Posts -->
+			<h2 class="h2">Recent Posts</h2>
+			<ul class="mt-4 grid grid-cols-1 justify-center gap-8">
+				{
+					formattedPosts.map((post, idx) => (
+						<li>
+							<PostCardBasic post={post} showDescription={false} />
+						</li>
+					))
+				}
+			</ul>
+			<div class="mt-8 flex">
+				<Button variant="outline" arrow="right" href="/blog/">All Blog Posts</Button>
+			</div>
+		</div>
+		<div
+			class="mx-auto mt-6 flex w-full max-w-lg flex-col gap-8 md:col-span-2 md:mt-0 md:max-w-full"
+		>
+			<!-- Enable whichever sidebar cards you desire, or change the order of them -->
+			<!-- <SocialsCard /> -->
+			<NewsletterCard />
+			<!-- <TagsCard /> -->
+			<WorkExperienceCard />
+		</div>
+	</div>
+</BaseLayout>

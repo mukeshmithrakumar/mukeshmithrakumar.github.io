@@ -1,0 +1,63 @@
+---
+// components
+import Button from "@components/Button/Button.astro";
+---
+
+<!-- create a contact me form where uses input their name, email, and message -->
+<section id="contact" class="mx-auto w-full">
+	<form id="contact-form" name="contact form" class="mt-4 flex flex-col gap-3">
+		<input type="hidden" name="form-name" value="contact" />
+		<div>
+			<div class="grid gap-3 sm:grid-cols-2">
+				<div class="flex flex-col">
+					<label for="contact-fname" class="opacity-90 dark:opacity-80">First Name</label>
+					<input
+						type="text"
+						class="form__input"
+						name="fname"
+						pattern="[A-Za-z]+"
+						id="contact-fname"
+						placeholder="Your first name"
+					/>
+				</div>
+
+				<div class="flex flex-col">
+					<label for="contact-lname" class="opacity-90 dark:opacity-80">Last Name</label>
+					<input
+						type="text"
+						class="form__input"
+						name="lname"
+						pattern="[A-Za-z]+"
+						id="contact-lname"
+						placeholder="Your last name"
+					/>
+				</div>
+			</div>
+		</div>
+		<div>
+			<label for="contact-email" class="mb-1 opacity-80">Email </label>
+			<input
+				type="email"
+				class="form__input"
+				name="email"
+				id="contact-email"
+				inputmode="email"
+				placeholder="Your preferred contact email"
+				required
+			/>
+		</div>
+		<div>
+			<label for="contact-message" class="opacity-90 dark:opacity-80">Message </label>
+			<textarea
+				name="message"
+				class="form__input"
+				id="contact-message"
+				rows="4"
+				placeholder="Your message here..."
+				required></textarea>
+		</div>
+		<div class="flex">
+			<Button variant="primary" type="submit">Send Message</Button>
+		</div>
+	</form>
+</section>

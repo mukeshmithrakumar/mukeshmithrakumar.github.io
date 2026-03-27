@@ -1,0 +1,39 @@
+---
+/**
+ * * These are alternating side cards
+ * Data is taken from src/config/projectData.json.ts
+ */
+
+import { Image } from "astro:assets";
+
+// components
+import Button from "@components/Button/Button.astro";
+
+// data
+import { type ProjectItem } from "@config/projectData.json";
+
+interface Props extends ProjectItem {
+	imageSide: "left" | "right";
+	rest?: any;
+}
+
+const { image, title, description, href, imageSide, ...rest } = Astro.props as Props;
+---
+
+<div class="mx-auto grid gap-x-8 md:grid-cols-2 md:gap-x-12 lg:gap-x-20" {...rest}>
+	<!-- image -->
+	<div class=`${imageSide === "right" ? "md:order-last": ""} mx-auto max-w-4xl`>
+		<Image class="object-cover" src={image} alt={title} height={700} />
+	</div>
+
+	<!-- text -->
+	<div>
+		<h2 class="h3 mt-6">{title}</h2>
+		<p class="description mt-4">{description}</p>
+		<div class="z-20 mt-4 flex">
+			<Button variant="ghost" href={href} arrow="right" target="_blank" rel="noopener noreferrer">
+				Learn more <span class="sr-only">about {title}</span>
+			</Button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+/* buttons, 4 types "filled", "outline", "ghost", "arrow" */
+.button {
+	@apply flex items-center justify-center px-4 py-1.5 font-medium transition-colors duration-200;
+	@apply focus:ring-offset-base-900 focus:outline-none;
+	@apply disabled:pointer-events-none;
+}
+
+.button--primary {
+	@apply border-primary-600 bg-base-900 relative border;
+	@apply hover:bg-primary-600 hover:text-base-950;
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+
+	&::after {
+		content: "";
+		@apply bg-primary-600 absolute inset-0 -z-50 h-full w-full translate-x-1 translate-y-1 transition duration-200 ease-out;
+	}
+
+	&:hover::after {
+		@apply -translate-x-0 -translate-y-0;
+	}
+}
+
+.button--secondary {
+	@apply border-base-600 bg-base-900 border;
+	@apply hover:border-primary-600;
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--outline {
+	@apply border-base-600 bg-base-900 border;
+	@apply hover:border-primary-600;
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--ghost {
+	@apply bg-base-800;
+	@apply hover:text-primary-600;
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}

@@ -1,0 +1,16 @@
+---
+// components
+import BaseCard from "@components/SidebarCards/BaseCard.astro";
+import TagCloud from "@components/TagCloud/TagCloud.astro";
+
+interface Props {
+	class?: string; // classes for the form
+	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { class: className, ...rest } = Astro.props as Props;
+---
+
+<BaseCard title="Post Tags" icon="tdesign:filter" class={className} {...rest}>
+	<TagCloud />
+</BaseCard>

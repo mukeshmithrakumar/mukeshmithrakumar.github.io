@@ -1,0 +1,170 @@
+@import url("./fonts.css");
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* tailwind plugins */
+@plugin "@tailwindcss/forms";
+
+/* dark mode */
+@variant dark (&:where(.dark, .dark *));
+
+/* theme definition import */
+@import "./tailwind-theme.css";
+
+/* other imports into specific layers */
+@import "./mos.css" layer(utilities);
+@import "./markdown-content.css" layer(components);
+@import "./buttons.css" layer(components);
+
+/* https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer */
+@layer base {
+	:root {
+		/* starwind component variables  */
+		--background: var(--color-base-100);
+		--foreground: var(--color-base-900);
+		--card: var(--color-base-50);
+		--card-foreground: var(--color-base-950);
+		--popover: var(--color-base-50);
+		--popover-foreground: var(--color-base-950);
+		--primary: var(--color-primary-600);
+		--primary-dark: var(--color-primary-800);
+		--primary-foreground: var(--color-base-50);
+		--secondary: var(--foreground);
+		--secondary-foreground: var(--background);
+		--muted: var(--color-base-100);
+		--muted-foreground: var(--color-base-600);
+		--accent: var(--color-base-200);
+		--accent-foreground: var(--color-base-900);
+		--info: var(--color-sky-300);
+		--info-foreground: var(--color-sky-950);
+		--success: var(--color-primary-400);
+		--success-foreground: var(--color-primary-950);
+		--warning: var(--color-amber-300);
+		--warning-foreground: var(--color-amber-950);
+		--error: var(--color-red-700);
+		--error-foreground: var(--color-base-50);
+		--border: var(--color-base-200);
+		--input: var(--color-base-200);
+		--outline: var(--color-primary-600);
+
+		--radius: 0.5rem;
+
+		/* default font */
+		font-family: var(--font-mono);
+	}
+
+	.dark {
+		/* starwind dark theme config */
+		--background: var(--color-base-900);
+		--foreground: var(--color-base-200);
+		--card: var(--color-base-950);
+		--card-foreground: var(--color-base-100);
+		--popover: var(--color-base-950);
+		--popover-foreground: var(--color-base-100);
+		--primary: var(--color-primary-600);
+		--primary-dark: var(--color-primary-800);
+		--primary-foreground: var(--color-base-50);
+		--secondary: var(--foreground);
+		--secondary-foreground: var(--background);
+		--muted: var(--color-base-900);
+		--muted-foreground: var(--color-base-400);
+		--accent: var(--color-base-900);
+		--accent-foreground: var(--color-base-100);
+		--info: var(--color-sky-300);
+		--info-foreground: var(--color-sky-950);
+		--success: var(--color-primary-400);
+		--success-foreground: var(--color-primary-950);
+		--warning: var(--color-amber-300);
+		--warning-foreground: var(--color-amber-950);
+		--error: var(--color-red-400);
+		--error-foreground: oklch(99% 0 0);
+		--border: var(--color-base-700);
+		--input: var(--color-base-800);
+		--outline: var(--color-primary-600);
+
+		@apply scheme-dark;
+	}
+
+	/* starwind preflight merged with Cosmic Themes */
+	* {
+		@apply border-border;
+	}
+	*:focus-visible {
+		@apply outline-outline !transition-none;
+	}
+	html {
+		@apply bg-background text-foreground leading-[1.6rem] scheme-light dark:scheme-dark;
+		scroll-behavior: smooth;
+		-moz-text-size-adjust: none;
+		-webkit-text-size-adjust: none;
+		text-size-adjust: none;
+	}
+	button {
+		@apply cursor-pointer;
+	}
+}
+
+@layer components {
+	.h1 {
+		@apply text-3xl font-medium md:text-4xl lg:text-5xl;
+	}
+
+	.h2 {
+		@apply text-2xl font-medium md:text-4xl;
+	}
+
+	.h3 {
+		@apply text-xl font-medium md:text-2xl;
+	}
+
+	.description {
+		@apply text-base-400;
+	}
+
+	.site-container {
+		@apply mx-auto max-w-5xl px-4;
+	}
+
+	/* used for newsletter, and contact form inputs */
+	.form__input {
+		@apply bg-base-800 w-full border border-transparent px-2.5 py-1.5 transition-colors;
+		@apply focus-visible:border-primary-600 focus:ring-0;
+	}
+
+	/* styles navbar links */
+	.nav__link--base {
+		@apply text-base-500 hover:text-base-600 dark:text-base-400 dark:hover:text-base-300 leading-tight font-medium transition;
+	}
+
+	.navlink__underline-ltr {
+		@apply from-primary-600 to-primary-600 bg-gradient-to-r bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover/navlink:bg-[length:100%_2px];
+	}
+}
+
+@layer utilities {
+	/* hover underline effect left-to-right
+     use "group" class on a parent element, and "underline-ltr" on the element */
+	.underline-ltr {
+		@apply from-primary-600 to-primary-600 bg-gradient-to-r bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover:bg-[length:100%_2px];
+	}
+
+	/* focus utility class (for when user is tabbing through items on page) */
+	.primary-focus {
+		@apply focus-visible:outline-primary-600 focus:outline-hidden focus-visible:rounded-xs focus-visible:outline-2;
+	}
+
+	/* use with "animate-pause" to pause a CSS animation */
+	.pause {
+		animation-play-state: paused !important;
+	}
+
+	/* used with select field */
+	.sr-only {
+		@apply sr-only;
+	}
+
+	.rotate-180 {
+		@apply rotate-180;
+	}
+}
