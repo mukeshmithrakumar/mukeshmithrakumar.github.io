@@ -78,7 +78,7 @@ const siteData: SiteDataProps = {
 
 	// Your information for blog post purposes
 	author: {
-		name: "Web Reaper",
+		name: "Mukesh Mithrakumar",
 		email: "creator@cosmicthemes.com",
 		twitter: "BowTiedWebReapr",
 	},

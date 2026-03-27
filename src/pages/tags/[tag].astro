@@ -5,7 +5,7 @@ import { type InferGetStaticPropsType, type InferGetStaticParamsType } from "ast
 import BaseLayout from "@layouts/BaseLayout.astro";
 
 // components
-import PostCardImage from "@components/PostCard/PostCardImage.astro";
+import PostCardBasic from "@components/PostCard/PostCardBasic.astro";
 import TagsCard from "@components/SidebarCards/TagsCard.astro";
 
 // utils
@@ -60,12 +60,16 @@ const filteredPosts = posts.filter((post) => {
 				</div>
 			</div>
 
-			<div class="mt-20 grid gap-4 gap-y-12 md:mt-28 md:grid-cols-2">
+			<div class="mr-auto max-w-xl">
+				<ul class="mt-20 grid grid-cols-1 justify-center gap-8">
 				{
 					filteredPosts.map((post) => (
-						<PostCardImage post={post} showDescription={true} data-mos="fade-in" />
+						<li>
+							<PostCardBasic post={post} showDescription={true} />
+						</li>
 					))
 				}
+				</ul>
 			</div>
 		</div>
 	</section>

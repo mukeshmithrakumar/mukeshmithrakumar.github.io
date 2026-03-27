@@ -1,5 +1,4 @@
 import { defineConfig } from "astro/config";
-
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import expressiveCode from "astro-expressive-code";
@@ -8,9 +7,6 @@ import compress from "@playform/compress";
 import AutoImport from "astro-auto-import";
 import icon from "astro-icon"; // https://www.astroicon.dev/guides/upgrade/v1/
 import react from "@astrojs/react";
-import keystatic from "@keystatic/astro";
-import netlify from "@astrojs/netlify";
-
 /** @type {import('astro-expressive-code').AstroExpressiveCodeOptions} */
 const expressiveCodeOptions = {
 	// You can set configuration options here
@@ -34,15 +30,10 @@ const expressiveCodeOptions = {
 		},
 	},
 };
-
 // https://astro.build/config
 export default defineConfig({
-	adapter: netlify({
-		imageCDN: false,
-	}),
 	site: "https://quantum.cosmicthemes.com",
 	redirects: {
-		"/admin": "/keystatic",
 	},
 	integrations: [
 		// example auto import component into blog post mdx files
@@ -78,7 +69,6 @@ export default defineConfig({
 		expressiveCode(expressiveCodeOptions),
 		mdx(),
 		react(),
-		keystatic(),
 		sitemap(),
 		compress({
 			HTML: true,

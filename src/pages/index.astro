@@ -16,18 +16,23 @@ import PostCardImage from "@components/PostCard/PostCardImage.astro";
 import Button from "@components/Button/Button.astro";
 import NewsletterCard from "@components/SidebarCards/NewsletterCard.astro";
 import TagsCard from "@components/SidebarCards/TagsCard.astro";
+import SocialsCard from "@components/SidebarCards/SocialsCard.astro";
 import WorkExperienceCard from "@components/SidebarCards/WorkExperienceCard.astro";
 
 // utils
 import { formatPosts, getAllPosts } from "@js/blogUtils";
+import { formatProjects, getAllProjects } from "@js/projectUtils";
 
 // data
 import siteData from "@config/siteData.json";
 
 const posts = await getAllPosts();
+const projects = await getAllProjects();
 
 // get recent 3 posts to put on homepage
 const formattedPosts = formatPosts(posts, { limit: 4 });
+const featuredProjects = formatProjects(projects, { limit: 4 });
+const showProjectDescriptions = true;
 ---
 
 <BaseLayout title={siteData.title} description={siteData.description}>
@@ -50,14 +55,48 @@ const formattedPosts = formatPosts(posts, { limit: 4 });
 			<div class="mt-8 flex">
 				<Button variant="outline" arrow="right" href="/blog/">All Blog Posts</Button>
 			</div>
+			<div class="mt-16">
+				<h2 class="h2">Projects</h2>
+				<ul class="mt-4 grid grid-cols-1 justify-center gap-8">
+					{
+						featuredProjects.map((project) => (
+							<li>
+								<article class="flex flex-col">
+									<div class="w-full">
+										<div class="group">
+											<a
+												class="underline-ltr text-base font-medium md:text-lg/tight"
+												href={`/projects/${project.id}/`}
+											>
+												{project.data.title}
+											</a>
+											{
+												showProjectDescriptions && (
+													<p class="description mt-1 text-sm lg:text-base">
+														{project.data.description}
+													</p>
+												)
+											}
+										</div>
+									</div>
+								</article>
+							</li>
+						))
+					}
+				</ul>
+				<div class="mt-8 flex">
+					<Button variant="outline" arrow="right" href="/projects/">All Projects</Button>
+				</div>
+			</div>
 		</div>
+
 		<div
 			class="mx-auto mt-6 flex w-full max-w-lg flex-col gap-8 md:col-span-2 md:mt-0 md:max-w-full"
 		>
 			<!-- Enable whichever sidebar cards you desire, or change the order of them -->
-			<!-- <SocialsCard /> -->
 			<NewsletterCard />
-			<!-- <TagsCard /> -->
+			<TagsCard />
+			<SocialsCard />
 			<WorkExperienceCard />
 		</div>
 	</div>

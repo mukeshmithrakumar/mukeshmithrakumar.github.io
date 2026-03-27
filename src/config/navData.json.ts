@@ -42,26 +42,30 @@ const navConfig: navItem[] = [
 	// 	}),
 	// },
 	{
-		text: "Pages",
-		dropdown: [
-			{
-				text: "Blog",
-				href: "/blog/",
-			},
-			{
-				text: "Projects",
-				href: "/projects/",
-			},
-			{
-				text: "Uses",
-				href: "/uses/",
-			},
-			{
-				text: "Elements",
-				href: "/elements/",
-			},
-		],
+		text: "Projects",
+		href: "/projects/",
 	},
+	// {
+	// 	text: "Pages",
+	// 	dropdown: [
+	// 		{
+	// 			text: "Blog",
+	// 			href: "/blog/",
+	// 		},
+	// 		// {
+	// 		// 	text: "Projects",
+	// 		// 	href: "/projects/",
+	// 		// },
+	// 		{
+	// 			text: "Uses",
+	// 			href: "/uses/",
+	// 		},
+	// 		{
+	// 			text: "Elements",
+	// 			href: "/elements/",
+	// 		},
+	// 	],
+	// },
 ];
 
 export default navConfig;

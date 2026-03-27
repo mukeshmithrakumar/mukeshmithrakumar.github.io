@@ -26,6 +26,27 @@ const blogCollection = defineCollection({
 		}),
 });
 
+const projectsCollection = defineCollection({
+	loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/data/projects" }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			pubDate: z
+				.string()
+				.or(z.date())
+				.transform((val) => new Date(val)),
+			updatedDate: z
+				.string()
+				.or(z.date())
+				.optional()
+				.transform((val) => (val ? new Date(val) : undefined)),
+			heroImage: image(),
+			projectUrl: z.string().url().optional(),
+			draft: z.boolean().optional(),
+		}),
+});
+
 // authors
 const authorsCollection = defineCollection({
 	loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/data/authors" }),
@@ -52,6 +73,7 @@ const otherPagesCollection = defineCollection({
 
 export const collections = {
 	blog: blogCollection,
+	projects: projectsCollection,
 	authors: authorsCollection,
 	otherPages: otherPagesCollection,
 };

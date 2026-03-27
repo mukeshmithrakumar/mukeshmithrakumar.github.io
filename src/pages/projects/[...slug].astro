@@ -1,0 +1,26 @@
+---
+import { render } from "astro:content";
+import { type InferGetStaticPropsType } from "astro";
+
+import ProjectLayout from "@layouts/ProjectLayout.astro";
+import { getAllProjects } from "@js/projectUtils";
+import ExternalLink from "@components/MarkdownComponents/ExternalLink.astro";
+
+export async function getStaticPaths() {
+	const projects = await getAllProjects();
+
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: project,
+	}));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const project = Astro.props as Props;
+const { Content, headings } = await render(project);
+---
+
+<ProjectLayout project={project} headings={headings}>
+	<Content components={{ a: ExternalLink }} />
+</ProjectLayout>
