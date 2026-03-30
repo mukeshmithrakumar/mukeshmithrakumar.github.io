@@ -1,1 +1,1 @@
-Sitemap: https://www.mukeshmithrakumar.com/sitemap.xml
+Sitemap: https://www.mukeshmithrakumar.com/sitemap-index.xml

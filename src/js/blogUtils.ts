@@ -21,7 +21,26 @@ export async function getAllPosts(): Promise<CollectionEntry<"blog">[]> {
 		limit: undefined,
 	});
 
+	validateUniquePostSlugs(formattedPosts);
+
 	return formattedPosts;
+}
+
+// --------------------------------------------------------
+/**
+ * * returns the canonical public slug for a blog post
+ * note: if frontmatter `slug` is omitted, falls back to Astro's content entry id
+ */
+export function getPostSlug(post: CollectionEntry<"blog">): string {
+	return sanitizePostSlug(post.data.slug ?? post.id);
+}
+
+// --------------------------------------------------------
+/**
+ * * returns the canonical public URL for a blog post
+ */
+export function getPostUrl(post: CollectionEntry<"blog">): string {
+	return `/blog/${getPostSlug(post)}/`;
 }
 
 // --------------------------------------------------------
@@ -85,7 +104,7 @@ export function arePostsRelated(
 	postTwo: CollectionEntry<"blog">,
 ): boolean {
 	// if titles are the same, then they are the same post. return false
-	if (postOne.id === postTwo.id) return false;
+	if (getPostSlug(postOne) === getPostSlug(postTwo)) return false;
 
 	const postOnetags = postOne.data.tags.map((category) => slugify(category));
 
@@ -160,4 +179,27 @@ export async function getAllAuthorsData(
 
 	// return a promise that is resolved when all promises in the array have been resolved
 	return Promise.all(authorsData);
+}
+
+// --------------------------------------------------------
+function sanitizePostSlug(slug: string): string {
+	return slug.trim().replace(/^\/+|\/+$/g, "");
+}
+
+// --------------------------------------------------------
+function validateUniquePostSlugs(posts: CollectionEntry<"blog">[]): void {
+	const seen = new Map<string, string>();
+
+	for (const post of posts) {
+		const slug = getPostSlug(post);
+		const existingPostId = seen.get(slug);
+
+		if (existingPostId) {
+			throw new Error(
+				`Duplicate blog slug "${slug}" found for posts "${existingPostId}" and "${post.id}".`,
+			);
+		}
+
+		seen.set(slug, post.id);
+	}
 }

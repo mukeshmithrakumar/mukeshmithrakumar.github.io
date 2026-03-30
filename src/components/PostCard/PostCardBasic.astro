@@ -7,7 +7,7 @@ import Tag from "@components/Tag/Tag.astro";
 
 // utils
 import { formatDate, humanize } from "@js/textUtils";
-import { getAllAuthorsData } from "@js/blogUtils";
+import { getAllAuthorsData, getPostUrl } from "@js/blogUtils";
 
 interface Props {
 	post: CollectionEntry<"blog">;
@@ -20,6 +20,7 @@ const { post, showDescription = false, class: className, ...rest } = Astro.props
 const { title, description, tags, authors, pubDate, heroImage } = post.data;
 
 const authorsData = await getAllAuthorsData(authors);
+const postUrl = getPostUrl(post);
 ---
 
 <article class=`flex flex-col ${className}` {...rest}>
@@ -37,7 +38,7 @@ const authorsData = await getAllAuthorsData(authors);
 
 		<!-- title -->
 		<div class="group mt-2">
-			<a class="underline-ltr text-base font-medium md:text-lg/tight" href={`/blog/${post.id}/`}>
+			<a class="underline-ltr text-base font-medium md:text-lg/tight" href={postUrl}>
 				{title}
 			</a>
 		</div>

@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import siteData from "@config/siteData.json";
 
 // utils
-import { getAllPosts } from "@js/blogUtils";
+import { getAllPosts, getPostUrl } from "@js/blogUtils";
 
 // this is needed for getAuthorName() and getAuthorEmail() below
 const authors: CollectionEntry<"authors">[] = await getCollection("authors");
@@ -50,7 +50,7 @@ export async function GET(context) {
 
 			// Compute RSS link from post `slug`
 			// This example assumes all posts are rendered as `/blog/[slug]` routes
-			link: `/blog/${post.id}/`,
+			link: getPostUrl(post),
 		})),
 	});
 }

@@ -7,6 +7,8 @@ const blogCollection = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
+			// Optional public URL slug for the post. Falls back to the content entry id if omitted.
+			slug: z.string().optional(),
 			description: z.string(),
 			// reference the authors collection https://docs.astro.build/en/guides/content-collections/#defining-collection-references
 			authors: z.array(reference("authors")),
