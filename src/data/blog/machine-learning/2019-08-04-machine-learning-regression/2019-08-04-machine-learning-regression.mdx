@@ -1,0 +1,246 @@
+---
+title: "Machine Learning: Regression"
+slug: machine-learning-regression
+description: ""
+draft: true
+authors:
+  - mithraics
+pubDate: 2019-06-26
+heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+tags:
+  - ML
+---
+
+### What is Regression?
+
+Regression is a method of modelling a target value based on independent predictors. This method is mostly used for forecasting and finding out cause and effect relationship between variables. Regression techniques mostly differ based on the number of independent variables and the type of relationship between the independent and dependent variables.
+
+Main regression algorithms:
+    - Multiple Linear Regression
+    - Decision Tree Regression
+    - Random Forest Regression
+    - K Nearest Neighbor Regression
+    - Neural Network
+    - Bayesian Linear Regression
+
+Simple linear regression is a type of regression analysis where the number of independent variables is one and there is a linear relationship between the independent $(x)$ and dependent $(y)$ variable. This can be modelled as:
+
+$$\color{orange}{y = \beta 0 + \beta 1 x \tag{}}$$
+
+This linear equation assigns one scale factor to each input value or column, called a coefficient represented by $\beta$
+
+### What is Multi-variable regression?
+
+A multi-variable linear equation may look like this:
+
+$$\color{orange}{f(x, y, z) = \beta_1 x + \beta_2 y + \beta_3 z \tag{}}$$
+
+where $\beta$ represents the coefficients or weights the model will try to learn and the variables $x, y, z$ represent the attributes, or distinct pieces of information we have about each observation.
+
+Multiple regression is one of many statistical techniques for which parameter estimates can be obtained based on Ordinary Least Squares method.
+
+### What is the cost function for linear regression?
+
+The cost function helps us to figure out the best possible values for $\beta$ which would provide the best fit line for the data points. Since we want the best values for $\beta$, we convert this search problem into a minimization problem where we would like to minimize the error between the predicted value and the actual value.
+
+$$
+\color{orange}{minimize \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \\
+J = \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \tag{}}
+$$
+
+We choose the above function to minimize. The difference between the predicted values and ground truth measures the error difference. We square the error difference and sum over all data points and divide that value by the total number of data points. This provides the average squared error over all the data points. Therefore, this cost function is also known as the Mean Squared Error(MSE) function. Now, using this MSE function we are going to change the values of $\beta 0$ and $\beta 1$ such that the MSE value settles at the minima.
+
+### What is Ordinary Least Squares Estimation?
+
+When we have more than one input we can use Ordinary Least Squares to estimate the values of the coefficients.
+
+The Ordinary Least Squares procedure seeks to minimize the sum of the squared residuals. This means that given a regression line through the data we calculate the distance from each data point to the regression line, square it, and sum all of the squared errors together. This is the quantity that ordinary least squares seeks to minimize.
+
+This approach treats the data as a matrix and uses linear algebra operations to estimate the optimal values for the coefficients. It means that all of the data must be available and you must have enough memory to fit the data and perform matrix operations.
+
+Ordinary Least Squares and Maximum Likelihood are two of the most common methods of parameter estimation methods (Learn more about [Maximum Likelihood]()).
+
+Ordinary Least Square method looks simple and computation is easy. But, this OLS method will only work for a univariate dataset which is single independent variables and single dependent variables. Multi-variate dataset contains a single independent variables set and multiple dependent variables sets, require us to use Gradient Descent.
+
+### What is the Gradient Descent?
+
+Gradient descent is an optimization algorithm (Learn more about [optimization]()). It is a method of updating $\beta 0$ and $\beta 1$ to reduce the cost function (MSE). The idea is that we start with some values for $\beta 0$ and $\beta 1$ and then update these values by taking the gradients of the cost function. To find these gradients, we take partial derivatives with respect to $\beta 0$ and $\beta 1$ (Learn more about [gradient descent]()).
+
+Sometimes the cost function can be a non-convex function where you could settle at a local minima but for linear regression, it is always a convex function.
+
+### What is R-squared?
+
+R-squared is a statistical measure of how close the data are to the fitted regression line. It is also known as the coefficient of determination, or the coefficient of multiple determination for multiple regression.
+
+The definition of R-squared is fairly straight-forward; it is the percentage of the response variable variation that is explained by a linear model. Or:
+
+$$\color{orange}{\text {R-sqaured} = \frac{\text {Explained Variation}}{\text {Total Variation}} \tag{}}$$
+
+$$
+\\[[2em] \color{orange}{\text{Coefficient of Determination} \rightarrow R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST} \tag{}} \\[0.7em]
+\text{Sum of Squares Total} \rightarrow SST = \sum (y - \bar{y})^2 \\[0.7em]
+\text{Sum of Squares Regression} \rightarrow SSR = \sum (y' - \bar{y'})^2 \\[0.7em]
+\text{Sum of Squares Error} \rightarrow SSE = \sum (y - y')^2
+$$
+
+where $y$ is the observed data and $y'$ is the predicted data.
+
+R-squared is always between 0 and 100%:
+- 0% indicates that the model explains none of the variability of the response data around its mean.
+- 100% indicates that the model explains all the variability of the response data around its mean.
+
+### How significant is the model?
+
+**F**-ratio estimates the statistical significance of the regression model and is computed from the mean squared terms in the ANOVA table. The significance of the F-ratio is obtained by referring to the F distribution table using two degrees of freedom $(df_{MSR}, \ df_{MSE})$. *p* is the number of independent variables (e.g., *p* is one for the simple linear regression).
+
+$$
+\color{orange}{\text{F-ratio} \rightarrow F = \frac{MSR}{MSE} = \frac{\frac{SSR}{df_{MSR}}}{\frac{SSE}{df_{MSE}}} \\[0.7em]
+\text{degree of freedom} \rightarrow \\
+\begin{cases}
+df_{MSR} = p \\
+df_{MSE} = n - p - 1 \\
+\end{cases}
+\tag{}}$$
+
+The advantage of the $F-ratio$ over $R^2$ is that the $F-ratio$ incorporates sample size and number of predictors in assessment of significance of the regression model. A model can have a high $R^2$ and still not be statistically significant.
+
+If the regression model is significantly good, we can use t-test to estimate the statistical significance of each coefficient (Learn more about [t-test]()).
+
+### Regularization for Regression
+
+There are extensions of the training of the linear model called regularization methods. These seek to both minimize the sum of the squared error of the model on the training data (using ordinary least squares) but also to reduce the complexity of the model (like the number or absolute size of the sum of all coefficients in the model).
+
+Two popular examples of regularization procedures for linear regression are:
+
+- Lasso Regression: where Ordinary Least Squares is modified to also minimize the absolute sum of the coefficients (called L1 regularization).
+- Ridge Regression: where Ordinary Least Squares is modified to also minimize the squared absolute sum of the coefficients (called L2 regularization).
+
+These methods are effective to use when there is collinearity in your input values and ordinary least squares would overfit the training data (Learn more about [regularization]()).
+
+### Assumptions for Linear Regression
+
+For regression to work its magic, inputs to the model need to be consistent with four assumptions:
+
+1. **Linear Relationship**: If the relationship is non-linear, the regression model will try to find any hint of a linear relationship, and only explain that. Sometimes this can be fixed by applying a non-linear transformation function to a feature.
+2. **Multivariate Normality**: The error from the model (calculated by subtracting the model-predicted values from the real outcome values) should be normally distributed. Since ordinary least squares regression models are fitted by choosing the parameters that best minimize error, skewness or outliers in the error can result in serious miss-estimations.
+3. **Homoscedasticity**: The distribution of your error terms (its "scedasticity"), should be consistent for all predicted values, or homoscedastic. For example, if your error terms aren't consistently distributed and you have more variance in the error for large outcome values than for small ones, then the confidence interval for large predicted values will be too small because it will be based on the average error variance. This leads to overconfidence in the accuracy of your model's predictions.
+4. **Low multicollinearity**: Correlations among features should be low or nonexistent. When features are correlated, they may both explain the same pattern of variance in the outcome. The model will attempt to find a solution, potentially by attributing half the explanatory power to one feature and half to the other. This isn’t a problem if our only goal is prediction, because then all that matters is that the variance gets explained. However, if we want to know which features matter most when predicting an outcome, multicollinearity can cause us to underestimate the relationship between features and outcomes. Multicollinearity can be fixed by PCA or by discarding some of the correlated features.
+5. **Gaussian Distributions**: Linear regression will make more reliable predictions if your input and output variables have a Gaussian distribution. You may get some benefit using transforms (e.g. log or BoxCox) on you variables to make their distribution more Gaussian looking.
+
+### What is Decision Tree Regression?
+
+Decision tree builds regression or classification models in the form of a tree structure. It breaks down a dataset into smaller and smaller subsets (a.k.a recursive partitioning) by searching for every distinct values of all its predictors, and splitting the value of a predictor that minimizes different optimization criteria.
+
+While at the same time an associated decision tree is incrementally developed. The final result is a tree with decision nodes and leaf nodes. Leaf node represents a decision on the numerical target. The topmost decision node in a tree which corresponds to the best predictor is called root node. Decision trees can handle both categorical and numerical data.
+
+Unlike linear regression models that calculate the coefficients of predictors, tree regression models calculate the relative importance of predictors. The relative importance of predictors can be computed by summing up the overall reduction of an optimization criteria.
+
+In a regression tree, since the target variable is a real valued number, we fit a regression model to the target variable using each of the independent variables. Then for each independent variable, the data is split at several split points. We calculate **Sum of Squared Error (SSE)** at each split point between the predicted value and the actual values. The variable resulting in minimum SSE is selected for the node.
+
+The core algorithm for building decision trees called **ID3** by J. R. Quinlan which employs a top-down, greedy search through the space of possible branches with no backtracking. The **ID3** algorithm can be used to construct a decision tree for regression by replacing Information Gain with *Standard Deviation Reduction* (Learn more about [Information gain]()).
+
+### Standard Deviation for Decision Tree Optimization
+
+A decision tree is built top-down from a root node and involves partitioning the data into subsets that contain instances with similar values (homogenous). We use standard deviation to calculate the homogeneity of a numerical sample. If the numerical sample is completely homogeneous its standard deviation is zero.
+
+Standard deviation for one attribute:
+
+$$
+\color{orange}{\text{Count} = n \\[0.7em]
+\text{Average} = \bar{x} = \frac{\sum x}{n} \\[0.7em]
+\text{Standard Deviation} = S = \sqrt{\frac{\sum (x - \bar{x})^2}{n}} \\[0.7em]
+\text{Coefficient of Variation} = CV = \frac{S}{\bar{x}} \times 100%
+\tag{}}$$
+
+Standard deviation for two attributes (target and predictor):
+
+$$\color{orange}{S(T, X) = \sum_{c \in X} P(c) S(c) \tag{}}$$
+
+The standard deviation reduction is based on the decrease in standard deviation after a dataset is split on an attribute. Constructing a decision tree is all about finding attribute that returns the highest standard deviation reduction (i.e., the most homogeneous branches).
+
+Steps in Standard Deviation Reduction:
+1. The standard deviation of the target is calculated.
+2. The dataset is then split on the different attributes. The standard deviation for each branch is calculated. The resulting standard deviation is subtracted from the standard deviation before the split.The result is the standard deviation reduction.
+
+$$\color{orange}{SDR(T,X) = S(T) - S(T,X) \tag{}}$$
+
+3. The attribute with the largest standard deviation reduction is chosen for the decision node.
+4. The dataset is divided based on the values of the selected attribute. This process is run recursively on the non-leaf branches, until all data is processed. In practice, we need some termination criteria. For example, when coefficient of deviation $(CV)$ for a branch becomes smaller than a certain threshold (e.g., 10%) and/or when too few instances $(n)$ remain in the branch (e.g., 3).
+
+### SSE for Decision Tree Optimization
+
+$$\color{orange}{SSE = \sum_{i \in S_1} (y_i - \bar{y}_1) + \sum_{i \in S_2}(y_i - \bar{y}_2) \tag{}}$$
+
+where $\bar{y}_1$ and $\bar{y}_2$ are the average values of the dependent variable in groups $S_1$ and $S_2$. For groups $S_1$ and $S_2$, the method will recursively split the predictor values within groups. In practice, the method stops when the sample size of the split group falls below certain threshold.
+
+To prevent over-fitting, the constructed tree can be pruned by penalizing the $SSE$ with tree size:
+
+$$\color{orange}{SSE_{C_p} = SSE + c_p \times S_t \tag{}}$$
+
+where $S_t$ is the size of the tree (number of terminal nodes), and $c_p$ is complexity parameter. Smaller $c_p$ will lead to larger trees, and vice versa.
+
+### What is Random Forest Regression?
+
+Random forests can be used for regression analysis and are in fact called Regression Forests. They are an ensemble of different regression trees and are used for nonlinear multiple regression. Each leaf contains a distribution for the continuous output variable/s.
+
+Random forest builds multiple decision trees and merges them together to get a more accurate and stable prediction.
+
+### What is K Nearest Neighbors Regression?
+
+KNN classifier assigns observations to categories or assigns probabilities to the various categories by having *k* observations vote for a *category*. To switch KNN classifier to regression we vote for a *value*. Then instead of taking the most popular response, the algorithm averages all of the votes. If you have weights you perform a weighted average.
+
+KNN regression uses the same distance functions as KNN classification. Such as:
+
+$$
+\color{orange}{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
+\text{Manhattan} \rightarrow \ \sum_{i=1}^k |x_i - y_i| \\[.7em]
+\text{Minkowski} \rightarrow \ \left(\sum_{i=1}^k (|x_i - y_i|)^q \right)^{1/q}
+\tag{}}$$
+
+The above three distance measure are only valid for continuous variables. In the case of categorical variables you must use the Hamming distance, which is a measure of the number of instances in which corresponding symbols are different in two strings of equal length.
+
+$$
+\color{orange}{D_H = \sum_{i=1}^k |x_i -y_i| \\[.7em]
+x = y \Rightarrow D = 0 \\[.7em]
+x \neq y \Rightarrow D = 1
+\tag{}}$$
+
+Choosing the optimal value for K is best done by first inspecting the data. In general, a large K value is more precise as it reduces the overall noise; however, the compromise is that the distinct boundaries within the feature space are blurred. Cross-validation is another way to retrospectively determine a good K value by using an independent data set to validate your K value.
+
+### Neural Network Regression
+
+Three fundamentals design choices for neural networks are
+1. the activation function: you generally use the same activation function as you use in the prior layers (e.g. an hyperbolic tangent); or you can even leave the layer linear. The crucial point is that the output of the network does not need to be binarized to get the final output.
+2. the loss function: is the crucial one. In classification, you typically use the multi-class cross-entropy with a softmax layer in output, but this cannot be used for regression. In this case, a common choice is the sum of squared error. There are many other choices, such as the hinge loss derived from SVMs, the squared hinge loss (which is smooth), the Huber loss (which is resistent to outliers but needs an additional parameter), and so on (Learn more about [Loss functions]()).
+3. the regularization term: does not change between classification and regression, and typical choices are the l2 norm or l1 norm to encourage some sparsity.
+
+### What is Bayesian Linear Regression?
+
+The frequentist view of linear regression model:
+    - Assumes that the response variable (y) is a linear combination of weights multiplied by a set of predictor variables (x).
+    - The best explanation is taken to mean the coefficients that minimize the residual sum of squares (RSS).
+    - What we obtain from frequentist linear regression is a single estimate for the model parameters based only on the training data.
+
+In the Bayesian viewpoint, we formulate linear regression using probability distributions rather than point estimates. The response, y, is not estimated as a single value, but is assumed to be drawn from a probability distribution. The model for Bayesian Linear Regression with the response sampled from a normal distribution is:
+
+$$\color{orange}{y \sim N(\beta^T X, \sigma^2 I) \tag{}}$$
+
+The output, y is generated from a normal (Gaussian) Distribution characterized by a mean and variance. The mean for linear regression is the transpose of the weight matrix multiplied by the predictor matrix. The variance is the square of the standard deviation σ (multiplied by the Identity matrix because this is a multi-dimensional formulation of the model).
+
+The aim of Bayesian Linear Regression is not to find the single “best” value of the model parameters, but rather to determine the posterior distribution for the model parameters. Not only is the response generated from a probability distribution, but the model parameters are assumed to come from a distribution as well. The posterior probability of the model parameters is conditional upon the training inputs and outputs:
+
+$$
+\color{orange}{P(\beta |y, X) = \frac{P(y| \beta, X) * P(\beta | X)}{P(y|X)} \\[0.7em]
+Posterior = \frac{Likelihood \ * \ Prior}{Normalization}
+\tag{}}$$
+
+Two primary benefits of Bayesian Linear Regression:
+1. **Priors**: If we have domain knowledge, or a guess for what the model parameters should be, we can include them in our model, unlike in the frequentist approach which assumes everything there is to know about the parameters comes from the data. If we don’t have any estimates ahead of time, we can use non-informative priors for the parameters such as a normal distribution.
+2. **Posterior**: The result of performing Bayesian Linear Regression is a distribution of possible model parameters based on the data and the prior. This allows us to quantify our uncertainty about the model: if we have fewer data points, the posterior distribution will be more spread out.
+
+As the amount of data points increases, the likelihood washes out the prior, and in the case of infinite data, the outputs for the parameters converge to the values obtained from OLS.
+
+Implementation:
+In practice, evaluating the posterior distribution for the model parameters is intractable for continuous variables, so we use sampling methods to draw samples from the posterior in order to approximate the posterior. The technique of drawing random samples from a distribution to approximate the distribution is one application of Monte Carlo methods. There are a number of algorithms for Monte Carlo sampling, with the most common being variants of Markov Chain Monte Carlo.
+
+When predicting the output for a single data point using our Bayesian Linear Model, we also do not get a single value but a distribution.

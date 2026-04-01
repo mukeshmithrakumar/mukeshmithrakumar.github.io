@@ -1,0 +1,203 @@
+---
+title: "Machine Learning: Clustering"
+slug: machine-learning-clustering
+description: ""
+draft: true
+authors:
+  - mithraics
+pubDate: 2019-08-18
+heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+tags:
+  - ML
+---
+
+### What is clustering?
+
+A cluster is a subset of data which are similar. Clustering (also called unsupervised learning) is the process of dividing a dataset into groups such that the members of each group are as similar (close) as possible to one another, and different groups are as dissimilar (far) as possible from one another. Clustering can uncover previously undetected relationships in a dataset.
+
+Main clustering algorithms:
+- Agglomerative
+- K-Means
+- Mean-Shift Clustering
+- Affinity Propagation
+- DBSCAN
+- Latent Dirichlet Allocation
+- Expectation–Maximization (EM) Clustering using Gaussian Mixture Models (GMM)
+
+A good clustering method requirements are:
+- The ability to discover some or all of the hidden clusters.
+- Within-cluster similarity and between-cluster dissimilarity.
+- Ability to deal with various types of attributes.
+- Can deal with noise and outliers.
+- Can handle high dimensionality.
+- Scalable, Interpretable and usable.
+
+An important issue in clustering is how to determine the similarity between two objects, so that clusters can be formed from objects with high similarity within clusters and low similarity between clusters. Commonly, to measure similarity or dissimilarity between objects, a distance measure such as Euclidean, Manhattan and Minkowski is used. A distance function returns a lower value for pairs of objects that are more similar to one another.
+
+$$
+\color{orange}{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
+\text{Manhattan} \rightarrow \ \sum_{i=1}^k |x_i - y_i| \\[.7em]
+\text{Minkowski} \rightarrow \ \left(\sum_{i=1}^k (|x_i - y_i|)^q \right)^{1/q}
+\tag{}}$$
+
+### Hierarchical Clustering
+
+Hierarchical clustering involves creating clusters that have a predetermined ordering from top to bottom. There are two types of hierarchical clustering, Divisive and Agglomerative.
+
+Divisive method:
+
+In *divisive* or *top-down clustering* method we assign all of the observations to a single cluster and then partition the cluster to two least similar clusters. Finally, we proceed recursively on each cluster until there is one cluster for each observation. There is evidence that divisive algorithms produce more accurate hierarchies than agglomerative algorithms in some circumstances but is conceptually more complex.
+
+Agglomerative method:
+
+In *agglomerative* or *bottom-up clustering* method we assign each observation to its own cluster. Then, compute the similarity (e.g., distance) between each of the clusters and join the two most similar clusters. Finally, repeat steps 2 and 3 until there is only a single cluster left.
+
+Before any clustering is performed, it is required to determine the proximity matrix containing the distance between each point using a distance function. Then, the matrix is updated to display the distance between each cluster. The following three methods differ in how the distance between each cluster is measured.
+
+1. Single Linkage
+In single linkage hierarchical clustering, the distance between two clusters is defined as the shortest distance between two points in each cluster.
+
+$$\color{orange}{L(r, s) = min(D(x_{ri}, x_{sj})) \tag{}}$$
+
+2. Complete Linkage
+In complete linkage hierarchical clustering, the distance between two clusters is defined as the longest distance between two points in each cluster.
+
+$$\color{orange}{L(r, s) = max(D(x_{ri}, x_{sj})) \tag{}}$$
+
+3. Average Linkage
+In average linkage hierarchical clustering, the distance between two clusters is defined as the average distance between each point in one cluster to every point in the other cluster.
+
+$$\color{orange}{L(r, s) = \frac{1}{n_r n_s} \sum_{i=1}^{n_r}\sum_{j=1}^{n_s} D(x_{ri}, x_{sj}) \tag{}}$$
+
+### K-Means Clustering
+
+K-Means clustering intends to partition n objects into k clusters in which each object belongs to the cluster with the nearest mean. This method produces exactly k different clusters of greatest possible distinction. The best number of clusters k leading to the greatest separation (distance) is not known as a priori and must be computed from the data. The objective of K-Means clustering is to minimize total intra-cluster variance, or, the squared error function:
+
+$$\color{orange}{\text{Objective function} \rightarrow J = \sum_{j=1}^k \sum_{i=1}^n \| x_i^{(j)} - c_j \|^2 \tag{}}$$
+
+where:
+- $k$ is the number of clusters
+- $n$ is the number of cases
+- $c_j$ is the centroid of cluster $j$
+
+Algorithm:
+1. Clusters the data into $k$ groups where $k$ is predefined.
+2. Select $k$ points at random as cluster centers.
+3. Assign objects to their closest cluster center according to the Euclidean distance function.
+4. Calculate the centroid or mean of all objects in each cluster.
+5. Repeat steps 2, 3 and 4 until the same points are assigned to each cluster in consecutive rounds.
+
+K-Means is relatively an efficient method. However, we need to specify the number of clusters, in advance and the final results are sensitive to initialization and often terminates at a local optimum. Unfortunately there is no global theoretical method to find the optimal number of clusters. A practical approach is to compare the outcomes of multiple runs with different k and choose the best one based on a predefined criterion. In general, a large $k$ probably decreases the error but increases the risk of overfitting.
+
+### How is the k-nearest neighbor algorithm different from k-means clustering?
+
+- KNN is a supervised ML technique and K-means is an unsupervised ML technique.
+- KNN Algorithm is based on feature similarity and K-means refers to the division of objects into clusters.
+- In k-nearest neighbors, the k represents the number of neighbors who have a vote in determining a new player's position.
+- The k in k-means means the number of clusters I want to have in the end.
+
+### Mean-Shift Clustering
+
+Mean shift builds upon the concept of kernel density estimation (KDE) (Learn more about [Density estimation]()). KDE is a method to estimate the underlying distribution (also called the probability density function) for a set of data.
+
+It works by placing a kernel on each point in the data set. A kernel is a fancy mathematical word for a weighting function. There are many different types of kernels, but the most popular one is the Gaussian kernel. Adding all of the individual kernels up generates a probability surface (e.g., density function). Depending on the kernel bandwidth parameter used, the resultant density function will vary.
+
+So how does mean shift come into the picture? Mean shift exploits this KDE idea by imagining what the points would do if they all climbed up hill to the nearest peak on the KDE surface. It does so by iteratively shifting each point uphill until it reaches a peak.
+
+Depending on the kernel bandwidth used, the KDE surface (and end clustering) will be different.
+
+Algorithm:
+- The algorithm starts by making a copy of the original data set and freezing the original points. The copied points are shifted against the original frozen points.
+
+Other clustering approaches, such as k-means, require a number of clusters to be specified as an input. This is acceptable for certain scenarios, but most of the time the number of clusters is not known. Mean shift cleverly exploits the density of the points in an attempt to generate a reasonable number of clusters.
+
+Mean shift, however, does come with some disadvantages. The most glaring disadvantage is its slowness. More specifically, it is an N squared algorithm. For problems with many points, it can take a long time to execute. The one silver lining is that, while it is slow, it is also embarrassingly parallelizable, as each point could be shifted in parallel with every other point.
+
+### Affinity Propagation Clustering
+
+Affinity Propagation is a clustering method that next to qualitative cluster, also determines the number of clusters, k, for you.
+
+In Affinity Propagation the data points can be seen as a network where all the data points send messages to all other points. The subject of these messages are the willingness of the points being exemplars. Exemplars are points that explain the other data points ‘best’ and are the most significant of their cluster. A cluster only has one exemplar. All the data points want to collectively determine which data points are an exemplar for them. These messages are stored in two matrices.
+
+- The 'responsibility' matrix R. In this matrix, $r(i, k)$ reflects how well-suited point $k$ is to be an exemplar for point $i$.
+- The 'availability' matrix A. $a(i, k)$ reflects how appropriate it would be for point $i$ to chose point $k$ as its exemplar.
+
+Both matrices can be interpreted as log probabilities and are thus negative valued. Those two matrices actually represent a graph where every data point is connected with all other points.
+
+This network can be encoded in a matrix where every index $i, k$ is a connection between two points.
+
+The algorithm converts through iteration. The first messages sent per iteration, are the responsibilities. These responsibility values are based on a similarity function $s$.
+
+The similarity function used by the authors is the negative Euclidian distance squared.
+
+$$\color{orange}{s(i, k) = - \| x_i - x_k \|^2 \tag{}}$$
+
+We can simply implement this similarity function and define a similarity matrix $S$, which is a graph of the similarities between all the points. We also initialize the $R$ and $A$ matrix to zeros.
+
+The responsibility messages are defined by:
+
+$$\color{orange}{r(i, k) \leftarrow s(i, k) - max_{k's.t.k' \neq k} \{a(i, k') + s(i, k')\} \tag{}}$$
+
+We could implement this with a nested for loop where we iterate over every row $i$ and then determine the $max(A + S)$ (of that row) for every index not equal to $k$ or $i$ (The index should not be equal to $i$ as it would be sending messages to itself). The damping factor is just there for nummerical stabilization and can be regarded as a slowly converging learning rate. The authors advised to choose a damping factor within the range of 0.5 to 1.
+
+The availability messages are defined by the following formulas. For all points not on the diagonal of A (all the messages going from one data point to all other points), the update is equal to the responsibility that point *k* assigns to itself and the sum of the responsibilities that other data points (except the current point) assign to *k*. Note that, due to the min function, this holds only true for negative values.
+
+$$\color{orange}{a(i, k) \leftarrow min\{0, r(k, k) + \sum_{i'.s.t.i' \notin (i, k)} max(0, r(i', k)\} \tag{}}$$
+
+For points on the diagonal of A (the availability value that a data point sends to itself), the message value is equal to the sum of all positive responsibility values send to the current data point.
+
+$$\color{orange}{a(k, k) \leftarrow \sum_{i' \neq k} max(0, r(i', k)) \tag{}}$$
+
+The final examplars are chosen by the maximum value of $A + B$
+
+$$\color{orange}{\text{exemplar}(i, k) = max\{ a(i', k) + b(i', k) \} \tag{}}$$
+
+### DBSCAN Clustering
+
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is a clustering method that is used in machine learning to separate clusters of high density from clusters of low density.
+
+Given that DBSCAN is a density based clustering algorithm, it does a great job of seeking areas in the data that have a high density of observations, versus areas of the data that are not very dense with observations. DBSCAN can sort data into clusters of varying shapes as well, another strong advantage. DBSCAN works as such:
+
+- Divides the dataset into n dimensions
+- For each point in the dataset, DBSCAN forms an n dimensional shape around that data point, and then counts how many data points fall within that shape.
+- DBSCAN counts this shape as a cluster. DBSCAN iteratively expands the cluster, by going through each individual point within the cluster, and counting the number of other data points nearby.
+
+Going through the aforementioned process step-by-step, DBSCAN will start by dividing the data into n dimensions. After DBSCAN has done so, it will start at a random point (in this case lets assume it was one of the red points), and it will count how many other points are nearby. DBSCAN will continue this process until no other data points are nearby, and then it will look to form a second cluster.
+
+Advantages:
+- Is great at separating clusters of high density versus clusters of low density within a given dataset.
+- Is great with handling outliers within the dataset.
+
+Disadvantages:
+- Does not work well when dealing with clusters of varying densities. While DBSCAN is great at separating high density clusters from low density clusters, DBSCAN struggles with clusters of similar density.
+- Struggles with high dimensionality data. I know, this entire article I have stated how DBSCAN is great at contorting the data into different dimensions and shapes. However, DBSCAN can only go so far, if given data with too many dimensions, DBSCAN suffers
+
+Metrics:
+- Silhouette Score: The silhouette score is calculated utilizing the mean intra- cluster distance between points, AND the mean nearest-cluster distance. For instance, a cluster with a lot of data points very close to each other (high density) AND is far away from the next nearest cluster (suggesting the cluster is very unique in comparison to the next closest), will have a strong silhouette score. A silhouette score ranges from -1 to 1, with -1 being the worst score possible and 1 being the best score. Silhouette scores of 0 suggest overlapping clusters.
+
+- Inertia: Inertia measures the internal cluster sum of squares (sum of squares is the sum of all residuals). Inertia is utilized to measure how related clusters are amongst themselves, the lower the inertia score the better. HOWEVER, it is important to note that inertia heavily relies on the assumption that the clusters are convex (of spherical shape). DBSCAN does not necessarily divide data into spherical clusters, therefore inertia is not a good metric to use for evaluating DBSCAN models (which is why I did not include inertia in the code above). Inertia is more often used in other clustering methods, such as K-means clustering.
+
+### Latent Dirichlet Allocation
+
+LDA or latent Dirichlet allocation is a "generative probabilistic model" of a collection of composites made up of parts. In terms of topic modeling, the composites are documents and the parts are words and/or phrases (n-grams).
+
+The probabilistic topic model estimated by LDA consists of two tables (matrices). The first table describes the probability or chance of selecting a particular part when sampling a particular topic (category). The second table describes the chance of selecting a particular topic when sampling a particular document or composite.
+
+The LDA algorithm assumes your composites were generated like so.
+
+1. Pick your unique set of parts.
+2. Pick how many composites you want.
+3. Pick how many parts you want per each composite (sample from a Poisson distribution).
+4. Pick how many topics (categories) you want.
+5. Pick a number between not zero and positive infinity and call it alpha.
+6. Pick a number between not zero and positive infinity and call it beta.
+7. Build the parts versus the topics table. For each column, draw a sample (spin the wheel) from a 8. Dirichlet distribution (a distribution of distributions) using beta as the input. Each sample will fill out each column in the table, sum to one, and give the probability of each part per topic (column).
+8. Build the composites versus the topics table. For each row, draw a sample from a Dirichlet distribution using alpha as the input. Each sample will fill out each row in the table, sum to one, and give the probability of each topic (column) per composite.
+9. Build the actual composites. For each composite, 1) look up its row in the composites versus topics table, 2) sample a topic based on the probabilities in the row, 3) go to the parts versus topics table, 4) look up the topic sampled, 5) sample a part based on the probabilities in the column, 6) repeat from step 2 until you’ve reached how many parts this composite was set to have.
+
+If you view the number of topics as number of clusters and the probabilities as the proportion of cluster membership then using LDA is a way of soft clustering your composites and parts. Contrast this with say k-means where each entity can only belong to one cluster. These fuzzy memberships provide a more nuanced way of recommending similar items, finding duplicates, or discovering user profiles/personas.
+
+If you choose the number of topics to be less than the documents, using LDA is a way of reducing the dimensionality (the number of rows and columns) of the original composite versus part data set. With the documents now mapped to a lower dimensional latent/hidden topic/category space, you can now apply other machine learning algorithms which will benefit from the smaller number of dimensions. For example, you could run your documents through LDA and then hard cluster them using DBSCAN.
+
+### Expectation-Maximization (EM) Clustering using Gaussian Mixture Models (GMM)
+

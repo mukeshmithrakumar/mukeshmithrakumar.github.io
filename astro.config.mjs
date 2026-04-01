@@ -7,6 +7,8 @@ import compress from "@playform/compress";
 import AutoImport from "astro-auto-import";
 import icon from "astro-icon"; // https://www.astroicon.dev/guides/upgrade/v1/
 import react from "@astrojs/react";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 /** @type {import('astro-expressive-code').AstroExpressiveCodeOptions} */
 const expressiveCodeOptions = {
 	// You can set configuration options here
@@ -67,7 +69,10 @@ export default defineConfig({
 			],
 		}),
 		expressiveCode(expressiveCodeOptions),
-		mdx(),
+		mdx({
+			remarkPlugins: [remarkMath],
+			rehypePlugins: [rehypeKatex],
+		}),
 		react(),
 		sitemap(),
 		compress({
