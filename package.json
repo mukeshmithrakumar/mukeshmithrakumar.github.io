@@ -3,6 +3,8 @@
 	"type": "module",
 	"version": "5.0.0",
 	"scripts": {
+		"generate:social-previews": "node scripts/generate-social-previews.mjs",
+		"prebuild": "node scripts/generate-social-previews.mjs",
 		"dev": "astro dev",
 		"start": "astro dev",
 		"build": "astro build",

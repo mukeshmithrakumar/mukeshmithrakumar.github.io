@@ -6,7 +6,7 @@ draft: true
 authors:
   - mithraics
 pubDate: 2019-08-18
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - ML
 ---
@@ -34,11 +34,10 @@ A good clustering method requirements are:
 
 An important issue in clustering is how to determine the similarity between two objects, so that clusters can be formed from objects with high similarity within clusters and low similarity between clusters. Commonly, to measure similarity or dissimilarity between objects, a distance measure such as Euclidean, Manhattan and Minkowski is used. A distance function returns a lower value for pairs of objects that are more similar to one another.
 
-$$
-\color{orange}{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
+<MathBlock formula={String.raw`{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
 \text{Manhattan} \rightarrow \ \sum_{i=1}^k |x_i - y_i| \\[.7em]
 \text{Minkowski} \rightarrow \ \left(\sum_{i=1}^k (|x_i - y_i|)^q \right)^{1/q}
-\tag{}}$$
+\tag{}}`} />
 
 ### Hierarchical Clustering
 
@@ -57,23 +56,23 @@ Before any clustering is performed, it is required to determine the proximity ma
 1. Single Linkage
 In single linkage hierarchical clustering, the distance between two clusters is defined as the shortest distance between two points in each cluster.
 
-$$\color{orange}{L(r, s) = min(D(x_{ri}, x_{sj})) \tag{}}$$
+<MathBlock formula={String.raw`L(r, s) = min(D(x_{ri}, x_{sj})) \tag{}`} />
 
 2. Complete Linkage
 In complete linkage hierarchical clustering, the distance between two clusters is defined as the longest distance between two points in each cluster.
 
-$$\color{orange}{L(r, s) = max(D(x_{ri}, x_{sj})) \tag{}}$$
+<MathBlock formula={String.raw`L(r, s) = max(D(x_{ri}, x_{sj})) \tag{}`} />
 
 3. Average Linkage
 In average linkage hierarchical clustering, the distance between two clusters is defined as the average distance between each point in one cluster to every point in the other cluster.
 
-$$\color{orange}{L(r, s) = \frac{1}{n_r n_s} \sum_{i=1}^{n_r}\sum_{j=1}^{n_s} D(x_{ri}, x_{sj}) \tag{}}$$
+<MathBlock formula={String.raw`L(r, s) = \frac{1}{n_r n_s} \sum_{i=1}^{n_r}\sum_{j=1}^{n_s} D(x_{ri}, x_{sj}) \tag{}`} />
 
 ### K-Means Clustering
 
 K-Means clustering intends to partition n objects into k clusters in which each object belongs to the cluster with the nearest mean. This method produces exactly k different clusters of greatest possible distinction. The best number of clusters k leading to the greatest separation (distance) is not known as a priori and must be computed from the data. The objective of K-Means clustering is to minimize total intra-cluster variance, or, the squared error function:
 
-$$\color{orange}{\text{Objective function} \rightarrow J = \sum_{j=1}^k \sum_{i=1}^n \| x_i^{(j)} - c_j \|^2 \tag{}}$$
+<MathBlock formula={String.raw`\text{Objective function} \rightarrow J = \sum_{j=1}^k \sum_{i=1}^n \| x_i^{(j)} - c_j \|^2 \tag{}`} />
 
 where:
 - $k$ is the number of clusters
@@ -130,27 +129,27 @@ The algorithm converts through iteration. The first messages sent per iteration,
 
 The similarity function used by the authors is the negative Euclidian distance squared.
 
-$$\color{orange}{s(i, k) = - \| x_i - x_k \|^2 \tag{}}$$
+<MathBlock formula={String.raw`s(i, k) = - \| x_i - x_k \|^2 \tag{}`} />
 
 We can simply implement this similarity function and define a similarity matrix $S$, which is a graph of the similarities between all the points. We also initialize the $R$ and $A$ matrix to zeros.
 
 The responsibility messages are defined by:
 
-$$\color{orange}{r(i, k) \leftarrow s(i, k) - max_{k's.t.k' \neq k} \{a(i, k') + s(i, k')\} \tag{}}$$
+<MathBlock formula={String.raw`r(i, k) \leftarrow s(i, k) - max_{k's.t.k' \neq k} \{a(i, k') + s(i, k')\} \tag{}`} />
 
 We could implement this with a nested for loop where we iterate over every row $i$ and then determine the $max(A + S)$ (of that row) for every index not equal to $k$ or $i$ (The index should not be equal to $i$ as it would be sending messages to itself). The damping factor is just there for nummerical stabilization and can be regarded as a slowly converging learning rate. The authors advised to choose a damping factor within the range of 0.5 to 1.
 
 The availability messages are defined by the following formulas. For all points not on the diagonal of A (all the messages going from one data point to all other points), the update is equal to the responsibility that point *k* assigns to itself and the sum of the responsibilities that other data points (except the current point) assign to *k*. Note that, due to the min function, this holds only true for negative values.
 
-$$\color{orange}{a(i, k) \leftarrow min\{0, r(k, k) + \sum_{i'.s.t.i' \notin (i, k)} max(0, r(i', k)\} \tag{}}$$
+<MathBlock formula={String.raw`a(i, k) \leftarrow min\{0, r(k, k) + \sum_{i'.s.t.i' \notin (i, k)} max(0, r(i', k)\} \tag{}`} />
 
 For points on the diagonal of A (the availability value that a data point sends to itself), the message value is equal to the sum of all positive responsibility values send to the current data point.
 
-$$\color{orange}{a(k, k) \leftarrow \sum_{i' \neq k} max(0, r(i', k)) \tag{}}$$
+<MathBlock formula={String.raw`a(k, k) \leftarrow \sum_{i' \neq k} max(0, r(i', k)) \tag{}`} />
 
 The final examplars are chosen by the maximum value of $A + B$
 
-$$\color{orange}{\text{exemplar}(i, k) = max\{ a(i', k) + b(i', k) \} \tag{}}$$
+<MathBlock formula={String.raw`\text{exemplar}(i, k) = max\{ a(i', k) + b(i', k) \} \tag{}`} />
 
 ### DBSCAN Clustering
 

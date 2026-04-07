@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-07-14
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - cv
 ---
@@ -21,7 +21,7 @@ Video is just an ordered set of frames of the same resolution, where the frames 
 
 Optical flow is a vector field of apparent motion of pixels between frames. Here motion field is the vector field of 2D projections of scene point motion vectors.
 
-<Image src="./20190714j.png" alt="Optical flow example" />
+![Optical flow example](./20190714j.png)
 
 We can treat optical flow as estimation of the true motion field and this is one of the key problems in video analysis. What optical flow estimation means is it essentially is a pixel correspondence estimation problem, or a matching problem and can be regarded as a dense correspondence problem:
 - Optical flow is a vector field ($u_{ij}, v_{ij}$) of apparent motion of pixels between frames.
@@ -31,22 +31,20 @@ There are two main ways to visualize the result of optical flow estimation.
 1. Directly draw motion vectors.
 2. Color coding: For each possible motion vector, we specify a color.
 
-<Image src="./20190714a.png" alt="Color coding" />
+![Color coding](./20190714a.png)
 
 Consider a pixel $I(x, y, t)$ and it moves by distance $(dx, dy)$ in the next frame taken after $dt$ time. Since those pixels are the same and intensity does not change, we can say,
 
-$$\color{orange}{I(x, y, t) = I(x + dx,\ y + dy,\ t + dt) \tag{1}}$$
+<MathBlock formula={String.raw`I(x, y, t) = I(x + dx,\ y + dy,\ t + dt) \tag{1}`} />
 
 Then by taking the taylor series approximation of the right hand side, removing common terms and dividing by $dt$ we get the following equation:
 
-$$\color{orange}{f_x u + f_y v + f_t = 0 \tag{2}}$$
+<MathBlock formula={String.raw`f_x u + f_y v + f_t = 0 \tag{2}`} />
 
 where
 
-$$
-\color{orange}{f_x = \frac{\partial f}{\partial x}; \ f_y = \frac{\partial f}{\partial y} \\
-u = \frac{dx}{dt}; \ v = \frac{dy}{dt} \tag{3}}
-$$
+<MathBlock formula={String.raw`{f_x = \frac{\partial f}{\partial x}; \ f_y = \frac{\partial f}{\partial y} \\
+u = \frac{dx}{dt}; \ v = \frac{dy}{dt} \tag{3}}`} />
 
 The above equation is called Optical Flow equation. In it, we can find $f_x$ and $f_y$, they are image gradients, similarly, $f_t$ is the gradient along time. But $(u, v)$ is unknown. We cannot solve this one equation with two unknown variables. So several methods are provided to solve this problem.
 
@@ -56,8 +54,7 @@ __Lucas Kanade Method:__
 
 Optical Flow assumes that all neighboring pixels will have similar motion. Lucas-Kanade method takes a 3x3 patch around the point. So all the 9 points have the same motion. We can find $(f_x, f_y, f_t)$ for these 9 points. So now our problem becomes solving 9 equations with two unknown variables which is over-determined. A better solution is obtained with least square fit method. Below is the final solution which is two equation-two unknown problem and we can solve this to get the solution.
 
-$$
-\color{orange}{
+<MathBlock formula={String.raw`{
 \begin{bmatrix}
 u \\ v
 \end{bmatrix} =
@@ -69,7 +66,7 @@ u \\ v
 \begin{bmatrix}
 - \sum_i f_{x_i}f_{t_i} \\ - \sum_i f_{y_i}f_{t_i}
 \end{bmatrix}
-\tag{4}}$$
+\tag{4}}`} />
 
 The idea is simple, we give some points to track, we receive the optical flow vectors of those points. But there are some problems. Until now, we were dealing with small motions, so it fails when there is a large motion. To deal with this we use pyramids. When we go up in the pyramid, small motions are removed and large motions become small motions. So by applying Lucas-Kanade there, we get optical flow along with the scale.
 
@@ -87,11 +84,11 @@ The Gunner Farneback's algorithm works as follows:
 To evaluate the procedure of optical flow estimation, we need to compare estimated optical flow field and ground truth optical flow field. There are several metrics. Two of the most often used are
 1. Angular error (AE): is the angle between estimated optical flow vector $(u_1, v_1)$ and ground truth optical flow vector $(u_0, v_0)$. It is measured as:
 
-$$\color{orange}{AE = arccos((u_0, v_0) \cdot (u_1, v_1)) \tag{5}}$$
+<MathBlock formula={String.raw`AE = arccos((u_0, v_0) \cdot (u_1, v_1)) \tag{5}`} />
 
 2. Endpoint error (EPE): is the distance between endpoints of estimated optical flow vector and ground truth optical flow vector.
 
-$$\color{orange}{EPE = \sqrt{(u_0 - u_1)^2 + (v_0 - v_1)^2} \tag{6}}$$
+<MathBlock formula={String.raw`EPE = \sqrt{(u_0 - u_1)^2 + (v_0 - v_1)^2} \tag{6}`} />
 
 Obtaining ground truth for optical flow is a very tricky problem because compared to image classification or object detection, we can't just annotate image with human iterator. And we need to specify correct optical flow vectors for every pixel in the image. As a result, the number of available ground truth data for optical flow estimation is very limited.
 
@@ -99,16 +96,16 @@ Obtaining ground truth for optical flow is a very tricky problem because compare
 
 The straightforward way to use deep learning into optical flow estimation is to create a neural network that takes two frames as input and produce optical flow map as output. This approach was successfully proposed in FlowNet paper in 2015.
 
-<Image src="./20190714b.png" alt="FlowNet" />
+![FlowNet](./20190714b.png)
 
 Two versions of FlowNet architecture was proposed.
 1. Two color frames are concatenated into one image with six channels, instead of three. This image is then passed to the fully convolutional neural network.
 
-<Image src="./20190714c.png" alt="FlowNet Architecture 1" />
+![FlowNet Architecture 1](./20190714c.png)
 
 2. A siamese network is used. Two frames are separately passed through convolutional layers for feature computation. Then those features are then passed to a specific layer which implements patch comparison. It works similar to convolution, but without learnable parameters. In this layer, the dot-product between feature vectors for pixel in the first image and for pixel in the second image is computed. The results are passed next to the series of convolutional layers to estimate optical flow.
 
-<Image src="./20190714d.png" alt="FlowNet Architecture 2" />
+![FlowNet Architecture 2](./20190714d.png)
 
 ### What is multi-scale pixel matching?
 
@@ -163,7 +160,7 @@ Object representation in visual tracking:
 - Now search for a new location of a template *t* in the next image *f*
 - Then do a per pixel comparison of the template and image fragment with image distance metric (sum of squared distance) and Normalized Cross Correlation (NCC):
 
-$$\color{orange}{\frac{1}{n-1} \sum_{x,y} \frac{(f(x,y) - \bar{f})(t(x, y) - \bar{t})}{\sigma_f, \sigma_t} \tag{7}}$$
+<MathBlock formula={String.raw`\frac{1}{n-1} \sum_{x,y} \frac{(f(x,y) - \bar{f})(t(x, y) - \bar{t})}{\sigma_f, \sigma_t} \tag{7}`} />
 
 Visual tracking by pattern matching with normalized cross correlation is a baseline visual tracking method.
 
@@ -193,11 +190,11 @@ Eg: Multi Domain Network (MDNet tracker)-
 - Train a neural network to distinguish object and background regions.
 - Almost anything can be the object of interest, so we can't train this network beforehand for all videos and for all type of object of interest : So we treat each video as a domain. Divide the neural network into shared and domain specific layers. We train the shared component offline on all available domains. Then, we train the domain-specific component for the target video online on the target video.
 
-<Image src="./20190714e.png" alt="MDNet tracker Architecture" />
+![MDNet tracker Architecture](./20190714e.png)
 
 To improve the localization of object, a bounding box regressor is also trained for each domain-specific branch. Due to the complexity of the regressor, it is trained only once in the first frame of the video.
 
-<Image src="./20190714f.png" alt="MDNet tracker Algorithm" />
+![MDNet tracker Algorithm](./20190714f.png)
 
 The second way is generic visual tracking: The idea is to train convolutional neural network that can regress the new position of any object which is positioned in the center of the previous frame. Such network takes two images as input. First image is the crop of the previous frame, centered at the object of interest. Second image is the crop of the current frame. The output is the new bounding box position in the current frame. Such network should be very fast because it doesn't need online training.
 
@@ -209,7 +206,7 @@ The architecture of this network is similar to the patch matching networks used 
 1. Both images are parsed through a series of convolutional layers.
 2. Outputs are parsed through a set of fully connected layers. The output to the net is bounding box of object in the second frame.
 
-<Image src="./20190714g.png" alt="GOTURN Architecture" />
+![GOTURN Architecture](./20190714g.png)
 
 ### What is Multiple Object Tracking (MOT)?
 
@@ -234,11 +231,11 @@ In detection based tracking:
 There are several overall performance metrics, which are used simultaneously to measure the tracking performance:
 - Multiple object tracking accuracy (MOTA) measures overall accuracy and the robustness of tracking. It measures total number of three types of errors; false negatives, false positives, and ID switch errors relative to the total number of ground truth detections individual. The best result is 1 or 100 percent.
 
-$$\color{orange}{MOTA = 1 - \frac{\sum_t(FN_t + FP_t +IDSW_t)}{\sum_t GT_t} \tag{8}}$$
+<MathBlock formula={String.raw`MOTA = 1 - \frac{\sum_t(FN_t + FP_t +IDSW_t)}{\sum_t GT_t} \tag{8}`} />
 
 - The multiple object tracking precision (MOTP) is the average dissimilarity between all true positives and their corresponding ground truth targets. It is computed as sum of bounding boxes overlap of target is assigned ground truth object to the total number of matches, thereby gives the average overlap between all correctly matched hypothesis in their respective objects and ranges between 50 percent and 100 percent.
 
-$$\color{orange}{MOTP = \frac{\sum_{t,i} d_{t,i}}{\sum_t c_t} \tag{9}}$$
+<MathBlock formula={String.raw`MOTP = \frac{\sum_{t,i} d_{t,i}}{\sum_t c_t} \tag{9}`} />
 
 ### What is object tracking by detection approach?
 
@@ -262,7 +259,7 @@ To associate detection and tracks, we need to estimate similarity or affinity be
 
 For each track, we select detection with the highest Intersection Over Union (IOU). If this IOU is larger than the threshold we add it to the track and remove it from the list of un-associated detections. If the best overlap is still lower than the threshold, we finish the track. If the track is too short or had no higher confidence detections we consider the track false positive and remove it from the final list of tracks.
 
-<Image src="./20190714h.png" alt="IoU tracker Algorithm" />
+![IoU tracker Algorithm](./20190714h.png)
 
 If detector fails a frame and misses the object, then tracking of this object is stopped. False negative ID switch errors will be produced. The problem can be alleviated if it can use predicted object position instead of a missed detection in this frame. For example, we can use kalman filter to predict object position in current frame based on its position in previous frames. Then we can associate detections in current frame these predictions from previous frames. If object is not detected in the current frame, you don't finish the track immediately but continue to track these predictions for several frames.
 
@@ -284,7 +281,7 @@ Kalman Filters, also known as linear quadratic estimation (LQE), is an algorithm
 
 **Kalman Gain** is a parameter which decides how much weight should be given to predicted value and the measured value. It checks the uncertainty in both predicted value and measured value and then it decides whether our actual value is close to predicted value or measured value.
 
-<Image src="./20190714i.jpeg" alt="Image Kalman filter overview" />
+![Image Kalman filter overview](./20190714i.jpeg)
 
 A Kalman filter always works with linear functions. But most of the real world problems involve non linear functions. In most cases, the system is looking into some direction and taking measurement in another direction. This involves angles and sine, cosine functions which are non linear functions which then lead to problems. If we enter non-linear data in a Kalman filter, our result is no longer in uni-modal Gaussian form and we can no longer estimate position and velocity.
 

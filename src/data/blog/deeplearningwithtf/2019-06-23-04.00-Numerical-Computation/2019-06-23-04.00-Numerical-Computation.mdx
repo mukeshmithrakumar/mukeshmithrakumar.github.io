@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-23
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - DL
 ---
@@ -80,7 +80,7 @@ print("What if we pre round before adding: {}".format(round(.1, 1) + round(.1, 1
 print("What if we post round after adding: {}".format(round(.1 + .1 + .1, 10) == round(.3, 10)))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 x + y =  0.30000000000000004
 Rounded x + y: 0.3
@@ -88,16 +88,15 @@ Check if .1 + .1 +.1 == .3: False
 What if we pre round before adding: False
 What if we post round after adding: True
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-1" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 __Underflow__: occurs when numbers near zero are rounded to zero. This can be particularly devastating, think of division by zero, some software environments will raise an exception but other will result with a placeholder not a number value.
 
-__Overflow__: occurs when numbers with large magnitude are approximated as $\infty$ or  $- \infty$.
+__Overflow__: occurs when numbers with large magnitude are approximated as <MathInline formula={String.raw`\infty`} /> or  <MathInline formula={String.raw`- \infty`} />.
 
 One function that must be stabilized against underflow and overflow is the __softmax function__:
 
-$$\color{orange}{\text{softmax}(x)_i = \frac{exp(x_j)}{\sum_{j=1}^n exp(x_j)} \tag{1}}$$
+<MathBlock formula={String.raw`\text{softmax}(x)_i = \frac{exp(x_j)}{\sum_{j=1}^n exp(x_j)} \tag{1}`} />
 
 ```python
 def softmax(x, solve=False):
@@ -150,7 +149,7 @@ overflow_softmax_tf = tf.nn.softmax(overflow, axis=None)
 print("Tensorflow Softmax Underflow: {} \nTensorflow Softmax Overflow: {}".format(underflow_softmax_tf, overflow_softmax_tf))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Softmax Underflow [nan nan nan]
 Softmax Overflow [nan nan nan]
@@ -159,16 +158,15 @@ Overflow Solved: [0. 0. 1.]
 Tensorflow Softmax Underflow: [1. 0. 0.]
 Tensorflow Softmax Overflow: [0. 0. 1.]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-2" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 04.02 - Poor Conditioning
 
 Conditioning refers to how rapidly a function changes with respect to small changes in its inputs. Functions that change rapidly when their inputs are perturbed slightly can be problematic for scientific computation because rounding errors in the inputs can result in large changes in the output.
 
-For example, the function $f(x) = A^{-1}x$. When $A \in \mathbb{R}^{n \times n}$ has an eigenvalue decomposition, its __condition number__ is:
+For example, the function <MathInline formula={String.raw`f(x) = A^{-1}x`} />. When <MathInline formula={String.raw`A \in \mathbb{R}^{n \times n}`} /> has an eigenvalue decomposition, its __condition number__ is:
 
-$$\color{orange}{max_{i, j} \Biggr | \frac{\lambda_i}{\lambda_j} \Biggr | \tag{2}}$$
+<MathBlock formula={String.raw`max_{i, j} \Biggr | \frac{\lambda_i}{\lambda_j} \Biggr | \tag{2}`} />
 
 This is the ratio of the magnitude of the largest and smallest eigenvalue. When this number is large, matrix inversion is particularly sensitive to error in the input.
 
@@ -196,7 +194,7 @@ condition_A = tf.math.multiply(tf.norm(A), tf.norm(tf.linalg.inv(A)))
 print("Condition Number of A: {}".format(condition_A))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[4.1 2.8]
@@ -213,34 +211,33 @@ We can see how the solution changes dramatically for a small increase in value
 
 Condition Number of A: 1623.00927734375
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-3" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 04.03 - Gradient-Based Optimization
 
 
-Most deep learning algorithms involve optimization of some sort. Optimization refers to the task of either minimizing or maximizing some function $f(x)$ by altering $x$. We usually phrase most optimization problems in terms of minimizing $f(x)$. Maximization may be accomplished via a minimization algorithm by minimizing $-f(x)$.
+Most deep learning algorithms involve optimization of some sort. Optimization refers to the task of either minimizing or maximizing some function <MathInline formula={String.raw`f(x)`} /> by altering <MathInline formula={String.raw`x`} />. We usually phrase most optimization problems in terms of minimizing <MathInline formula={String.raw`f(x)`} />. Maximization may be accomplished via a minimization algorithm by minimizing <MathInline formula={String.raw`-f(x)`} />.
 
 The function we want to minimize or maximize is called the __objective function__ or __criterion__. When we are minimizing it, we may also call it the __cost function, loss function__, or __error function__.
 
 We often denote the value that minimizes or maximizes a function with a superscript *. For example we might say
 
-$$x^* = arg \ min \  f(x)$$.
+<MathBlock formula={String.raw`x^* = arg \ min \  f(x)`} />.
 
-Suppose we have a function $y = f(x)$, where both _x_ and _y_ are real numbers. The __derivative__ of this function is denoted as $f^{\prime}(x)$ or as $\frac{dy}{dx}$. The derivative $f^{\prime}(x)$ gives the slope of $f(x)$ at the point _x_. In other words, it specifies how to scale a small change in the input to obtain the corresponding change in the output:
+Suppose we have a function <MathInline formula={String.raw`y = f(x)`} />, where both _x_ and _y_ are real numbers. The __derivative__ of this function is denoted as <MathInline formula={String.raw`f^{\prime}(x)`} /> or as <MathInline formula={String.raw`\frac{dy}{dx}`} />. The derivative <MathInline formula={String.raw`f^{\prime}(x)`} /> gives the slope of <MathInline formula={String.raw`f(x)`} /> at the point _x_. In other words, it specifies how to scale a small change in the input to obtain the corresponding change in the output:
 
-$$\color{orange}{f(x + \epsilon) \approx f(x) + \epsilon f^{\prime}(x) \tag{3}}$$
+<MathBlock formula={String.raw`f(x + \epsilon) \approx f(x) + \epsilon f^{\prime}(x) \tag{3}`} />
 
-__Gradient descent__ is the technique of moving in small steps with the opposite sign of the derivative to reduce $f(x)$.
+__Gradient descent__ is the technique of moving in small steps with the opposite sign of the derivative to reduce <MathInline formula={String.raw`f(x)`} />.
 
-<img src="https://raw.githubusercontent.com/adhiraiyan/DeepLearningWithTF2.0/master/notebooks/figures/fig0403a.jpeg" alt="Gradient descent" class="center-image">
+![Gradient descent](./fig0403a.jpeg)
 
 
-- When $f^{\prime}(x) = 0$, the derivative provides no information about which direction to move. These points are known as __critical points__, or __stationary points__.
-- A __local minimum__ is a points where $f(x)$ is lower than all neighboring points, so it is no longer possible to decrease $f(x)$ by making infinitesimal steps.
-- A __local maximum__ is a point where $f(x)$ is higher than all neighboring points, so it is not possible to increase $f(x)$ by making infinitesimal steps.
+- When <MathInline formula={String.raw`f^{\prime}(x) = 0`} />, the derivative provides no information about which direction to move. These points are known as __critical points__, or __stationary points__.
+- A __local minimum__ is a points where <MathInline formula={String.raw`f(x)`} /> is lower than all neighboring points, so it is no longer possible to decrease <MathInline formula={String.raw`f(x)`} /> by making infinitesimal steps.
+- A __local maximum__ is a point where <MathInline formula={String.raw`f(x)`} /> is higher than all neighboring points, so it is not possible to increase <MathInline formula={String.raw`f(x)`} /> by making infinitesimal steps.
 - Some critical points are neither maxima or minima, these are knows as __saddle points__.
-- A point that obtains the absolute lowest value of $f(x)$ is a __global minimum__.
+- A point that obtains the absolute lowest value of <MathInline formula={String.raw`f(x)`} /> is a __global minimum__.
 
 ```python
 """
@@ -304,16 +301,15 @@ plt.title("Saddle Point")
 plt.show()
 ```
 
-{% capture text-capture %}
-<Image src="./output_17_0.png" alt="Gradient descent minimums plot" />
+<ResultToggle>
+![Gradient descent minimums plot](./output_17_0.png)
 
-<Image src="./output_17_1.png" alt="Saddle Point" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-4" button-text="Toggle to see results" toggle-text=text-capture%}
+![Saddle Point](./output_17_1.png)
+</ResultToggle>
 
-In deep learning we often deal with multidimensional inputs with functions that may have many local minima that are not optimal and many saddle points surrounded by very flat regions. This makes optimization difficult, we therefore usually settle for finding a value of $f$ that is very low but not necessarily minimal in any formal sense.
+In deep learning we often deal with multidimensional inputs with functions that may have many local minima that are not optimal and many saddle points surrounded by very flat regions. This makes optimization difficult, we therefore usually settle for finding a value of <MathInline formula={String.raw`f`} /> that is very low but not necessarily minimal in any formal sense.
 
-For functions with multiple inputs, we must make use of the concept of __partial derivatives__. The partial derivative $\frac{\partial}{\partial  x_i} f(x)$ measures how $f$ changes as only the variable $x_i$ increases at point __x__. The __gradient__ generalizes the notion of derivative to the case where the derivative is with respect to a vector: the gradient of $f$ is the vector containing all the partial derivatives, denoted $\nabla_x f(x)$. Element $i$ of the gradient is the partial derivative of $f$ with respect to $x_i$.
+For functions with multiple inputs, we must make use of the concept of __partial derivatives__. The partial derivative <MathInline formula={String.raw`\frac{\partial}{\partial  x_i} f(x)`} /> measures how <MathInline formula={String.raw`f`} /> changes as only the variable <MathInline formula={String.raw`x_i`} /> increases at point __x__. The __gradient__ generalizes the notion of derivative to the case where the derivative is with respect to a vector: the gradient of <MathInline formula={String.raw`f`} /> is the vector containing all the partial derivatives, denoted <MathInline formula={String.raw`\nabla_x f(x)`} />. Element <MathInline formula={String.raw`i`} /> of the gradient is the partial derivative of <MathInline formula={String.raw`f`} /> with respect to <MathInline formula={String.raw`x_i`} />.
 
 ```python
 """
@@ -340,31 +336,30 @@ del g  # Drop the reference to the tape
 print("Partial Derivative of dz_dx: {} \nPartial Derivative of dz_dy: {} ".format(dz_dx, dz_dy))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Partial Derivative of dz_dx: 2.0
 Partial Derivative of dz_dy: -1.0
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-5" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-The __directional derivative__ in direction $u$ (a unit vector) is the slope of the function $f$ in direction $u$. In other words, the directional derivative is the derivative of the function $f(x + \alpha u)$ with respect to $\alpha$, evaluated at $\alpha = 0$. Using the chain rule, we can see that $\frac{\partial}{\partial \alpha} f(x + \alpha u)$ evaluates to $u^{\top} \nabla_x f(x)$ when $\alpha = 0$.
+The __directional derivative__ in direction <MathInline formula={String.raw`u`} /> (a unit vector) is the slope of the function <MathInline formula={String.raw`f`} /> in direction <MathInline formula={String.raw`u`} />. In other words, the directional derivative is the derivative of the function <MathInline formula={String.raw`f(x + \alpha u)`} /> with respect to <MathInline formula={String.raw`\alpha`} />, evaluated at <MathInline formula={String.raw`\alpha = 0`} />. Using the chain rule, we can see that <MathInline formula={String.raw`\frac{\partial}{\partial \alpha} f(x + \alpha u)`} /> evaluates to <MathInline formula={String.raw`u^{\top} \nabla_x f(x)`} /> when <MathInline formula={String.raw`\alpha = 0`} />.
 
-To minimize $f$, we would like to find the direction in which $f$ decreases the fastest. We can do this using the directional derivative:
+To minimize <MathInline formula={String.raw`f`} />, we would like to find the direction in which <MathInline formula={String.raw`f`} /> decreases the fastest. We can do this using the directional derivative:
 
-$$\color{orange}{min_{u, u^{\top} \ u=1} u^{\top} \nabla_x f(x) \tag{4}}$$
+<MathBlock formula={String.raw`min_{u, u^{\top} \ u=1} u^{\top} \nabla_x f(x) \tag{4}`} />
 
-$$\color{orange}{=min_{u, u^{\top} \ u=1} \|u\|_2 \ \| \nabla_x f(x) \|_2 \ cos \theta  \tag{5}}$$
+<MathBlock formula={String.raw`=min_{u, u^{\top} \ u=1} \|u\|_2 \ \| \nabla_x f(x) \|_2 \ cos \theta  \tag{5}`} />
 
-where $\theta$ is the angle between $u$ and the gradient. Substituting in $\|u\|_2 = 1$ and ignoring factors that do not depend on $u$, this simplifies to $min_u cos \theta$. This is minimized when $u$ points in the opposite direction as the gradient. in other words, the gradient points directly uphill, and the negative gradient points directly downhill. We can decrease $f$ by moving in the direction of the negative gradient. This is known as the __method of steepest descent__ or __gradient descent__.
+where <MathInline formula={String.raw`\theta`} /> is the angle between <MathInline formula={String.raw`u`} /> and the gradient. Substituting in <MathInline formula={String.raw`\|u\|_2 = 1`} /> and ignoring factors that do not depend on <MathInline formula={String.raw`u`} />, this simplifies to <MathInline formula={String.raw`min_u cos \theta`} />. This is minimized when <MathInline formula={String.raw`u`} /> points in the opposite direction as the gradient. in other words, the gradient points directly uphill, and the negative gradient points directly downhill. We can decrease <MathInline formula={String.raw`f`} /> by moving in the direction of the negative gradient. This is known as the __method of steepest descent__ or __gradient descent__.
 
 Well, if you take away all the math, gradient descent simply states that if you move in the opposite direction of a functions gradient, you will be able to decrease it. Think about it this way, if you have climbed a mountain and you want to hike down, you know the fastest way down is from the way the mountain is steepest right. If you have skied, one of the fastest ways to reach the bottom is by skiing from the steepest parts. This is exactly what we do, we find the steepest part and then move in the opposite direction.
 
 Steepest descent proposes a new point:
 
-$$\color{orange}{x^{'} = x - \epsilon \nabla_x f(x) \tag{6}}$$
+<MathBlock formula={String.raw`x^{'} = x - \epsilon \nabla_x f(x) \tag{6}`} />
 
-where $\epsilon$ is the __learning rate__, a positive scalar determining the size of the step.
+where <MathInline formula={String.raw`\epsilon`} /> is the __learning rate__, a positive scalar determining the size of the step.
 
 ```python
 """
@@ -400,7 +395,7 @@ for i in range(41):
 plt.grid()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Starting x value: 1.0
 Iteration: 0 x: 0.6618226766586304
@@ -413,28 +408,27 @@ Iteration: 30 x: -0.7770206928253174
 Iteration: 35 x: -0.777148425579071
 Iteration: 40 x: -0.7771748900413513
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-6" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_22_1.png" alt="Gradient descent example" />
+![Gradient descent example](./output_22_1.png)
 
 Below is an animation of how our gradient takes small steps and finds the global minimum.
 
-<Image src="./fig0403b.gif" alt="Gradient descent with tensorflow" />
+![Gradient descent with tensorflow](./fig0403b.gif)
 
-In some cases, we may be able to avoid running this iterative algorithm and just jump directly to the critical point by solving the equation $\nabla_x f(x) = 0$ for $x$.
+In some cases, we may be able to avoid running this iterative algorithm and just jump directly to the critical point by solving the equation <MathInline formula={String.raw`\nabla_x f(x) = 0`} /> for <MathInline formula={String.raw`x`} />.
 
 Although gradient descent is limited to optimization in continuous spaces, the general concept of repeatedly making a small move (that is approximately the best small move) toward better configurations can be generalized to discrete spaces. Ascending an objective function of discrete parameters is called __hill climbing__.
 
 Haha, I had to put this, the perfect analogy for gradient descent would be have you seen these videos where people roll down the hill,
 
-<Image src="./fig0403c.jpg" alt="Gradient descent example" />
+![Gradient descent example](./fig0403c.jpg)
 
 Gradient descent is exactly that, not everyone reaches the bottom (global minimum), they get stuck in pits (local minimum), where you start from the top (initial values) plays a huge part in the path you take and how fast you roll down (learning rate) determines how fast you reach the bottom and if you could potentially jump out of the pits. If you haven't watched these videos, take a look at [this](https://www.youtube.com/watch?v=fiaWyG7iKes) btw, that is just crazy.
 
 #### 4.3.1 Beyond the Gradient: Jacobian and Hessian Matrices
 
-Suppose we need to find all the partial derivatives of a function whose input and output are both vectors. The matrix containing all such partial derivatives is known as a __Jacobian matrix__. Specifically, if we have a function $f : \mathbb{R}^m \rightarrow \mathbb{R}^n$, then the Jacobian matrix $J \in \mathbb{R}^{n \times m}$ of $f$ is defined such that $J_{i, j} = \frac{\partial}{\partial x_j} f(x)$.
+Suppose we need to find all the partial derivatives of a function whose input and output are both vectors. The matrix containing all such partial derivatives is known as a __Jacobian matrix__. Specifically, if we have a function <MathInline formula={String.raw`f : \mathbb{R}^m \rightarrow \mathbb{R}^n`} />, then the Jacobian matrix <MathInline formula={String.raw`J \in \mathbb{R}^{n \times m}`} /> of <MathInline formula={String.raw`f`} /> is defined such that <MathInline formula={String.raw`J_{i, j} = \frac{\partial}{\partial x_j} f(x)`} />.
 
 ```python
 """
@@ -452,17 +446,16 @@ print("Jacobian \n{}".format(jacobian))
 del g  # Drop the reference to the tape
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Jacobian
 [[2. 0.]
  [0. 4.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-7" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 We are also sometimes interested in a derivative of a derivative. This is known
-as a second derivative. For example, for a function  $f : \mathbb{R}^n \rightarrow \mathbb{R}$, the derivative with respect to $x_i$ of the derivative of $f$ with respect to $x_j$ is denoted as $\frac{\partial^2}{\partial x_i \partial x_j} f$. In a single dimension we denote $\frac{d^2}{dx^2} f$ by $f^{\prime \prime}(x)$. The second derivative tells
+as a second derivative. For example, for a function  <MathInline formula={String.raw`f : \mathbb{R}^n \rightarrow \mathbb{R}`} />, the derivative with respect to <MathInline formula={String.raw`x_i`} /> of the derivative of <MathInline formula={String.raw`f`} /> with respect to <MathInline formula={String.raw`x_j`} /> is denoted as <MathInline formula={String.raw`\frac{\partial^2}{\partial x_i \partial x_j} f`} />. In a single dimension we denote <MathInline formula={String.raw`\frac{d^2}{dx^2} f`} /> by <MathInline formula={String.raw`f^{\prime \prime}(x)`} />. The second derivative tells
 us how the first derivative will change as we vary the input. This is important because it tells us whether a gradient step will cause as much of an improvement as we would expect based on the gradient alone. We can think of the second derivative as measuring __curvature__.
 
 ```python
@@ -485,24 +478,23 @@ print("First Derivative of f(x): {} \nSecond Derivative of f(x): {}".format(dy_d
 del t, t2  # Drop the reference to the tape
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 First Derivative of f(x): 3.0
 Second Derivative of f(x): 6.0
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-8" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Below is a plot of our function f(x) = x^3, f'(x) = 3x^2 and f''(x)=6x:
 
-<Image src="./fig0403d.png" alt="First and second derivative plot" />
+![First and second derivative plot](./fig0403d.png)
 
 The second derivative can be used to determine whether a critical point is
 a local maximum, a local minimum, or a saddle point.
-- When $f^{\prime}(x) = 0$ and $f^{\prime \prime}(x) > 0$, we can conclude that $x$ is a local minimum.
-- When $f^{\prime}(x) = 0$ and $f^{\prime \prime}(x) < 0$, we can conclude that $x$ is a local maximum.
-- If $f^{\prime \prime}(x) = 0$ then $x$ may be a saddle point or a part of a flat region.
-- If the second derivative is zero, then there is no curvature. It is a perfectly flat line, and its value can be predicted using only the gradient. If the gradient is 1, then we can make a step of size $\epsilon$ along the negative gradient, and the cost function will decrease by $\epsilon$.
+- When <MathInline formula={String.raw`f^{\prime}(x) = 0`} /> and <MathInline formula={String.raw`f^{\prime \prime}(x) > 0`} />, we can conclude that <MathInline formula={String.raw`x`} /> is a local minimum.
+- When <MathInline formula={String.raw`f^{\prime}(x) = 0`} /> and <MathInline formula={String.raw`f^{\prime \prime}(x) < 0`} />, we can conclude that <MathInline formula={String.raw`x`} /> is a local maximum.
+- If <MathInline formula={String.raw`f^{\prime \prime}(x) = 0`} /> then <MathInline formula={String.raw`x`} /> may be a saddle point or a part of a flat region.
+- If the second derivative is zero, then there is no curvature. It is a perfectly flat line, and its value can be predicted using only the gradient. If the gradient is 1, then we can make a step of size <MathInline formula={String.raw`\epsilon`} /> along the negative gradient, and the cost function will decrease by <MathInline formula={String.raw`\epsilon`} />.
 
 ```python
 # Plot where second derivative is zero
@@ -535,12 +527,11 @@ plt.plot(x0, d2, color='#FF9A13')
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_33_0.png" alt="second derivative is zero" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-9" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![second derivative is zero](./output_33_0.png)
+</ResultToggle>
 
-- If the second derivative is negative, the function curves downward, so the cost function will actually decrease by more than $\epsilon$.
+- If the second derivative is negative, the function curves downward, so the cost function will actually decrease by more than <MathInline formula={String.raw`\epsilon`} />.
 
 ```python
 # Plot where second derivative is negative
@@ -568,12 +559,11 @@ plt.plot(x0, d3, color='#FF9A13')
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_35_0.png" alt="second derivative is negative" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-10" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![second derivative is negative](./output_35_0.png)
+</ResultToggle>
 
-- If the second derivative is positive, the function curves upward, so the cost function can decrease by less than $\epsilon$.
+- If the second derivative is positive, the function curves upward, so the cost function can decrease by less than <MathInline formula={String.raw`\epsilon`} />.
 
 ```python
 # Plot where second derivative is positive
@@ -601,14 +591,13 @@ plt.plot(x0, d3, color='#FF9A13')
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_37_0.png" alt="second derivative is positive" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-11" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![second derivative is positive](./output_37_0.png)
+</ResultToggle>
 
-When our function has multiple input dimensions, there are many second derivatives. These derivatives can be collected together into a matrix called the __Hessian matrix__. The Hessian matrix $H (f)(x)$ is defined such that:
+When our function has multiple input dimensions, there are many second derivatives. These derivatives can be collected together into a matrix called the __Hessian matrix__. The Hessian matrix <MathInline formula={String.raw`H (f)(x)`} /> is defined such that:
 
-$$\color{orange}{H(f)(x)_{i, j} = \frac{\partial^2}{\partial x_i \partial x_j} f(x) \tag{7}}$$
+<MathBlock formula={String.raw`H(f)(x)_{i, j} = \frac{\partial^2}{\partial x_i \partial x_j} f(x) \tag{7}`} />
 
 Equivalently, the Hessian is the Jacobian of the gradient.
 
@@ -658,26 +647,25 @@ hessian = h.gradient(jacobian, x)                      # We take the gradient of
 print("Jacobian: \n{} \nHessian: \n{}".format(jacobian, hessian))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Jacobian:
 [  -1. -194.]
 Hessian:
 [   4. -482.]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-12" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Anywhere that the second partial derivatives are continuous, the differential
 operators are commutative, this implies that:
 
-$$\color{orange}{H_{i, j} = H_{j, i} \tag{8}}$$
+<MathBlock formula={String.raw`H_{i, j} = H_{j, i} \tag{8}`} />
 
 so the Hessian matrix is symmetric at such points.
 
 Most of the functions we encounter in the context of deep learning have a symmetric Hessian almost everywhere. Because the Hessian matrix is real and symmetric, we can decompose it into a set of real eigenvalues and an orthogonal basis of eigenvectors. If you don't recall Eigenvalues and Eigenvectors, I strongly suggest you review [Eigendecomposition](https://www.adhiraiyan.org/deeplearning/02.00-Linear-Algebra#7). But for the sake of completion, the eigenvectors of matrix M  are vectors that do not change direction when multiplied with M , and the eigenvalues represent the change in length of the eigenvector when multiplied with M .
 
-The second derivative in a specific direction represented by a unit vector $d$ is given by $d^{\top} H d$. When $d$ is the eigenvector of $H$, the second derivative in that direction is given by the corresponding eigenvalue. For other directions of $d$, the directional second derivative is a weighted average of all the eigenvalues, with weights between 0 and 1, and eigenvectors that have a smaller angle with $d$ receiving more weight. The maximum eigenvalue determines the maximum second derivative, and the minimum eigenvalue determines the minimum second derivative.
+The second derivative in a specific direction represented by a unit vector <MathInline formula={String.raw`d`} /> is given by <MathInline formula={String.raw`d^{\top} H d`} />. When <MathInline formula={String.raw`d`} /> is the eigenvector of <MathInline formula={String.raw`H`} />, the second derivative in that direction is given by the corresponding eigenvalue. For other directions of <MathInline formula={String.raw`d`} />, the directional second derivative is a weighted average of all the eigenvalues, with weights between 0 and 1, and eigenvectors that have a smaller angle with <MathInline formula={String.raw`d`} /> receiving more weight. The maximum eigenvalue determines the maximum second derivative, and the minimum eigenvalue determines the minimum second derivative.
 
 ```python
 # Eigenvalue and Eigenvectors for the Hessian matrix
@@ -688,7 +676,7 @@ eigenvalues, eigenvectors = tf.linalg.eigh(hessian)
 print("Eigenvalue for the Hessian: \n{} \n\nEigenvectors for the Hessian: \n{}".format(eigenvalues, eigenvectors))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Eigenvalue for the Hessian:
 [-480.00824    6.00823]
@@ -697,39 +685,38 @@ Eigenvectors for the Hessian:
 [[ 0.00411512  0.99999154]
     [ 0.99999154 -0.00411512]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-13" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The (directional) second derivative tells us how well we can expect a gradient
-descent step to perform. We can make a second-order Taylor series approximation to the function $f(x)$ around the current point $x^{(0)}$ and if we use a learning rate of $\epsilon$, then the new point $x$ will be given by $x^{(0)} - \epsilon g$ which gives:
+descent step to perform. We can make a second-order Taylor series approximation to the function <MathInline formula={String.raw`f(x)`} /> around the current point <MathInline formula={String.raw`x^{(0)}`} /> and if we use a learning rate of <MathInline formula={String.raw`\epsilon`} />, then the new point <MathInline formula={String.raw`x`} /> will be given by <MathInline formula={String.raw`x^{(0)} - \epsilon g`} /> which gives:
 
-$$\color{orange}{f(x^{(0)} - \epsilon g) \approx f(x^{(0)}) - \epsilon g^{\top}g + \frac{1}{2} \epsilon^2 g^{\top} Hg \tag{9}}$$
+<MathBlock formula={String.raw`f(x^{(0)} - \epsilon g) \approx f(x^{(0)}) - \epsilon g^{\top}g + \frac{1}{2} \epsilon^2 g^{\top} Hg \tag{9}`} />
 
 I know, that looks complicated, let me explain. There are three terms here: the original value of the function, the expected improvement due to the slope of the function, and the correction we must apply to account for the curvature of the function. What you need to know is:
 
 - When this last term is too large, the gradient descent step can actually move uphill.
-- When it is zero or negative, the Taylor series approximation predicts that increasing $\epsilon$ forever will decrease $f$ forever.
+- When it is zero or negative, the Taylor series approximation predicts that increasing <MathInline formula={String.raw`\epsilon`} /> forever will decrease <MathInline formula={String.raw`f`} /> forever.
 
 Take a look at the image below. The graph on the left, which is the first derivative of a one dimensional function and the graph on the right is the second derivative of the same function.
 
-<Image src="./fig0403e.png" alt="Hessian derivative directions" />
+![Hessian derivative directions](./fig0403e.png)
 
 In the left diagram, the slope changes a lot, while it is more stable in the right diagram. As you can see, the rate of change of the slope corresponds to how “curved” each loss function is. The sharper the curve, the more rapidly the slope changes.
 
-In multiple dimensions, we need to examine all the second derivatives of the function. Using the eigendecomposition of the Hessian matrix, we can generalize the second derivative test to multiple dimensions. At a critical point, where $\nabla_x f(x) = 0$, we can examine the eigenvalues of the Hessian to determine whether the critical point is a local maximum, local minimum, or saddle point.
+In multiple dimensions, we need to examine all the second derivatives of the function. Using the eigendecomposition of the Hessian matrix, we can generalize the second derivative test to multiple dimensions. At a critical point, where <MathInline formula={String.raw`\nabla_x f(x) = 0`} />, we can examine the eigenvalues of the Hessian to determine whether the critical point is a local maximum, local minimum, or saddle point.
 - When the Hessian is positive definite (all its eigenvalues are positive), the point is a local minima.
 - When the Hessian is negative definite (all its eigenvalues are negative), the point is a local maximum.
 - When all the nonzero eigenvalues have the same sign but atleast one eigenvalue is zero, the derivative test can be inconclusive, like the univariate second derivative test.
 
 In multiple dimensions, there is a different second derivative for each direction at a single point. The condition number of the Hessian at this point measures how much the second derivatives differ from each other. When the Hessian has a poor condition number, gradient descent performs poorly. This is because in one direction, the derivative increases rapidly, while in another direction, it increases slowly.  Gradient descent is unaware of this change in the derivative, so it does not know that it needs to explore preferentially in the direction where the derivative remains negative for longer. Poor condition number also makes choosing a good step size difficult. The step size must be small enough to avoid overshooting the minimum and going uphill in directions with strong positive curvature. This usually means that the step size is too small to make significant progress in other directions with less curvature.
 
-This issue can be resolved by using information from the Hessian matrix to guide the search. The simplest method for doing so is known as __Newton's method__. Newton's method is based on using a second-order Taylor series expansion to approximate $f(x)$ near some point $x^{(0)}$ and by solving for the critical point, we obtain:
+This issue can be resolved by using information from the Hessian matrix to guide the search. The simplest method for doing so is known as __Newton's method__. Newton's method is based on using a second-order Taylor series expansion to approximate <MathInline formula={String.raw`f(x)`} /> near some point <MathInline formula={String.raw`x^{(0)}`} /> and by solving for the critical point, we obtain:
 
-$$\color{orange}{x^* = x^{(0)} - H(f)(x^{(0)})^{-1} \ \nabla_x f(x^{(0)}) \tag{10}}$$
+<MathBlock formula={String.raw`x^* = x^{(0)} - H(f)(x^{(0)})^{-1} \ \nabla_x f(x^{(0)}) \tag{10}`} />
 
-- When $f$ is positive definite quadratic function, Newton's method consists of applying the above equation once to jump to the minimum of the function directly.
+- When <MathInline formula={String.raw`f`} /> is positive definite quadratic function, Newton's method consists of applying the above equation once to jump to the minimum of the function directly.
 
-- When $f$ is not truly quadratic but can be locally approximated as a positive definite quadratic, Newton's method consists of applying the above equation multiple times.
+- When <MathInline formula={String.raw`f`} /> is not truly quadratic but can be locally approximated as a positive definite quadratic, Newton's method consists of applying the above equation multiple times.
 
 Iteratively updating the approximation and jumping to the minimum of the approximation can reach the critical point much faster than gradient descent would. This is a useful property near a local minimum, but it can be a harmful property near a saddle point.
 
@@ -793,24 +780,23 @@ plt.quiver(X0, Y0, N_grad[0], N_grad[1], color='purple',angles='xy',scale_units=
 
 ```
 
-{% capture text-capture %}
-<Image src="./output_46_0.png" alt="Newton's method plot" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-14" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Newton's method plot](./output_46_0.png)
+</ResultToggle>
 
 Optimization algorithms that use only the gradient, such as gradient descent, are called __first-order optimization algorithms__. Optimization algorithms that also use the Hessian matrix, such as Newton's method, are called __second-order optimization algorithms__.
 
-Deep learning algorithms tend to lack guarantees because the family of functions used in deep learning is quite complicated. But sometimes we gain some guarantees by restricting ourselves to functions that are either __Lipschitz continuous__ or have Lipschitz continuous derivatives. A Lipschitz function is a function $f$ whose rate of change is bounded by a __Lipschitz constant__ $\mathcal{L}$:
+Deep learning algorithms tend to lack guarantees because the family of functions used in deep learning is quite complicated. But sometimes we gain some guarantees by restricting ourselves to functions that are either __Lipschitz continuous__ or have Lipschitz continuous derivatives. A Lipschitz function is a function <MathInline formula={String.raw`f`} /> whose rate of change is bounded by a __Lipschitz constant__ <MathInline formula={String.raw`\mathcal{L}`} />:
 
-$$\color{orange}{\forall x, \forall y, |f(x) - f(y)| \leq \mathcal{L} \| x - y \|_2 \tag{11}}$$
+<MathBlock formula={String.raw`\forall x, \forall y, |f(x) - f(y)| \leq \mathcal{L} \| x - y \|_2 \tag{11}`} />
 
 This property is useful because it enables us to quantify our assumption that a small change in the input made by an algorithm such as gradient descent will have a small change in the output.
 
 ### 04.04 - Constrained Optimization
 
-Sometimes we may wish to find the maximal or minimal value of $f(x)$ for values of $x$ in some set $\mathbb{S}$. This is knows as __constrained optimization__. Points that lie within the set $\mathbb{S}$ are called __feasible__ points in constrained optimization technology.
+Sometimes we may wish to find the maximal or minimal value of <MathInline formula={String.raw`f(x)`} /> for values of <MathInline formula={String.raw`x`} /> in some set <MathInline formula={String.raw`\mathbb{S}`} />. This is knows as __constrained optimization__. Points that lie within the set <MathInline formula={String.raw`\mathbb{S}`} /> are called __feasible__ points in constrained optimization technology.
 
-We often wish to find a solution that is small in some sense. A common approach in such situations is to impose a norm constraint, such as $\| x \| \leq 1$. One simple approach to constrained optimization is simply to modify gradient descent taking the constraint into account.
+We often wish to find a solution that is small in some sense. A common approach in such situations is to impose a norm constraint, such as <MathInline formula={String.raw`\| x \| \leq 1`} />. One simple approach to constrained optimization is simply to modify gradient descent taking the constraint into account.
 
 A more sophisticated approach is to design a different, unconstrained optimization problem whose solution can be converted into a solution to the original, constrained optimization problem. This approach requires creativity; the transformation between optimization problems must be designed specifically for each case we encounter.
 
@@ -818,13 +804,13 @@ The __Karush-Kuhn-Tucker (KKT)__ approach provides a very general
 solution to constrained optimization. With the KKT approach, we introduce
 a new function called the __generalized Lagrangian__ or __generalized Lagrange function__.
 
-To define the Lagrangian, we first need to describe $\mathbb{S}$ in terms of equations and inequalities. We want a description of $\mathbb{S}$ in terms of m functions $g^{(i)}$ and $n$ functions $h^{(j)}$ so that $\mathbb{S} = \{ x \  \mid \ \forall i, g^{(i)} (x) = 0 \ \text{and} \ \forall j, h^{(j)} (x) \leq o) \}$. The equations involving $g^{(i)}$ are called __equality constraints__, and the inequalities involving $h^{(j)}$ are called __inequality constraints__.
+To define the Lagrangian, we first need to describe <MathInline formula={String.raw`\mathbb{S}`} /> in terms of equations and inequalities. We want a description of <MathInline formula={String.raw`\mathbb{S}`} /> in terms of m functions <MathInline formula={String.raw`g^{(i)}`} /> and <MathInline formula={String.raw`n`} /> functions <MathInline formula={String.raw`h^{(j)}`} /> so that <MathInline formula={String.raw`\mathbb{S} = \{ x \  \mid \ \forall i, g^{(i)} (x) = 0 \ \text{and} \ \forall j, h^{(j)} (x) \leq o) \}`} />. The equations involving <MathInline formula={String.raw`g^{(i)}`} /> are called __equality constraints__, and the inequalities involving <MathInline formula={String.raw`h^{(j)}`} /> are called __inequality constraints__.
 
-We introduce new variables $\lambda_i$ and $\alpha_j$ for each constraint, these are called the KKT multipliers. The generalized Lagrangian is then defined as:
+We introduce new variables <MathInline formula={String.raw`\lambda_i`} /> and <MathInline formula={String.raw`\alpha_j`} /> for each constraint, these are called the KKT multipliers. The generalized Lagrangian is then defined as:
 
-$$\color{orange}{L(x, \lambda, \alpha) = f(x) + \displaystyle\sum_i \lambda_i g^{(i)} (x) + \displaystyle\sum_j \alpha_j h^{(j)} (x) \tag{12}}$$
+<MathBlock formula={String.raw`L(x, \lambda, \alpha) = f(x) + \displaystyle\sum_i \lambda_i g^{(i)} (x) + \displaystyle\sum_j \alpha_j h^{(j)} (x) \tag{12}`} />
 
-We can now solve a constrained minimization problem using unconstrained optimization of the generalized Lagrangian. As long as at least one feasible point exists and $f(x)$ is not permitted to have $\infty$.
+We can now solve a constrained minimization problem using unconstrained optimization of the generalized Lagrangian. As long as at least one feasible point exists and <MathInline formula={String.raw`f(x)`} /> is not permitted to have <MathInline formula={String.raw`\infty`} />.
 
 ```python
 """
@@ -847,36 +833,35 @@ plt.fill([0.5,0.5,1.5,1.5], [2.5,1.5,1.5,2.5], alpha=0.3)         # bounds 0.5, 
 plt.axis([0,3,0,3])
 ```
 
-{% capture text-capture %}
-<Image src="./output_52_1.png" alt="generalized Lagrangian" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-15" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![generalized Lagrangian](./output_52_1.png)
+</ResultToggle>
 
 To perform constrained maximization, we can construct the generalized
-Lagrange function of $- f(x)$, which leads to this optimization problem:
+Lagrange function of <MathInline formula={String.raw`- f(x)`} />, which leads to this optimization problem:
 
-$$\color{orange}{min_x max_{\lambda} max_{\alpha, \alpha \geq 0} = - f(x) + \displaystyle\sum_i \lambda_i g^{(i)} (x) + \displaystyle\sum_j \alpha_j h^{(j)} (x) \tag{13}}$$
+<MathBlock formula={String.raw`min_x max_{\lambda} max_{\alpha, \alpha \geq 0} = - f(x) + \displaystyle\sum_i \lambda_i g^{(i)} (x) + \displaystyle\sum_j \alpha_j h^{(j)} (x) \tag{13}`} />
 
 The sign of the term for the equality constraints does not matter; we may define it with addition or subtraction as we wish.
 
 A simple set of properties describe the optimal points of constrained optimization problems. These properties are called the Karush-Kuhn-Tucker (KKT) conditions. They are necessary conditions, but not always sufficient conditions, for a point to be optimal. The conditions are:
 - The gradient of the generalized Lagrangian is zero.
-- All constraints on both $x$ and the KKT multipliers are satisfied
-- The inequality constraints exhibit "complementary slackness": $\alpha \odot h(x) = 0$
+- All constraints on both <MathInline formula={String.raw`x`} /> and the KKT multipliers are satisfied
+- The inequality constraints exhibit "complementary slackness": <MathInline formula={String.raw`\alpha \odot h(x) = 0`} />
 
 ### 04.05 - Example: Linear Least Squares
 
-Let's see how we can find the value of $x$ that minimizes:
+Let's see how we can find the value of <MathInline formula={String.raw`x`} /> that minimizes:
 
-$$\color{orange}{f(x) = \frac{1}{2} \| Ax - b \|_2^2 \tag{14}}$$
+<MathBlock formula={String.raw`f(x) = \frac{1}{2} \| Ax - b \|_2^2 \tag{14}`} />
 
 using gradient based optimization.
 
 First we need to obtain the gradient:
 
-$$\color{orange}{\nabla_x f(x) = A^{\top} (Ax - b) = A^{\top} Ax - A^{\top} b \tag{15}}$$
+<MathBlock formula={String.raw`\nabla_x f(x) = A^{\top} (Ax - b) = A^{\top} Ax - A^{\top} b \tag{15}`} />
 
-<Image src="./fig0405a.png" alt="Linear least squares" />
+![Linear least squares](./fig0405a.png)
 
 One can also solve this problem using Newton's method. In this case, because
 the true function is quadratic, the quadratic approximation employed by Newton's method is exact, and the algorithm converges to the global minimum in a single step.
@@ -922,15 +907,14 @@ plt.legend(loc='upper left')
 plt.show()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 slope (m): tf.Tensor(1.0040492, shape=(), dtype=float32)
 intercept (b): tf.Tensor(0.011254057, shape=(), dtype=float32)
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-16" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_57_1.png" alt="Newton's iterative method" />
+![Newton's iterative method](./output_57_1.png)
 
 ```python
 """
@@ -962,18 +946,17 @@ ax.set_ylabel(r"$y$", fontsize=18)
 ax.legend(loc=2);
 ```
 
-{% capture text-capture %}
-<Image src="./output_58_0.png" alt="Newton's direct method" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-17" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Newton's direct method](./output_58_0.png)
+</ResultToggle>
 
-Now, suppose we wish to minimize the same function, but subject to the constraint $x^{\top} x \leq 1$. To do so, we introduce the Lagrangian:
+Now, suppose we wish to minimize the same function, but subject to the constraint <MathInline formula={String.raw`x^{\top} x \leq 1`} />. To do so, we introduce the Lagrangian:
 
-$$\color{orange}{L(x, \lambda) = f(x) + \lambda (x^{\top} x - 1) \tag{16}}$$
+<MathBlock formula={String.raw`L(x, \lambda) = f(x) + \lambda (x^{\top} x - 1) \tag{16}`} />
 
 We can now solve the problem:
 
-$$\color{orange}{min_x max_{\lambda, \lambda \geq 0} L(x, \lambda) \tag{17}}$$
+<MathBlock formula={String.raw`min_x max_{\lambda, \lambda \geq 0} L(x, \lambda) \tag{17}`} />
 
 ```python
 """
@@ -1013,7 +996,7 @@ solve = tf.linalg.solve(matrix, rhs)
 print("Solving the constrained optimization using Lagrange multipliers yield x: \n{}".format(solve))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Solving the constrained optimization using Lagrange multipliers yield x:
 [[ 3. ]
@@ -1022,10 +1005,9 @@ Solving the constrained optimization using Lagrange multipliers yield x:
  [ 2. ]
  [-0.5]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-18" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-The smallest norm solution to the unconstrained least squares problem may be found using the Moore-Penrose pseudoinverse: $x = A^+ b$. If this point is feasible, then it is the solution to the constrained problem.
+The smallest norm solution to the unconstrained least squares problem may be found using the Moore-Penrose pseudoinverse: <MathInline formula={String.raw`x = A^+ b`} />. If this point is feasible, then it is the solution to the constrained problem.
 
 ```python
 # Moore-penrose pseudoinverse solution to the above problem
@@ -1034,7 +1016,7 @@ mpp_solution = tfp.math.pinv(matrix)
 print(mpp_solution)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 tf.Tensor(
 [[-0.75        0.375      -0.24999987  0.4999999   0.12500001]
@@ -1043,18 +1025,19 @@ tf.Tensor(
  [-0.5        -0.2500001  -0.16666664  0.33333343 -0.08333337]
  [-0.12499999  0.06250004  0.29166666 -0.08333335  0.02083335]], shape=(5, 5), dtype=float32)
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-19" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-If the Moore-Penrose pseudoinverse solution is not feasible, we find the solution where the constraint is active by differetiating the Lagrangian with respect to $x$ and solving for $x$, we obtain:
+If the Moore-Penrose pseudoinverse solution is not feasible, we find the solution where the constraint is active by differetiating the Lagrangian with respect to <MathInline formula={String.raw`x`} /> and solving for <MathInline formula={String.raw`x`} />, we obtain:
 
-$$\color{orange}{x = (A^{\top} A + 2 \lambda I)^{-1} A^{\top} b \tag{18}}$$
+<MathBlock formula={String.raw`x = (A^{\top} A + 2 \lambda I)^{-1} A^{\top} b \tag{18}`} />
 
-We can then find the magnitude of $\lambda$ by performing gradient ascent using:
+We can then find the magnitude of <MathInline formula={String.raw`\lambda`} /> by performing gradient ascent using:
 
-$$\color{orange}{\frac{\partial}{\partial \lambda} L(x, \lambda) = x^{\top} x - 1 \tag{19}}$$
+<MathBlock formula={String.raw`\frac{\partial}{\partial \lambda} L(x, \lambda) = x^{\top} x - 1 \tag{19}`} />
 
-When the norm of $x$ exceeds 1, this derivative is positive, so to follow the derivative uphill and increase the Lagrangian with respect to $\lambda$, we increase $\lambda$. Because the coefficient on the $x^{\top} x$ penatly has increased, solving the linear equation for $x$ will now yield a solution with a smaller norm. The process of solving the linear equation and adjusting $\lambda$ continues until $x$ has the correct norm and the derivative on $\lambda$ is 0.
+When the norm of <MathInline formula={String.raw`x`} /> exceeds 1, this derivative is positive, so to follow the derivative uphill and increase the Lagrangian with respect to <MathInline formula={String.raw`\lambda`} />, we increase <MathInline formula={String.raw`\lambda`} />. Because the coefficient on the <MathInline formula={String.raw`x^{\top} x`} /> penatly has increased, solving the linear equation for <MathInline formula={String.raw`x`} /> will now yield a solution with a smaller norm. The process of solving the linear equation and adjusting <MathInline formula={String.raw`\lambda`} /> continues until <MathInline formula={String.raw`x`} /> has the correct norm and the derivative on <MathInline formula={String.raw`\lambda`} /> is 0.
+
+<Newsletter />
 
 ## 💫 Congratulations
 
@@ -1075,6 +1058,4 @@ Computational Science and Engineering by Prof. R. Hiptmair](http://www.sam.math.
 This concludes the mathematical preliminaries that we use to develop machine learning algorithms. We are now ready to build and analyze some full-fledged machine learning systems. I am excited, are you 😍.
 
 🔥 You can access the Code for this notebook in [GitHub](https://github.com/adhiraiyan/DeepLearningWithTF2.0) or launch an executable versions of this notebook using [Google Colab](https://colab.research.google.com/github/adhiraiyan/DeepLearningWithTF2.0/blob/master/notebooks/04.00-Numerical-Computation.ipynb) or [Jupyter nbviewer](https://nbviewer.jupyter.org/github/adhiraiyan/DeepLearningWithTF2.0/blob/master/notebooks/04.00-Numerical-Computation.ipynb). 🔥
-
-<Newsletter />
 

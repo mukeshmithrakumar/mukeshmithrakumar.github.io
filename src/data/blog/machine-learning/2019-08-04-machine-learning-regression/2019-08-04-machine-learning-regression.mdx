@@ -6,7 +6,7 @@ draft: true
 authors:
   - mithraics
 pubDate: 2019-06-26
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - ML
 ---
@@ -25,7 +25,7 @@ Main regression algorithms:
 
 Simple linear regression is a type of regression analysis where the number of independent variables is one and there is a linear relationship between the independent $(x)$ and dependent $(y)$ variable. This can be modelled as:
 
-$$\color{orange}{y = \beta 0 + \beta 1 x \tag{}}$$
+<MathBlock formula={String.raw`y = \beta 0 + \beta 1 x \tag{}`} />
 
 This linear equation assigns one scale factor to each input value or column, called a coefficient represented by $\beta$
 
@@ -33,7 +33,7 @@ This linear equation assigns one scale factor to each input value or column, cal
 
 A multi-variable linear equation may look like this:
 
-$$\color{orange}{f(x, y, z) = \beta_1 x + \beta_2 y + \beta_3 z \tag{}}$$
+<MathBlock formula={String.raw`f(x, y, z) = \beta_1 x + \beta_2 y + \beta_3 z \tag{}`} />
 
 where $\beta$ represents the coefficients or weights the model will try to learn and the variables $x, y, z$ represent the attributes, or distinct pieces of information we have about each observation.
 
@@ -43,10 +43,8 @@ Multiple regression is one of many statistical techniques for which parameter es
 
 The cost function helps us to figure out the best possible values for $\beta$ which would provide the best fit line for the data points. Since we want the best values for $\beta$, we convert this search problem into a minimization problem where we would like to minimize the error between the predicted value and the actual value.
 
-$$
-\color{orange}{minimize \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \\
-J = \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \tag{}}
-$$
+<MathBlock formula={String.raw`{minimize \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \\
+J = \frac{1}{n} \sum_{i=1}^n (pred_i - y_i)^2 \tag{}}`} />
 
 We choose the above function to minimize. The difference between the predicted values and ground truth measures the error difference. We square the error difference and sum over all data points and divide that value by the total number of data points. This provides the average squared error over all the data points. Therefore, this cost function is also known as the Mean Squared Error(MSE) function. Now, using this MSE function we are going to change the values of $\beta 0$ and $\beta 1$ such that the MSE value settles at the minima.
 
@@ -74,14 +72,12 @@ R-squared is a statistical measure of how close the data are to the fitted regre
 
 The definition of R-squared is fairly straight-forward; it is the percentage of the response variable variation that is explained by a linear model. Or:
 
-$$\color{orange}{\text {R-sqaured} = \frac{\text {Explained Variation}}{\text {Total Variation}} \tag{}}$$
+<MathBlock formula={String.raw`\text {R-sqaured} = \frac{\text {Explained Variation}}{\text {Total Variation}} \tag{}`} />
 
-$$
-\\[[2em] \color{orange}{\text{Coefficient of Determination} \rightarrow R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST} \tag{}} \\[0.7em]
+<MathBlock formula={String.raw`\\[[2em] {\text{Coefficient of Determination} \rightarrow R^2 = \frac{SSR}{SST} = 1 - \frac{SSE}{SST} \tag{}} \\[0.7em]
 \text{Sum of Squares Total} \rightarrow SST = \sum (y - \bar{y})^2 \\[0.7em]
 \text{Sum of Squares Regression} \rightarrow SSR = \sum (y' - \bar{y'})^2 \\[0.7em]
-\text{Sum of Squares Error} \rightarrow SSE = \sum (y - y')^2
-$$
+\text{Sum of Squares Error} \rightarrow SSE = \sum (y - y')^2`} />
 
 where $y$ is the observed data and $y'$ is the predicted data.
 
@@ -93,14 +89,13 @@ R-squared is always between 0 and 100%:
 
 **F**-ratio estimates the statistical significance of the regression model and is computed from the mean squared terms in the ANOVA table. The significance of the F-ratio is obtained by referring to the F distribution table using two degrees of freedom $(df_{MSR}, \ df_{MSE})$. *p* is the number of independent variables (e.g., *p* is one for the simple linear regression).
 
-$$
-\color{orange}{\text{F-ratio} \rightarrow F = \frac{MSR}{MSE} = \frac{\frac{SSR}{df_{MSR}}}{\frac{SSE}{df_{MSE}}} \\[0.7em]
+<MathBlock formula={String.raw`{\text{F-ratio} \rightarrow F = \frac{MSR}{MSE} = \frac{\frac{SSR}{df_{MSR}}}{\frac{SSE}{df_{MSE}}} \\[0.7em]
 \text{degree of freedom} \rightarrow \\
 \begin{cases}
 df_{MSR} = p \\
 df_{MSE} = n - p - 1 \\
 \end{cases}
-\tag{}}$$
+\tag{}}`} />
 
 The advantage of the $F-ratio$ over $R^2$ is that the $F-ratio$ incorporates sample size and number of predictors in assessment of significance of the regression model. A model can have a high $R^2$ and still not be statistically significant.
 
@@ -145,16 +140,15 @@ A decision tree is built top-down from a root node and involves partitioning the
 
 Standard deviation for one attribute:
 
-$$
-\color{orange}{\text{Count} = n \\[0.7em]
+<MathBlock formula={String.raw`{\text{Count} = n \\[0.7em]
 \text{Average} = \bar{x} = \frac{\sum x}{n} \\[0.7em]
 \text{Standard Deviation} = S = \sqrt{\frac{\sum (x - \bar{x})^2}{n}} \\[0.7em]
 \text{Coefficient of Variation} = CV = \frac{S}{\bar{x}} \times 100%
-\tag{}}$$
+\tag{}}`} />
 
 Standard deviation for two attributes (target and predictor):
 
-$$\color{orange}{S(T, X) = \sum_{c \in X} P(c) S(c) \tag{}}$$
+<MathBlock formula={String.raw`S(T, X) = \sum_{c \in X} P(c) S(c) \tag{}`} />
 
 The standard deviation reduction is based on the decrease in standard deviation after a dataset is split on an attribute. Constructing a decision tree is all about finding attribute that returns the highest standard deviation reduction (i.e., the most homogeneous branches).
 
@@ -162,20 +156,20 @@ Steps in Standard Deviation Reduction:
 1. The standard deviation of the target is calculated.
 2. The dataset is then split on the different attributes. The standard deviation for each branch is calculated. The resulting standard deviation is subtracted from the standard deviation before the split.The result is the standard deviation reduction.
 
-$$\color{orange}{SDR(T,X) = S(T) - S(T,X) \tag{}}$$
+<MathBlock formula={String.raw`SDR(T,X) = S(T) - S(T,X) \tag{}`} />
 
 3. The attribute with the largest standard deviation reduction is chosen for the decision node.
 4. The dataset is divided based on the values of the selected attribute. This process is run recursively on the non-leaf branches, until all data is processed. In practice, we need some termination criteria. For example, when coefficient of deviation $(CV)$ for a branch becomes smaller than a certain threshold (e.g., 10%) and/or when too few instances $(n)$ remain in the branch (e.g., 3).
 
 ### SSE for Decision Tree Optimization
 
-$$\color{orange}{SSE = \sum_{i \in S_1} (y_i - \bar{y}_1) + \sum_{i \in S_2}(y_i - \bar{y}_2) \tag{}}$$
+<MathBlock formula={String.raw`SSE = \sum_{i \in S_1} (y_i - \bar{y}_1) + \sum_{i \in S_2}(y_i - \bar{y}_2) \tag{}`} />
 
 where $\bar{y}_1$ and $\bar{y}_2$ are the average values of the dependent variable in groups $S_1$ and $S_2$. For groups $S_1$ and $S_2$, the method will recursively split the predictor values within groups. In practice, the method stops when the sample size of the split group falls below certain threshold.
 
 To prevent over-fitting, the constructed tree can be pruned by penalizing the $SSE$ with tree size:
 
-$$\color{orange}{SSE_{C_p} = SSE + c_p \times S_t \tag{}}$$
+<MathBlock formula={String.raw`SSE_{C_p} = SSE + c_p \times S_t \tag{}`} />
 
 where $S_t$ is the size of the tree (number of terminal nodes), and $c_p$ is complexity parameter. Smaller $c_p$ will lead to larger trees, and vice versa.
 
@@ -191,19 +185,17 @@ KNN classifier assigns observations to categories or assigns probabilities to th
 
 KNN regression uses the same distance functions as KNN classification. Such as:
 
-$$
-\color{orange}{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
+<MathBlock formula={String.raw`{\text{Euclidean} \rightarrow \ \sqrt{\sum_{i=1}^k (x_i - y_i)^2} \\[.7em]
 \text{Manhattan} \rightarrow \ \sum_{i=1}^k |x_i - y_i| \\[.7em]
 \text{Minkowski} \rightarrow \ \left(\sum_{i=1}^k (|x_i - y_i|)^q \right)^{1/q}
-\tag{}}$$
+\tag{}}`} />
 
 The above three distance measure are only valid for continuous variables. In the case of categorical variables you must use the Hamming distance, which is a measure of the number of instances in which corresponding symbols are different in two strings of equal length.
 
-$$
-\color{orange}{D_H = \sum_{i=1}^k |x_i -y_i| \\[.7em]
+<MathBlock formula={String.raw`{D_H = \sum_{i=1}^k |x_i -y_i| \\[.7em]
 x = y \Rightarrow D = 0 \\[.7em]
 x \neq y \Rightarrow D = 1
-\tag{}}$$
+\tag{}}`} />
 
 Choosing the optimal value for K is best done by first inspecting the data. In general, a large K value is more precise as it reduces the overall noise; however, the compromise is that the distinct boundaries within the feature space are blurred. Cross-validation is another way to retrospectively determine a good K value by using an independent data set to validate your K value.
 
@@ -223,16 +215,15 @@ The frequentist view of linear regression model:
 
 In the Bayesian viewpoint, we formulate linear regression using probability distributions rather than point estimates. The response, y, is not estimated as a single value, but is assumed to be drawn from a probability distribution. The model for Bayesian Linear Regression with the response sampled from a normal distribution is:
 
-$$\color{orange}{y \sim N(\beta^T X, \sigma^2 I) \tag{}}$$
+<MathBlock formula={String.raw`y \sim N(\beta^T X, \sigma^2 I) \tag{}`} />
 
 The output, y is generated from a normal (Gaussian) Distribution characterized by a mean and variance. The mean for linear regression is the transpose of the weight matrix multiplied by the predictor matrix. The variance is the square of the standard deviation σ (multiplied by the Identity matrix because this is a multi-dimensional formulation of the model).
 
 The aim of Bayesian Linear Regression is not to find the single “best” value of the model parameters, but rather to determine the posterior distribution for the model parameters. Not only is the response generated from a probability distribution, but the model parameters are assumed to come from a distribution as well. The posterior probability of the model parameters is conditional upon the training inputs and outputs:
 
-$$
-\color{orange}{P(\beta |y, X) = \frac{P(y| \beta, X) * P(\beta | X)}{P(y|X)} \\[0.7em]
+<MathBlock formula={String.raw`{P(\beta |y, X) = \frac{P(y| \beta, X) * P(\beta | X)}{P(y|X)} \\[0.7em]
 Posterior = \frac{Likelihood \ * \ Prior}{Normalization}
-\tag{}}$$
+\tag{}}`} />
 
 Two primary benefits of Bayesian Linear Regression:
 1. **Priors**: If we have domain knowledge, or a guess for what the model parameters should be, we can include them in our model, unlike in the frequentist approach which assumes everything there is to know about the parameters comes from the data. If we don’t have any estimates ahead of time, we can use non-informative priors for the parameters such as a normal distribution.

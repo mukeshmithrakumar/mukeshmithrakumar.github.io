@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-02
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - DL
 ---
@@ -87,13 +87,12 @@ print("Tensorflow version: {}".format(tf.__version__))
 print("Tensorflow probability version: {}".format(tfp.__version__))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Tensorflow version: 2.0.0-dev20190602
 Tensorflow probability version: 0.8.0-dev20190602
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-1" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.01 - Why Probability?
 
@@ -109,7 +108,7 @@ There are three possible sources of uncertainty:
 
 Okay, swear, last Avengers reference.
 
-<Image src="./fig0300a.jpg" alt="frequentist probability" />
+![frequentist probability](./fig0300a.jpg)
 
 When Dr. Strange said we have 1 in 14 million chances of winning the war, he practically saw those 14 million futures, this is called __frequentist probability__, which defines an event's probability as the limit of its relative frequency in a large number of trials. But not always do we have Dr. Strange's time stone to see all the possible futures or events that are repeatable, in this case we turn to __Bayesian probability__, which uses probability to represent a degree of belief for certain events, with 1 indicating absolute certainty and 0 indicating absolute uncertainty.
 
@@ -121,7 +120,7 @@ A __random variable__ is a variable that can take on different values randomly. 
 
 Well, if that doesn't make sense, let me give you an example, when we hear random variable, we tend to think, this must work like a random number generator, spitting out random values each time we call. Atleast that's what I thought when I heard about random variables for the first time, this is partly correct, let me clear it up, so, random number generators have two main components, a sampler, which is nothing more than a happy soul that flips a coin over and over again, reporting the results. And after this sampler, we have a random variable, the job of the random variable is to translate these Heads or Tails events into numbers based on our rules.
 
-Random variables can be discrete or continuous. A discrete random variable is one that has a finite or countably infinite number of states. Note that these states are not necessarily the integers; they can also just be named states that are not considered to have any numerical value. For example, gender (male, female, etc), for which we use an indicator function $\mathbb{I}$ to map non-numeric values to numbers, e.g. male=0, female=1. A continuous random variable is associated with a real value.
+Random variables can be discrete or continuous. A discrete random variable is one that has a finite or countably infinite number of states. Note that these states are not necessarily the integers; they can also just be named states that are not considered to have any numerical value. For example, gender (male, female, etc), for which we use an indicator function <MathInline formula={String.raw`\mathbb{I}`} /> to map non-numeric values to numbers, e.g. male=0, female=1. A continuous random variable is associated with a real value.
 
 ```python
 """
@@ -156,12 +155,11 @@ plt.hist(rayleigh, color=color_o)
 plt.show()
 ```
 
-{% capture text-capture %}
-<Image src="./output_9_0.png" alt="Rademacher Discrete Random Variables" />
+<ResultToggle>
+![Rademacher Discrete Random Variables](./output_9_0.png)
 
-<Image src="./output_9_1.png" alt="Rayleigh Continuous Random Variables" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-2" button-text="Toggle to see results" toggle-text=text-capture%}
+![Rayleigh Continuous Random Variables](./output_9_1.png)
+</ResultToggle>
 
 ### 03.03 - Probability Distributions
 
@@ -173,7 +171,7 @@ A probability distribution over discrete variables may be described using a __pr
 
 For example the roll of a dice is random and a discrete variable means the roll can only have 1, 2, 3, 4, 5 or 6 on a die and no values inbetween.
 
-We denote probability mass functions with $P$, where we denote a __PMF__ equation as $P(X = x)$. Here $x$ can be a number on the dice when $X$ is the event of rolling the dice.
+We denote probability mass functions with <MathInline formula={String.raw`P`} />, where we denote a __PMF__ equation as <MathInline formula={String.raw`P(X = x)`} />. Here <MathInline formula={String.raw`x`} /> can be a number on the dice when <MathInline formula={String.raw`X`} /> is the event of rolling the dice.
 
 ```python
 """
@@ -215,24 +213,23 @@ def roll(sides, rolls):
 single_dice(x=6, sides=6, rolls=10000)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 P(X = 6) = 16.43%
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-3" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_14_1.png" alt="single dice distribution" />
+![single dice distribution](./output_14_1.png)
 
-To be a __PMF__ on a random variable x, a function $P$ must satisfy the following properties:
+To be a __PMF__ on a random variable x, a function <MathInline formula={String.raw`P`} /> must satisfy the following properties:
 
-- The domain of $P$ must be the set of all possible states of x. In our example above the possible states of x are from 1-6, try plugging in 7 for x and see what value you get.
+- The domain of <MathInline formula={String.raw`P`} /> must be the set of all possible states of x. In our example above the possible states of x are from 1-6, try plugging in 7 for x and see what value you get.
 
-- $\forall x \in \mathrm{x}, 0 \leq P(x) \leq 1$. An impossible event has probability 0, and no state can be less probable than that. Likewise, an event that is guaranteed to happen has probability 1, and no state can have a greater chance of occurring. If you tried plugging in 7 for our example above, you would have seen the probability of obtaining a 7 would be zero, that is an impossible event because 7 is not in our set.
+- <MathInline formula={String.raw`\forall x \in \mathrm{x}, 0 \leq P(x) \leq 1`} />. An impossible event has probability 0, and no state can be less probable than that. Likewise, an event that is guaranteed to happen has probability 1, and no state can have a greater chance of occurring. If you tried plugging in 7 for our example above, you would have seen the probability of obtaining a 7 would be zero, that is an impossible event because 7 is not in our set.
 
-- $\sum_{x \in \mathrm{x}} P(x) = 1$. Normalized property that prevents from obtaining probabilities greater than one. Meaning if you add all the individual values of our dice probabilities, it should sum to 1 or 100%.
+- <MathInline formula={String.raw`\sum_{x \in \mathrm{x}} P(x) = 1`} />. Normalized property that prevents from obtaining probabilities greater than one. Meaning if you add all the individual values of our dice probabilities, it should sum to 1 or 100%.
 
-Probability mass functions can act on many variables at the same time. Such a probability distribution over many variables is known as a __joint probability mass function__. $P (\mathrm{x} = x; \mathrm{y} = y) = P(x) P(y)$ denotes the probability that $\mathrm{x} = x$ and $\mathrm{y} = y$ simultaneously.
+Probability mass functions can act on many variables at the same time. Such a probability distribution over many variables is known as a __joint probability mass function__. <MathInline formula={String.raw`P (\mathrm{x} = x; \mathrm{y} = y) = P(x) P(y)`} /> denotes the probability that <MathInline formula={String.raw`\mathrm{x} = x`} /> and <MathInline formula={String.raw`\mathrm{y} = y`} /> simultaneously.
 
 ```python
 """
@@ -278,16 +275,15 @@ print("P(x = {:.4}%), P(y = {:.4}%), P(x = {}; y = {}) = {:.4}%\n\n".format(tf.m
 
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 P(x = 16.9%), P(y = 16.39%), P(x = 4; y = 1) = 2.77%
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-4" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_17_0.png" alt="Dice 1 rolls" />
+![Dice 1 rolls](./output_17_0.png)
 
-<Image src="./output_17_1.png" alt="Dice 2 rolls" />
+![Dice 2 rolls](./output_17_1.png)
 
 #### 3.3.2 Continuous Variables and Probability Density Functions
 
@@ -310,21 +306,20 @@ g = sns.distplot(continuous, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_20_0.png" alt="uniform distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-5" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![uniform distribution](./output_20_0.png)
+</ResultToggle>
 
-To be a probability density function, a function $p$ must satisfy the
+To be a probability density function, a function <MathInline formula={String.raw`p`} /> must satisfy the
 following properties:
 
-- The domain of $p$ must be the set of all possible states of x
+- The domain of <MathInline formula={String.raw`p`} /> must be the set of all possible states of x
 
-- $\forall x \in \mathrm{x}, p(x) \geq 0$. Note that we do not require $p(x) \leq 1$
+- <MathInline formula={String.raw`\forall x \in \mathrm{x}, p(x) \geq 0`} />. Note that we do not require <MathInline formula={String.raw`p(x) \leq 1`} />
 
-- $\int p(x)dx = 1$
+- <MathInline formula={String.raw`\int p(x)dx = 1`} />
 
-A probability density function $p(x)$ does not give the probability of a specific state directly; instead the probability of landing inside an infinitesimal region with volume $\delta x$ is given by $p(x) \delta x$
+A probability density function <MathInline formula={String.raw`p(x)`} /> does not give the probability of a specific state directly; instead the probability of landing inside an infinitesimal region with volume <MathInline formula={String.raw`\delta x`} /> is given by <MathInline formula={String.raw`p(x) \delta x`} />
 
 ```python
 """
@@ -340,12 +335,11 @@ patches[3].set_fc(color_o)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_23_0.png" alt="continuous distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-6" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![continuous distribution](./output_23_0.png)
+</ResultToggle>
 
-We can integrate the density function to find the actual probability mass of a set of points. Specifically, the probability that $x$ lies in some set $\mathbb{S}$ is given by the integral of $p(x)$ over that set ($\int_{[a,b]} p(x) dx$)
+We can integrate the density function to find the actual probability mass of a set of points. Specifically, the probability that <MathInline formula={String.raw`x`} /> lies in some set <MathInline formula={String.raw`\mathbb{S}`} /> is given by the integral of <MathInline formula={String.raw`p(x)`} /> over that set (<MathInline formula={String.raw`\int_{[a,b]} p(x) dx`} />)
 
 __Tensorflow Probability Distribution Library__
 
@@ -397,14 +391,13 @@ plt.grid()
 print("Probability of drawing 1.5 = {:.4}% from the normal distribution".format(pdf_x*100))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Probability of drawing 1.5 = 11.74% from the normal distribution
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-7" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_26_1.png" alt="Normal distribution" />
+![Normal distribution](./output_26_1.png)
 
 ### 03.04 - Marginal Probability
 
@@ -412,7 +405,7 @@ Sometimes we know the probability distribution over a set of variables and we wa
 
 For discrete random variables x and y, we use the __sum rule__ to find the marginal probability distribution.
 
-$$\color{orange}{\forall x \in \mathrm{x}, P(\mathrm{x} = x) = \displaystyle\sum_{y} P(\mathrm{x} = x, \mathrm{y} = y) = \displaystyle\sum_{y} P( x) P(y)) \tag{1}}$$
+<MathBlock formula={String.raw`\forall x \in \mathrm{x}, P(\mathrm{x} = x) = \displaystyle\sum_{y} P(\mathrm{x} = x, \mathrm{y} = y) = \displaystyle\sum_{y} P( x) P(y)) \tag{1}`} />
 
 If you have trouble viewing the equations in the browser you can also read the chapter in [Jupyter nbviewer](https://nbviewer.jupyter.org/github/adhiraiyan/DeepLearningWithTF2.0/blob/master/notebooks/03.00-Probability-and-Information-Theory.ipynb) in its entirety. If not, let's continue.
 
@@ -447,37 +440,36 @@ self_driving_joint = tfd.Independent(self_driving, reinterpreted_batch_ndims=1)
 print("Marginal Probability of event [0, 0, 0]: {:.4}".format(self_driving_joint.prob([0, 0, 0])))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Individual probabilities: [0.09999999 0.19999999 0.29999998]
 Marginal Probability of event [0, 0, 0]: 0.504
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-8" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Now now, the value can be scary, I mean just 50% chance of surviving, not so good, but note that this is just probability, what you should worry is about the odds. We use probability and odds interchangeably in day to day life, but they mean different things, if you recall in my first example, Dr. Strange gave us the odds of winning as 1 in 14 million, so in the self driving car case, even though the probability may seem low, your odds may be higher. For a detailed difference between odds and probability, check ["The Difference Between "Probability" and "Odds""](http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Confidence_Intervals/BS704_Confidence_Intervals10.html).
 
 Finally for continuous variables, we need to use integration instead of summation.
 
-$$\color{orange}{p(x) = \int p(x, y) dy \tag{2}}$$
+<MathBlock formula={String.raw`p(x) = \int p(x, y) dy \tag{2}`} />
 
 And the way to find the marginal probabilities would be the same except you would be using a different distribution, based on continuous random variables, three more sections and you will have a better idea of which distributions to use 😉.
 
 ### 03.05 - Conditional Probability
 
-In many cases, we are interested in the probability of some event, given that some other event has happened. This is called a __conditional probability__. We denote the conditional probability that $\mathrm{y} = y$ given  $\mathrm{x} = x$ as:
+In many cases, we are interested in the probability of some event, given that some other event has happened. This is called a __conditional probability__. We denote the conditional probability that <MathInline formula={String.raw`\mathrm{y} = y`} /> given  <MathInline formula={String.raw`\mathrm{x} = x`} /> as:
 
-$$\color{orange}{P(\mathrm{x} = x \ | \ \mathrm{y} = y) = \frac{P(\mathrm{x} = x, \mathrm{y} = y)}{P(\mathrm{y} = y)} \tag{3a}}$$
+<MathBlock formula={String.raw`P(\mathrm{x} = x \ | \ \mathrm{y} = y) = \frac{P(\mathrm{x} = x, \mathrm{y} = y)}{P(\mathrm{y} = y)} \tag{3a}`} />
 
 This can be really useful on uncertain events, for example, if I ask you, do you think I walk to work? By now you should say something along, 40% chance or some arbitrary number that I walk to work, but if I give you additional information like say i live 10 minutes walking distance from work, then the probability of me walking to work got high right, this can happen the other way too, if I say I am 1 hour walking distance from work, then probability of me walking to work will get small. This is conditional probability. You will word it as "probability of me walking to work given I live 10 minutes from work".
 
 The conditional probability can also be given in terms of sets as below:
 
-$$\color{orange}{P(\mathrm{x} = x \ | \ \mathrm{y} = y) = \frac{P( x \cap y)}{P(y)} \tag{3b}}$$
+<MathBlock formula={String.raw`P(\mathrm{x} = x \ | \ \mathrm{y} = y) = \frac{P( x \cap y)}{P(y)} \tag{3b}`} />
 
 This can be illustrated as below:
 
-<Image src="./fig0305a.png" alt="Conditinoal probability" />
+![Conditinoal probability](./fig0305a.png)
 
 ```python
 """
@@ -517,7 +509,7 @@ for i in range(100):
 
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 X1: [4] 	 X2: [3] 	 P(X1 or X2=4 | 7): 33.33%
 X1: [3] 	 X2: [4] 	 P(X1 or X2=4 | 7): 33.33%
@@ -525,14 +517,13 @@ X1: [3] 	 X2: [4] 	 P(X1 or X2=4 | 7): 33.33%
 X1: [4] 	 X2: [3] 	 P(X1 or X2=4 | 7): 33.33%
 X1: [4] 	 X2: [3] 	 P(X1 or X2=4 | 7): 33.33%
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-9" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.06 - The Chain Rule of Conditional Probabilities
 
 Any joint probability distribution over many random variables may be decomposed into conditional distributions over only one variable:
 
-$$\color{orange}{P(\mathrm{x^{(1)}, \cdots, x^{(n)}}) = P(\mathrm{x^{(1)}}) \textstyle\prod_{i = 2}^{n} P (\mathrm{x^{(i)}} | \mathrm{x^{(1)}, \cdots, x^{(i-1)}}) \tag{4}}$$
+<MathBlock formula={String.raw`P(\mathrm{x^{(1)}, \cdots, x^{(n)}}) = P(\mathrm{x^{(1)}}) \textstyle\prod_{i = 2}^{n} P (\mathrm{x^{(i)}} | \mathrm{x^{(1)}, \cdots, x^{(i-1)}}) \tag{4}`} />
 
 This observation is known as the __chain rule__, or __product rule__, of probability.
 
@@ -565,18 +556,17 @@ joint_unit_distribution = tfd.Independent(units_distribution, reinterpreted_batc
 print("Probability of P(a, b, c) = P(1, 1, 1): {:.4}".format(joint_unit_distribution.prob([1, 1, 1])))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Probability of P(a, b, c) = P(1, 1, 1): 0.856
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-10" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.07 - Independence and Conditional Independence
 
 Two random variables x and y are __independent__ if their probability distribution can be expressed as a product of two factors, one involving only x and one involving only y:
 
-$$\color{orange}{\forall x \in \mathrm{x}, y \in \mathrm{y}, \ p(\mathrm{x} = x, \mathrm{y} = y) = p(\mathrm{x} = x)p(\mathrm{y} = y) \tag{5}}$$
+<MathBlock formula={String.raw`\forall x \in \mathrm{x}, y \in \mathrm{y}, \ p(\mathrm{x} = x, \mathrm{y} = y) = p(\mathrm{x} = x)p(\mathrm{y} = y) \tag{5}`} />
 
 For example, let's say Scooby-Doo and Tom live in Coolsville.The probability that Scooby gets home in time for dinner, and the probability that Tom gets home in time for dinner are independent, this is we wouldn't expect one to have an affect on the other. These are independent events.
 
@@ -595,32 +585,31 @@ conditional_prob = tf.divide(prob_numerator, prob_denominator)
 print("Probability of getting 4 on dice 1 given I get 1 on Dice 2: {}%".format(tf.multiply(conditional_prob, 100)))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Probability of getting 4 on dice 1 given I get 1 on Dice 2: 21.0%
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-11" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Note the dice 1 throw that resulted getting four can happen without the need of dice 2 throw, these two events are  independent.
 
 Two random variables x and y are __conditionally independent__ given a random variable z if the conditional probability distribution over x and y factorizes in this way for every value of z:
 
-$$\color{orange}{\forall x \in \mathrm{x}, y \in \mathrm{y}, z \in \mathrm{z}, \ p(\mathrm{x} = x, \mathrm{y} = y \ | \ \mathrm{z} = z) = p(\mathrm{x} = x \ | \ \mathrm{z} = z)p(\mathrm{y} = y \ | \ \mathrm{z} = z) \tag{6}}$$
+<MathBlock formula={String.raw`\forall x \in \mathrm{x}, y \in \mathrm{y}, z \in \mathrm{z}, \ p(\mathrm{x} = x, \mathrm{y} = y \ | \ \mathrm{z} = z) = p(\mathrm{x} = x \ | \ \mathrm{z} = z)p(\mathrm{y} = y \ | \ \mathrm{z} = z) \tag{6}`} />
 
 Let's continue with our Scooby-Doo and Tom example, now let's say there was a monster mouse attack in the city. The probabilities of Scooby getting home in time and Tom getting home in time for dinner will depend on the monster mouse attack. However, Scooby and Tom have nothing to do with each other, then their probabilities of getting home in time are independent. Meaning we can't deduce from Scooby getting home late that Tom will get late as well.
 
-We denote $x \perp y$ means that x and y are independent while $x \perp y \ \| \ z$ means that x and y are conditionally independent given z.
+We denote <MathInline formula={String.raw`x \perp y`} /> means that x and y are independent while <MathInline formula={String.raw`x \perp y \ \| \ z`} /> means that x and y are conditionally independent given z.
 
 ### 03.08 - Expectation, Variance and Covariance
 
-The __expectation__, or __expected value__, of some function $f(x)$ with respect to a probability distribution $P(x)$ is the average, or mean value, that $f$ takes on when $x$ is drawn from $P$. For discrete variables this can be computed with a summation:
+The __expectation__, or __expected value__, of some function <MathInline formula={String.raw`f(x)`} /> with respect to a probability distribution <MathInline formula={String.raw`P(x)`} /> is the average, or mean value, that <MathInline formula={String.raw`f`} /> takes on when <MathInline formula={String.raw`x`} /> is drawn from <MathInline formula={String.raw`P`} />. For discrete variables this can be computed with a summation:
 
-$$\color{orange}{\mathbb{E}_{x \sim P} [f(x)] = \displaystyle\sum_{x} P(x) f(x) \tag{7}}$$
+<MathBlock formula={String.raw`\mathbb{E}_{x \sim P} [f(x)] = \displaystyle\sum_{x} P(x) f(x) \tag{7}`} />
 
-Let me motivate this with a simple example, let's say I take you to a casino, my treat for you working up to section 8 😉 and we play a simple game. You pay, well I pay 2 bitcoins and you roll a fair die. In this game if you get {1, 2, 3} lets call this event A, you will win 1 bitcoin, if event B={4, 5} occurs, you win 2 bitcoins and if C={6} occurs, you win 6  bitcoins. So, we being smart want to calculate how much we expect to make every time we play this game. So, if A occurs, we make -1 bitcoins, if B occurs, we don't make any bitcoin and if C occurs, we make 4 bitcoins. So, we can compute the average profit as:
+Let me motivate this with a simple example, let's say I take you to a casino, my treat for you working up to section 8 😉 and we play a simple game. You pay, well I pay 2 bitcoins and you roll a fair die. In this game if you get \{1, 2, 3\} lets call this event A, you will win 1 bitcoin, if event B=\{4, 5\} occurs, you win 2 bitcoins and if C={6} occurs, you win 6  bitcoins. So, we being smart want to calculate how much we expect to make every time we play this game. So, if A occurs, we make -1 bitcoins, if B occurs, we don't make any bitcoin and if C occurs, we make 4 bitcoins. So, we can compute the average profit as:
 
-$(-1) \times (1/6 + 1/6 + 1/6) + (0) \times (1/6 + 1/6) + (4) \times (1/6) = 1/6$
+<MathBlock formula={String.raw`(-1) \times (1/6 + 1/6 + 1/6) + (0) \times (1/6 + 1/6) + (4) \times (1/6) = 1/6`} />
 
 And, we can expect to make 1/6 bitcoins on the average every time we play this game. So before you bet on something or play a game next time, just check how much you can expect to make out of it
 
@@ -638,16 +627,15 @@ for i in range(0, len(dice)):
 print( "Expectation of the bitcoin game E(X) is : {:.4}".format(expectation))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Expectation of the bitcoin game E(X) is : 0.167
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-12" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 For continuous variables, it is computed with an integral:
 
-$$\color{orange}{\mathbb{E}_{x \sim P} [f(x)] = \int p(x) f(x) dx \tag{8}}$$
+<MathBlock formula={String.raw`\mathbb{E}_{x \sim P} [f(x)] = \int p(x) f(x) dx \tag{8}`} />
 
 ```python
 # Let's create a uniform distribution such that the limit be between 0 and 1
@@ -663,26 +651,25 @@ plt.hist(continuous_expectation, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 The Expectation of f(x) = 1 for the limit 0 to 1: 0.5
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-13" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_47_1.png" alt="Expectation Plot" />
+![Expectation Plot](./output_47_1.png)
 
 Expectations are linear, for example,
 
-$$\color{orange}{\mathbb{E}_{\mathrm{x}}[\alpha f(x) + \beta g(x)] = \alpha \mathbb{E}_{\mathrm{x}}[f(x)] + \beta \mathbb{E}_{\mathrm{x}}[g(x)]  \tag{9}}$$
+<MathBlock formula={String.raw`\mathbb{E}_{\mathrm{x}}[\alpha f(x) + \beta g(x)] = \alpha \mathbb{E}_{\mathrm{x}}[f(x)] + \beta \mathbb{E}_{\mathrm{x}}[g(x)]  \tag{9}`} />
 
-where $\alpha \ \text{and} \ \beta$ are not dependent on $x$.
+where <MathInline formula={String.raw`\alpha \ \text{and} \ \beta`} /> are not dependent on <MathInline formula={String.raw`x`} />.
 
 When we predict the expected value of an experiment, we would like our outcome to not deviate too much from the expected value and __variance__ gives a measure of how much the values of a function of a random variable x vary as we sample different values of x from its probability distribution:
 
-$$\color{orange}{Var(f(x)) = \mathbb{E} \Big[ (f(x) - \mathbb{E}[f(x)])^2 \Big] \tag{10}}$$
+<MathBlock formula={String.raw`Var(f(x)) = \mathbb{E} \Big[ (f(x) - \mathbb{E}[f(x)])^2 \Big] \tag{10}`} />
 
-When the variance is low, the values of $f(x)$ cluster near their expected value. The square root of the variance is known as the __standard deviation__.
+When the variance is low, the values of <MathInline formula={String.raw`f(x)`} /> cluster near their expected value. The square root of the variance is known as the __standard deviation__.
 
 ```python
 # creating an x axis from -3 to 3 with 0.001 increments
@@ -704,19 +691,18 @@ plt.grid()
 print("Blue Plot Variance: {} \nOrange Plot Variance: {}".format(distribution_1.variance(), distribution_2.variance()))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Blue Plot Variance: 0.25
 Orange Plot Variance: 2.25
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-14" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_50_1.png" alt="Variance Plot" />
+![Variance Plot](./output_50_1.png)
 
 The __covariance__ gives some sense of how much two values are linearly related to each other, as well as the scale of these variables:
 
-$$\color{orange}{Cov(f(x), g(y)) = \mathbb{E} \big[ (f(x) - \mathbb{E}[f(x)]) (g(y) - \mathbb{E}[g(y)]) \big] \tag{11}}$$
+<MathBlock formula={String.raw`Cov(f(x), g(y)) = \mathbb{E} \big[ (f(x) - \mathbb{E}[f(x)]) (g(y) - \mathbb{E}[g(y)]) \big] \tag{11}`} />
 
 In simple terms covariance refers to the measure of how two random variable in a data set will change together.
 
@@ -739,12 +725,11 @@ covariance = tfp.stats.covariance(f_x, g_y, sample_axis=0, event_axis=None)
 print("Covariance of f(x) and g(y): {}".format(covariance[0]))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Covariance of f(x) and g(y): [ 0.10961602 -0.08872931  0.03041128]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-15" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Sometimes we confuse covariance with __correlation__, even though they both indicate whether variables are positively or negatively related to each other, they defer from the fact that covariance only determines whether the different units of the variables are increasing or decreasing, while correlation measures how closely the variables move together by normalizing the contribution of each variable.
 
@@ -755,24 +740,23 @@ correlation = tfp.stats.correlation(f_x, g_y, sample_axis=0, event_axis=None)
 print("Correlation of f(x) and g(y): {}".format(correlation[0]))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Correlation of f(x) and g(y): [ 0.10907104 -0.09540905  0.02875604]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-16" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The notions of covariance and dependence are related but distinct concepts. They are related because two variables that are independent have zero covariance, and two variables that have nonzero covariance are dependent.
 
 Independence, however, is a distinct property from covariance. For two variables to have zero covariance, there must be no linear dependence between them. Independence is a stronger requirement than zero covariance, because independence also excludes nonlinear relationships.
 
-The __covariance matrix__ of a random vector $x \in \mathbb{R}^n$ is an *n x n* matrix, such that:
+The __covariance matrix__ of a random vector <MathInline formula={String.raw`x \in \mathbb{R}^n`} /> is an *n x n* matrix, such that:
 
-$$\color{orange}{Cov(\mathbf{x})_{i, j} = Cov(\mathrm{x}_i, \mathrm{x}_j) \tag{12}}$$
+<MathBlock formula={String.raw`Cov(\mathbf{x})_{i, j} = Cov(\mathrm{x}_i, \mathrm{x}_j) \tag{12}`} />
 
 The diagonal elements of the covariance give the variance:
 
-$$\color{orange}{ Cov(\mathrm{x}_i, \mathrm{x}_j) = Var(\mathrm{x}_i) \tag{13}}$$
+<MathBlock formula={String.raw`Cov(\mathrm{x}_i, \mathrm{x}_j) = Var(\mathrm{x}_i) \tag{13}`} />
 
 ```python
 # covariance matrix of f(x)
@@ -781,7 +765,7 @@ cov_matrix = tfp.stats.covariance(f_x, sample_axis=0, event_axis=-1)
 print("Variance of x: {} \nCovariance Matrix for x: \n{}".format(covariance[0], cov_matrix[0]))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Variance of x: [ 0.10961602 -0.08872931  0.03041128]
 Covariance Matrix for x:
@@ -789,8 +773,7 @@ Covariance Matrix for x:
  [ 0.01786118  1.0053835   0.04651672]
  [-0.01279851  0.04651672  1.0021778 ]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-17" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.09 - Common Probability Distributions
 
@@ -800,15 +783,13 @@ Following are a few examples of popular distributions.
 
 #### 3.9.1 Bernoulli Distribution
 
-The __Bernoulli distribution__ is a distribution over a single binary random variable. It is controlled by a single parameter $\phi \in [0, 1]$, which gives the probability of the random variable being equal to 1. It has the following properties:
+The __Bernoulli distribution__ is a distribution over a single binary random variable. It is controlled by a single parameter <MathInline formula={String.raw`\phi \in [0, 1]`} />, which gives the probability of the random variable being equal to 1. It has the following properties:
 
-$$
-\color{orange}{P(\mathrm{x} = 1) = \phi} \\
-\color{orange}{P(\mathrm{x} = 0) = 1 - \phi} \\
-\color{orange}{P(\mathrm{x} = x) = \phi^x (1 - \phi)^{1-x}} \\
-\color{orange}{\mathbb{E}_{\mathrm{x}} [\mathrm{x}] = \phi}\\
-\color{orange}{ Var_{\mathrm{x}}(\mathrm{x}) = \phi(1 - \phi) \tag{14}}
-$$
+<MathBlock formula={String.raw`{P(\mathrm{x} = 1) = \phi} \\
+{P(\mathrm{x} = 0) = 1 - \phi} \\
+{P(\mathrm{x} = x) = \phi^x (1 - \phi)^{1-x}} \\
+{\mathbb{E}_{\mathrm{x}} [\mathrm{x}] = \phi}\\
+{ Var_{\mathrm{x}}(\mathrm{x}) = \phi(1 - \phi) \tag{14}}`} />
 
 The bernoulli distribution is a special case of the __Binomial distribution__ where there is only one trial. A binomial distribution is the sum of independent and identically distributed Bernoulli random variables. For example, let's say you do a single coin toss, the probability of getting heads is p. The random variable that represents your winnings after one coin toss is a Bernoulli random variable. So, what is the probability that you land heads in 100 tosses, this is where you use the Bernoulli trials, in general, if there are n Bernoulli trials, then the sum of those trials is a binomial distribution with parameters n and p. Below, we will see an example for 1000 trials and the resulting Binomial distribution is plotted.
 
@@ -836,7 +817,7 @@ property_5 = bernoulli_distribution.variance()
 print("Var(x) = {0} (1 - {0})".format(property_5))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 P(x = 1) = 0.5
 P(x = 0) = 1 - 0.5 = 0.5
@@ -844,14 +825,13 @@ Property three is a generalization of property 1 and two
 For Bernoulli distribution The expected value of a Bernoulli random variable  X is p (E[X] = p)
 Var(x) = 0.25 (1 - 0.25)
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-18" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_63_1.png" alt="Bernoulli Distribution" />
+![Bernoulli Distribution](./output_63_1.png)
 
 #### 3.9.2 Multinoulli Distribution
 
-The __multinoulli__ or __categorical distribution__ is a distribution over a single discrete variable with *k* different states, where *k* is finite. The multinoulli distribution is a special case of the __multinomial distribution__, which is a generalization of Binomial distribution. A multinomial distribution is the distribution over vectors in ${0, \cdots, n}^k$ representing how many times each of the *k* categories visited when *n* samples are drawn from a multinoulli distribution.
+The __multinoulli__ or __categorical distribution__ is a distribution over a single discrete variable with *k* different states, where *k* is finite. The multinoulli distribution is a special case of the __multinomial distribution__, which is a generalization of Binomial distribution. A multinomial distribution is the distribution over vectors in <MathInline formula={String.raw`{0, \cdots, n}^k`} /> representing how many times each of the *k* categories visited when *n* samples are drawn from a multinoulli distribution.
 
 ```python
 # For a fair dice
@@ -871,16 +851,15 @@ g = sns.distplot(multinoulli_pdf, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Dice throw values: [[ 8. 10. 13. 12.  9.  8.]]
 In sixty trials, index 0 represents the times the dice landed on 1 (= 8.0 times) and
 index 1 represents the times the dice landed on 2 (= 10.0 times)
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-19" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_66_1.png" alt="Multinomial Distribution" />
+![Multinomial Distribution](./output_66_1.png)
 
 There are other discrete distributions like:
 - Hypergeometric Distribution: models sampling without replacement
@@ -895,9 +874,9 @@ Next, we will take a look at some continuous distributions.
 
 The most commonly used distribution over real numbers is the __normal distribution__, also known as the __Gaussian distribution__:
 
-$$\color{orange}{\mathcal{N}(x; \mu, \sigma^2) = \sqrt{\frac{1}{2 \pi \sigma^2}} exp \Big(- \frac{1}{2 \sigma^2} (x - \mu)^2 \Big) \tag{15}}$$
+<MathBlock formula={String.raw`\mathcal{N}(x; \mu, \sigma^2) = \sqrt{\frac{1}{2 \pi \sigma^2}} exp \Big(- \frac{1}{2 \sigma^2} (x - \mu)^2 \Big) \tag{15}`} />
 
-The two parameters $\mu \in \mathbb{R}$ and $\sigma \in (0, \infty)$ control the normal distribution. The parameter $\mu$ gives the coordinate of the central peak. This is also the mean of the distribution: $\mathbb{E}[\mathrm{x}] = \mu$. The standard deviation of the distribution is given by $\sigma$, and the variance by $\sigma^2$.
+The two parameters <MathInline formula={String.raw`\mu \in \mathbb{R}`} /> and <MathInline formula={String.raw`\sigma \in (0, \infty)`} /> control the normal distribution. The parameter <MathInline formula={String.raw`\mu`} /> gives the coordinate of the central peak. This is also the mean of the distribution: <MathInline formula={String.raw`\mathbb{E}[\mathrm{x}] = \mu`} />. The standard deviation of the distribution is given by <MathInline formula={String.raw`\sigma`} />, and the variance by <MathInline formula={String.raw`\sigma^2`} />.
 
 ```python
 # We use linespace to create a range of values starting from -8 to 8 with incremants (= stop - start / num - 1)
@@ -917,10 +896,9 @@ plt.fill_between(rand_x_, gaussian_pdf_, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_70_0.png" alt="Gaussian Distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-20" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Gaussian Distribution](./output_70_0.png)
+</ResultToggle>
 
 Normal distributions are a sensible choice for many applications. In the absence of prior knowledge about what form a distribution over the real numbers should take, the normal distribution is a good default choice for two major reasons.
 
@@ -928,11 +906,11 @@ Normal distributions are a sensible choice for many applications. In the absence
 2. Out of all possible probability distributions with the same variance,
 the normal distribution encodes the maximum amount of uncertainty over the real numbers. We can thus think of the normal distribution as being the one that inserts the least amount of prior knowledge into a model.
 
-The normal distribution generalizes to $\mathbb{R}^n$, in which case it is known as the __multivariate normal distribution__. It may be parameterized with a positive definite symmetric matrix $\Sigma$:
+The normal distribution generalizes to <MathInline formula={String.raw`\mathbb{R}^n`} />, in which case it is known as the __multivariate normal distribution__. It may be parameterized with a positive definite symmetric matrix <MathInline formula={String.raw`\Sigma`} />:
 
-$$\color{orange}{\mathcal{N}(x; \mu, \Sigma) = \sqrt{\frac{1}{(2 \pi)^n det(\Sigma)}} exp \Biggr(- \frac{1}{2} (x - \mu)^\top \Sigma^{(-1)} (x - \mu) \Biggr) \tag{16}}$$
+<MathBlock formula={String.raw`\mathcal{N}(x; \mu, \Sigma) = \sqrt{\frac{1}{(2 \pi)^n det(\Sigma)}} exp \Biggr(- \frac{1}{2} (x - \mu)^\top \Sigma^{(-1)} (x - \mu) \Biggr) \tag{16}`} />
 
-The parameter $\mu$ still gives the mean of the distribution, though now it is vector valued. The parameter $\Sigma$ gives the covariance matrix of the distribution.
+The parameter <MathInline formula={String.raw`\mu`} /> still gives the mean of the distribution, though now it is vector valued. The parameter <MathInline formula={String.raw`\Sigma`} /> gives the covariance matrix of the distribution.
 
 ```python
 # We create a multivariate normal distribution with two distributions with mean 0. and std.deviation of 2.
@@ -946,18 +924,17 @@ g = sns.jointplot(samples[:, 0], samples[:, 1], kind='scatter', color=color_b)
 plt.show()
 ```
 
-{% capture text-capture %}
-<Image src="./output_72_0.png" alt="multivariate normal distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-21" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![multivariate normal distribution](./output_72_0.png)
+</ResultToggle>
 
 #### 3.9.4 Exponential and Laplace Distributions
 
-In the context of deep learning, we often want to have a probability distribution with a sharp point at $x = 0$. To accomplish this, we can use the __exponential distribution__:
+In the context of deep learning, we often want to have a probability distribution with a sharp point at <MathInline formula={String.raw`x = 0`} />. To accomplish this, we can use the __exponential distribution__:
 
-$$\color{orange}{p(x; \lambda) = \lambda \mathbf{1}_{x \geq 0} exp(- \lambda x) \tag{17}}$$
+<MathBlock formula={String.raw`p(x; \lambda) = \lambda \mathbf{1}_{x \geq 0} exp(- \lambda x) \tag{17}`} />
 
-The exponential distribution uses the indicator function $\mathbf{1}_{x \geq 0}$ to assign probability zero to all negative values of $x$.
+The exponential distribution uses the indicator function <MathInline formula={String.raw`\mathbf{1}_{x \geq 0}`} /> to assign probability zero to all negative values of <MathInline formula={String.raw`x`} />.
 
 ```python
 # We use linespace to create a range of values starting from 0 to 4 with incremants (= stop - start / num - 1)
@@ -981,14 +958,13 @@ plt.title(r"Probability density function of Exponential distribution with $\lamb
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_75_0.png" alt="Exponential distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-22" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Exponential distribution](./output_75_0.png)
+</ResultToggle>
 
-A closely related probability distribution that allows us to place a sharp peak of probability mass at an arbitrary point $\mu$ is the __Laplace distribution__:
+A closely related probability distribution that allows us to place a sharp peak of probability mass at an arbitrary point <MathInline formula={String.raw`\mu`} /> is the __Laplace distribution__:
 
-$$\color{orange}{\text{Laplace} (x; \mu, \gamma) = \frac{1}{2 \gamma} exp \Big( - \frac{|x - \mu|}{\gamma} \Big) \tag{18}}$$
+<MathBlock formula={String.raw`\text{Laplace} (x; \mu, \gamma) = \frac{1}{2 \gamma} exp \Big( - \frac{|x - \mu|}{\gamma} \Big) \tag{18}`} />
 
 ```python
 # We use linespace to create a range of values starting from 0 to 4 with incremants (= stop - start / num - 1)
@@ -1012,20 +988,19 @@ plt.title(r"Probability density function of Laplace distribution")
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_77_0.png" alt="Laplace distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-23" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Laplace distribution](./output_77_0.png)
+</ResultToggle>
 
 #### 3.9.5 The Dirac Distribution and Empirical Distribution
 
-In some cases, we wish to specify that all the mass in a probability distribution clusters around a single point. This can be accomplished by defining a PDF using the Dirac delta function, $\delta (x)$:
+In some cases, we wish to specify that all the mass in a probability distribution clusters around a single point. This can be accomplished by defining a PDF using the Dirac delta function, <MathInline formula={String.raw`\delta (x)`} />:
 
-$$\color{orange}{p(x) = \delta(x - \mu) \tag{19}}$$
+<MathBlock formula={String.raw`p(x) = \delta(x - \mu) \tag{19}`} />
 
 The Dirac delta function is defined such that it is zero valued everywhere except 0, yet integrates to 1. We can think of the Dirac delta function as being the limit point of a series of functions that put less and less mass on all points other than zero.
 
-By defining $p(x)$ to be $\delta$ shifted by $-\mu$ we obtain an infinitely narrow infinitely high peak of probability mass where $x = \mu$
+By defining <MathInline formula={String.raw`p(x)`} /> to be <MathInline formula={String.raw`\delta`} /> shifted by <MathInline formula={String.raw`-\mu`} /> we obtain an infinitely narrow infinitely high peak of probability mass where <MathInline formula={String.raw`x = \mu`} />
 
 ```python
 """
@@ -1051,16 +1026,15 @@ plt.fill_between(rand_x_, dirac_pdf_, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_80_0.png" alt="Dirac distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-24" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Dirac distribution](./output_80_0.png)
+</ResultToggle>
 
 A common use of the Dirac delta distribution is as a component of an __empirical distribution__:
 
-$$\color{orange}{\hat{p}(x) = \frac{1}{m} \displaystyle\sum_{i = 1}^m \delta  (x - x^{(i)}) \tag{20}}$$
+<MathBlock formula={String.raw`\hat{p}(x) = \frac{1}{m} \displaystyle\sum_{i = 1}^m \delta  (x - x^{(i)}) \tag{20}`} />
 
-which puts probability mass $\frac{1}{m}$ on each of the $m$ points $x^{(1)}, \cdots, x^{(m)}$, forming a given data set or collection of sample.
+which puts probability mass <MathInline formula={String.raw`\frac{1}{m}`} /> on each of the <MathInline formula={String.raw`m`} /> points <MathInline formula={String.raw`x^{(1)}, \cdots, x^{(m)}`} />, forming a given data set or collection of sample.
 
 The Dirac delta distribution is only necessary to define the empirical distribution over continuous variables.
 
@@ -1073,9 +1047,9 @@ We can view the empirical distribution formed from a dataset of training example
 
 One common way of combining simpler distributions to define probability distribution is to construct a __mixture distribution__. A mixture distribution is made up of several component distributions. On each trial, the choice of which component distribution should generate the sample is determined by sampling a component identity from a multinoulli distribution:
 
-$$\color{orange}{P(\mathrm{x}) = \displaystyle\sum_i P(c = i) \ P(\mathrm{x} | c = i) \tag{21}}$$
+<MathBlock formula={String.raw`P(\mathrm{x}) = \displaystyle\sum_i P(c = i) \ P(\mathrm{x} | c = i) \tag{21}`} />
 
-where $P(c)$ is the multinoulli distribution over component identities.
+where <MathInline formula={String.raw`P(c)`} /> is the multinoulli distribution over component identities.
 
 ```python
 """
@@ -1118,18 +1092,17 @@ g = sns.jointplot(x=samples[:, 0, 0], y=samples[:, 1, 0], kind="scatter", color=
 plt.show()
 ```
 
-{% capture text-capture %}
-<Image src="./output_85_0.png" alt="Mixtures of distribution" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-25" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Mixtures of distribution](./output_85_0.png)
+</ResultToggle>
 
 The mixture model allows us to briefly glimpse a concept that will be of paramount importance later—the __latent variable__. A latent variable is a random variable that we cannot observe directly. Latent variables may be related to x through the joint distribution.
 
-A very powerful and common type of mixture model is the Gaussian mixture model, in which the components $p(\mathrm{x} \| c =i)$ are Gaussians. Each component has a separate parametrized mean $\mu^{(i)}$ and covariance $\Sigma^{(i)}$. As with a single Gaussian distribution, the mixture of Gaussians might constrain the covariance matrix for each component to be diagonal or isotropic. A Gaussian mixture model is a __universal approximator__ of densities, in the sense that any smooth density can be approximated with any specific nonzero amount of error by a Gaussian mixture model with enough components.
+A very powerful and common type of mixture model is the Gaussian mixture model, in which the components <MathInline formula={String.raw`p(\mathrm{x} \| c =i)`} /> are Gaussians. Each component has a separate parametrized mean <MathInline formula={String.raw`\mu^{(i)}`} /> and covariance <MathInline formula={String.raw`\Sigma^{(i)}`} />. As with a single Gaussian distribution, the mixture of Gaussians might constrain the covariance matrix for each component to be diagonal or isotropic. A Gaussian mixture model is a __universal approximator__ of densities, in the sense that any smooth density can be approximated with any specific nonzero amount of error by a Gaussian mixture model with enough components.
 
 Some of the other continuous distribution functions include:
-- Erlang Distribution: In a Poisson process of rate $\lambda$ the waiting times between k events have an Erlang distribution.
-- Gamma Distribution: In a Poisson process with rate $\lambda$  the gamma distribution gives the time to the $k^{th}$ event.
+- Erlang Distribution: In a Poisson process of rate <MathInline formula={String.raw`\lambda`} /> the waiting times between k events have an Erlang distribution.
+- Gamma Distribution: In a Poisson process with rate <MathInline formula={String.raw`\lambda`} />  the gamma distribution gives the time to the <MathInline formula={String.raw`k^{th}`} /> event.
 - Beta Distribution: represents a family of probabilities and is a versatile way to represent outcomes for percentages or proportions.
 - Dirichlet Distribution: is a multivariate generalization of the Beta distribution. Dirichlet distributions are commonly used as prior distributions in Bayesian statistics.
 
@@ -1139,9 +1112,9 @@ I recommend you go back to some of the examples before section 9 to see how we a
 
 Logistic Sigmoid:
 
-$$\color{orange}{\sigma(x) = \frac{1}{1 + exp(-x)} \tag{22}}$$
+<MathBlock formula={String.raw`\sigma(x) = \frac{1}{1 + exp(-x)} \tag{22}`} />
 
-The logistic sigmoid is commonly used to produce the $\phi$ parameter of a Bernoulli distribution because its range is (0, 1), which lies within the valid range of values for the $\phi$ parameter. The sigmoid function saturates when its argument is very positive or very negative, meaning that the function becomes very flat and insensitive to small changes in its input.
+The logistic sigmoid is commonly used to produce the <MathInline formula={String.raw`\phi`} /> parameter of a Bernoulli distribution because its range is (0, 1), which lies within the valid range of values for the <MathInline formula={String.raw`\phi`} /> parameter. The sigmoid function saturates when its argument is very positive or very negative, meaning that the function becomes very flat and insensitive to small changes in its input.
 
 ```python
 def logistic(x, phi):
@@ -1174,16 +1147,15 @@ plt.legend()
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_92_0.png" alt="logistic function" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-26" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![logistic function](./output_92_0.png)
+</ResultToggle>
 
 Softplus Function:
 
-$$\color{orange}{\zeta (x) = log \ (1 + exp(x)) \tag{23}}$$
+<MathBlock formula={String.raw`\zeta (x) = log \ (1 + exp(x)) \tag{23}`} />
 
-The softplus function can be useful for producing the $\beta$ or $\sigma$ parameter of a normal distribution because its range is (0, $\infty$). It also arises commonly when manipulating expressions involving sigmoids. The name of the softplus function comes from the fact that it is a smoothed, or “softened,” version of $x^+ = max(0, x)$
+The softplus function can be useful for producing the <MathInline formula={String.raw`\beta`} /> or <MathInline formula={String.raw`\sigma`} /> parameter of a normal distribution because its range is (0, <MathInline formula={String.raw`\infty`} />). It also arises commonly when manipulating expressions involving sigmoids. The name of the softplus function comes from the fact that it is a smoothed, or “softened,” version of <MathInline formula={String.raw`x^+ = max(0, x)`} />
 
 ```python
 def softplus(x, beta):
@@ -1216,31 +1188,30 @@ plt.legend()
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_94_0.png" alt="softplus function" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-27" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![softplus function](./output_94_0.png)
+</ResultToggle>
 
 The following are some useful properties if you wish to memorize:
 
-<Image src="./fig0310a.PNG" alt="sigmoid and softplus properties" />
+![sigmoid and softplus properties](./fig0310a.PNG)
 
-The function $\sigma^{-1}x$ is called the __logit__ in statistics, but this term is rarely used in machine learning.
+The function <MathInline formula={String.raw`\sigma^{-1}x`} /> is called the __logit__ in statistics, but this term is rarely used in machine learning.
 
 ### 03.11 - Bayes' Rule
 
-__Bayes' rule__ is a useful tool that computes the conditional probability $P( x \| y)$ from $P(y \| x)$. Here
+__Bayes' rule__ is a useful tool that computes the conditional probability <MathInline formula={String.raw`P( x \| y)`} /> from <MathInline formula={String.raw`P(y \| x)`} />. Here
 
-- $P( x \| y)$ is called the _posterior_; this is what we are trying to estimate,
-- $P(y \| x)$ is called the _likelihood_; this is the probability of observing the new evidence, given our initial hypothesis,
-- $P(x)$ is called the _prior_; this is the probability of our hypothesis without any additional prior information,
-- $P(y)$ is called the _marginal likelihood_; this is the total probability of observing the evidence.
+- <MathInline formula={String.raw`P( x \| y)`} /> is called the _posterior_; this is what we are trying to estimate,
+- <MathInline formula={String.raw`P(y \| x)`} /> is called the _likelihood_; this is the probability of observing the new evidence, given our initial hypothesis,
+- <MathInline formula={String.raw`P(x)`} /> is called the _prior_; this is the probability of our hypothesis without any additional prior information,
+- <MathInline formula={String.raw`P(y)`} /> is called the _marginal likelihood_; this is the total probability of observing the evidence.
 
 The Bayes' rule can be summed up as:
 
-$$\color{orange}{P(x | y) = \frac{P(x) \ P(y | x)}{P(y)} \tag{24}}$$
+<MathBlock formula={String.raw`P(x | y) = \frac{P(x) \ P(y | x)}{P(y)} \tag{24}`} />
 
-Even though $P(y)$ appears in the formula, it is usually feasible to compute $P(y) = \sum_x P(y \| x) P(x)$, so we do not need to begin with knowledge of $P(y)$.
+Even though <MathInline formula={String.raw`P(y)`} /> appears in the formula, it is usually feasible to compute <MathInline formula={String.raw`P(y) = \sum_x P(y \| x) P(x)`} />, so we do not need to begin with knowledge of <MathInline formula={String.raw`P(y)`} />.
 
 ```python
 """
@@ -1268,12 +1239,11 @@ p_jar_1_given_vanilla = (p_jar_1 * p_vanilla_given_jar_1) / p_vanilla
 print('P(Jar 1 | Vanilla) = {}'.format(p_jar_1_given_vanilla))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 P(Jar 1 | Vanilla) = 0.6
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-28" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.12 - Technical Details of Continuous Variables
 
@@ -1281,7 +1251,7 @@ In this section, we start with __Measure Theory__ and I would be giving you a no
 
 Measure theory studies ways of generalizing the intuitive notions of length, area and volume. For example, see the image below:
 
-<Image src="./fig0312a.jpg" alt="Measure Theory Example" />
+![Measure Theory Example](./fig0312a.jpg)
 
 It's pretty challenging to see how we can measure the area of such a shape and that's in 2D and most of the time we are playing with higher dimensional data. Btw what do you see in the image, I see Darth Vader from star wars and I can't unsee it now 😂. Anyways, let's see how measure theory can help in such situations.
 
@@ -1291,15 +1261,15 @@ Measure theory also provides a rigorous way of describing a set of points as neg
 
 Another useful term from measure theory is __almost everywhere__. A property that holds almost everywhere holds throughout all space except for on a set of measure zero. Now this is where we generalize our measure, even though the example we saw had little probability, measure theory helps make certain probability statements precise.
 
-Another technical detail of continuous variables relates to handling continuous random variables that are deterministic functions of one another. Suppose we have two random variables, __x__ and __y__, such that $y = g(x)$, where *g* is an invertible, continuous, differentiable transformation. One might expect that $p_y(y) = p_x(g^{-1}(y))$. This is not actually the case.
+Another technical detail of continuous variables relates to handling continuous random variables that are deterministic functions of one another. Suppose we have two random variables, __x__ and __y__, such that <MathInline formula={String.raw`y = g(x)`} />, where *g* is an invertible, continuous, differentiable transformation. One might expect that <MathInline formula={String.raw`p_y(y) = p_x(g^{-1}(y))`} />. This is not actually the case.
 
-The problem with this approach is that it fails to account for the distortion of space introduced by the function *g*. Recall that the probability of $x$ lying in an infinitesimally small region with volume $\delta x$ is given by $p(x) \delta x$. Since *g* can expand or contract space, the infinitesimal volume surrounding $x$ in $x$ space may have different volume in $y$ space. We can correct this problem by defining:
+The problem with this approach is that it fails to account for the distortion of space introduced by the function *g*. Recall that the probability of <MathInline formula={String.raw`x`} /> lying in an infinitesimally small region with volume <MathInline formula={String.raw`\delta x`} /> is given by <MathInline formula={String.raw`p(x) \delta x`} />. Since *g* can expand or contract space, the infinitesimal volume surrounding <MathInline formula={String.raw`x`} /> in <MathInline formula={String.raw`x`} /> space may have different volume in <MathInline formula={String.raw`y`} /> space. We can correct this problem by defining:
 
-$$\color{orange}{p_x(x) = p_y(g(x)) \Bigg|\frac{\partial g(x)}{\partial x} \Bigg| \tag{25}}$$
+<MathBlock formula={String.raw`p_x(x) = p_y(g(x)) \Bigg|\frac{\partial g(x)}{\partial x} \Bigg| \tag{25}`} />
 
-In higher dimensions, the derivative generalizes to the determinant of the __Jacobian matrix__- the matrix with $J_{i, j} = \frac{\partial{x}_i}{\partial{y}_j}$. Thus for real valued vectors $x$ and $y$:
+In higher dimensions, the derivative generalizes to the determinant of the __Jacobian matrix__- the matrix with <MathInline formula={String.raw`J_{i, j} = \frac{\partial{x}_i}{\partial{y}_j}`} />. Thus for real valued vectors <MathInline formula={String.raw`x`} /> and <MathInline formula={String.raw`y`} />:
 
-$$\color{orange}{p_x(x) = p_y(g(x)) \Bigg| det \Big( \frac{\partial g(x)}{\partial x} \Big) \Bigg| \tag{26}}$$
+<MathBlock formula={String.raw`p_x(x) = p_y(g(x)) \Bigg| det \Big( \frac{\partial g(x)}{\partial x} \Big) \Bigg| \tag{26}`} />
 
 ### 03.13 - Information Theory
 
@@ -1309,11 +1279,11 @@ The basic intuition behind the information theory is that a likely event should 
 
 Let me give you a simple example, lets say you have a male friend, and he is head over heels in love with this girl, so he asks this girl out pretty much every week and there's a 99% chance she says no, so you being his best friend, he texts you everytime after he asks the girl out to let you know what happened, he texts, "Hey guess what she said, NO 😭😭😭", this is of course wasteful, considering he has a very low chance so it makes more sense for your friend to just send "😭" but if she says yes then he can of course send a longer text, so this way, the number of bits used to convey the message (and your corresponding data bill) will be minimized. P.S don't tell your friend he has a low chance, that's how you lose friends 😬.
 
-To satisfy these properties, we define the __self-information__ of an event $\mathrm{x} = x$ to be:
+To satisfy these properties, we define the __self-information__ of an event <MathInline formula={String.raw`\mathrm{x} = x`} /> to be:
 
-$$\color{orange}{I(x) = -log \ P(x) \tag{27}}$$
+<MathBlock formula={String.raw`I(x) = -log \ P(x) \tag{27}`} />
 
-In this book, we always use log to mean the natural logarithm, with base e. Our definition of $I(x)$ is therefore written in units of __nats__. One nat is the amount of information gained by observing an event of probability $\frac{1}{e}$. Other texts use base-2
+In this book, we always use log to mean the natural logarithm, with base e. Our definition of <MathInline formula={String.raw`I(x)`} /> is therefore written in units of __nats__. One nat is the amount of information gained by observing an event of probability <MathInline formula={String.raw`\frac{1}{e}`} />. Other texts use base-2
 logarithms and units called __bits__ or __shannons__; information measured in bits is just a rescaling of information measured in nats.
 
 ```python
@@ -1335,23 +1305,22 @@ print("Entropy of 10 coin tosses in nats: {} \nFor tosses: {}".format(coin_entro
 plt.grid()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Entropy of 10 coin tosses in nats: 0.6931471824645996
 For tosses: [0 1 1 1 0 1 1 1 0 1]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-29" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_104_1.png" alt="Entropy Plot" />
+![Entropy Plot](./output_104_1.png)
 
 Self information deals only with a single outcome. We can quantify the amount of uncertainty in an entire probability distribution using the __Shannon entropy__:
 
-$$\color{orange}{H(\mathrm{x}) = \mathbb{E}_{x \sim P} [I(x)] = -\mathbb{E}_{x \sim P}[log \ P(x)] \tag{28}}$$
+<MathBlock formula={String.raw`H(\mathrm{x}) = \mathbb{E}_{x \sim P} [I(x)] = -\mathbb{E}_{x \sim P}[log \ P(x)] \tag{28}`} />
 
-also denoted as $H(P)$.
+also denoted as <MathInline formula={String.raw`H(P)`} />.
 
-Shannon entropy of a distribution is the expected amount of information in an event drawn from that distribution. It gives a lower bound on the number of bits needed on average to encode symbols drawn from a distribution P. Distributions that are nearly deterministic (where the outcome is nearly certain) have low entropy; distributions that are closer to uniform have high entropy. When $\mathrm{x}$ is continuous, the Shannon entropy is known as the __differential entropy__.
+Shannon entropy of a distribution is the expected amount of information in an event drawn from that distribution. It gives a lower bound on the number of bits needed on average to encode symbols drawn from a distribution P. Distributions that are nearly deterministic (where the outcome is nearly certain) have low entropy; distributions that are closer to uniform have high entropy. When <MathInline formula={String.raw`\mathrm{x}`} /> is continuous, the Shannon entropy is known as the __differential entropy__.
 
 ```python
 """
@@ -1379,12 +1348,11 @@ print("TFPs entropy: {} matches with the Shannon Entropy Function we wrote: {}".
                                                                                        shannon_entropy_func(bernoulli_distribution)))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 TFPs entropy: 0.6931471824645996 matches with the Shannon Entropy Function we wrote: 0.6931471824645996
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-30" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Entropy isn't remarkable for its interpretation, but for its properties. For example, entropy doesn't care about the actual *x* values like variance, it only considers their probability. So if we increase the number of values *x* may take then the entropy will increase and the probabilities will be less concentrated.
 
@@ -1403,14 +1371,13 @@ plt.hist(shannon_list, color=color_b)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_108_0.png" alt="Shannon Entropy Plot" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-31" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Shannon Entropy Plot](./output_108_0.png)
+</ResultToggle>
 
 If we have two separate probability distributions P(x) and Q(x) over the same random variable x, we can measure how different these two distributions are using the __Kullback-Leibler (KL) divergence__:
 
-$$\color{orange}{D_{KL} (P \| Q) = \mathbb{E}_{x \sim P} \Big[ log \ \frac{P(x)}{Q(x)} \Big] = \mathbb{E}_{x \sim P} [log \ P(x) - log \ Q(x)] \tag{29}}$$
+<MathBlock formula={String.raw`D_{KL} (P \| Q) = \mathbb{E}_{x \sim P} \Big[ log \ \frac{P(x)}{Q(x)} \Big] = \mathbb{E}_{x \sim P} [log \ P(x) - log \ Q(x)] \tag{29}`} />
 
 In the case of discrete variables, it is the extra amount of information needed to send a message containing symbols drawn from probability distribution P, when we use a code that was designed to minimize
 the length of messages drawn from probability distribution Q.
@@ -1438,18 +1405,17 @@ kl = tfd.kl_divergence(p, q)
 print("TFPs KL_Divergence: {} matches with the KL Function we wrote: {}".format(kl, kl_func(p, q)))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 TFPs KL_Divergence: 0.4431471824645996 matches with the KL Function we wrote: 0.4431471824645996
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-32" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The KL divergence has many useful properties, most notably being nonnegative. The KL divergence is 0 if and only if P and Q are the same distribution in the case of discrete variables, or equal “almost everywhere” in the case of continuous variables.
 
-A quantity that is closely related to the KL divergence is the __cross-entropy__ $H(P, Q) = H(P) + D_{KL} (P \| Q)$, which is similar to the KL divergence but lacking the term on the left:
+A quantity that is closely related to the KL divergence is the __cross-entropy__ <MathInline formula={String.raw`H(P, Q) = H(P) + D_{KL} (P \| Q)`} />, which is similar to the KL divergence but lacking the term on the left:
 
-$$\color{orange}{H(P, Q) = - \mathbb{E}_{x \sim P} \ log \ Q(x) \tag{30}}$$
+<MathBlock formula={String.raw`H(P, Q) = - \mathbb{E}_{x \sim P} \ log \ Q(x) \tag{30}`} />
 
 Minimizing the cross-entropy with respect to Q is equivalent to minimizing the KL divergence, because Q does not participate in the omitted term.
 
@@ -1469,12 +1435,11 @@ cross_entropy = q.cross_entropy(p)
 print("TFPs cross entropy: {}".format(cross_entropy))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 TFPs cross entropy: 3.418938636779785
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-33" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 03.14 - Structured Probabilistic Models
 
@@ -1484,45 +1449,45 @@ Insted of using a single function to represent a probabiility distribuiton, we c
 
 We can describe these kinds of factorizations using graphs. Here, we use the word “graph” in the sense of graph theory: a set of vertices that may be connected to each other with edges. When we represent the factorization of a probability distribution with a graph, we call it a __structured probabilistic model__, or __graphical model__.
 
-<Image src="./fig0314a.jpeg" alt="Graphical Theory Intro" />
+![Graphical Theory Intro](./fig0314a.jpeg)
 
 If you haven't noticed, I am not that artsy, the image above is from Vaidehi Joshi's Medium post.
 
-There are two main kinds of structured probabilistic models: directed and undirected. Both kinds of graphical models use a graph $\mathcal{G}$ in which each node in the graph corresponds to a random variable, and an edge connecting two random variables means that the probability distribution is able to represent direct interactions between those two random variables.
+There are two main kinds of structured probabilistic models: directed and undirected. Both kinds of graphical models use a graph <MathInline formula={String.raw`\mathcal{G}`} /> in which each node in the graph corresponds to a random variable, and an edge connecting two random variables means that the probability distribution is able to represent direct interactions between those two random variables.
 
-__Directed__ models or __Directed Acyclic Graphs (DAG)__ also known as __Bayesian Network__ use graphs with directed edges, these edges give _casuality_ relationships and they represent factorizations into conditional probability distributions. Specifically, a directed model contains one factor for every random variable $\mathrm{x}_i$ in the distribution, and that factor consists of the conditional distribution over $\mathrm{x}_i$ given the parents of $\mathrm{x}_i$ denoted:
+__Directed__ models or __Directed Acyclic Graphs (DAG)__ also known as __Bayesian Network__ use graphs with directed edges, these edges give _casuality_ relationships and they represent factorizations into conditional probability distributions. Specifically, a directed model contains one factor for every random variable <MathInline formula={String.raw`\mathrm{x}_i`} /> in the distribution, and that factor consists of the conditional distribution over <MathInline formula={String.raw`\mathrm{x}_i`} /> given the parents of <MathInline formula={String.raw`\mathrm{x}_i`} /> denoted:
 
-$Pa_{\mathcal{G}}(\mathrm{x}_i)$
+<MathBlock formula={String.raw`Pa_{\mathcal{G}}(\mathrm{x}_i)`} />
 
-$$\color{orange}{p(\mathrm{x}) = \prod_i p(\mathrm{x}_i \ \| \ Pa_{\mathcal{G}}(\mathrm{x}_i)) \tag{31}}$$
+<MathBlock formula={String.raw`p(\mathrm{x}) = \prod_i p(\mathrm{x}_i \ \| \ Pa_{\mathcal{G}}(\mathrm{x}_i)) \tag{31}`} />
 
-<Image src="./fig0314b.PNG" alt="Directed graph example" />
+![Directed graph example](./fig0314b.PNG)
 
 This graph corresponds to probability distributions that can be factored as:
 
-$p(a, b, c, d, e) = p(a) p(b \| a) p(c \| a, b) p(d \| b) p(e \| c)$
+<MathBlock formula={String.raw`p(a, b, c, d, e) = p(a) p(b \| a) p(c \| a, b) p(d \| b) p(e \| c)`} />
 
 An application of directed graph is in finding who is related to who, for example, take Dr. Who, haha, that wasn't on purpose:
 
-<Image src="./fig0314d.png" alt="Directed graph example dr who" />
+![Directed graph example dr who](./fig0314d.png)
 
 I don't watch the show so, have no clue who these people are but looking at the graph, there are some bad people and how one is related to another is quite clear. You can also think of social networks, like twitter, if you put all your followers and people who you follow, what you get would be a directed graph.
 
-__Undirected__ models or __Undirected Graphical Models (UGM)__ also known as __Markov Random Fields__ use graphs with undirected edges, these edges give _correlations_ between variables and they represent factorization into a set of functionals unlike in the directed case, these functions are usually not probability distributions of any kind. Any set of nodes that are all connected to each other in $\mathcal{G}$ is called a clique. Each clique $\mathcal{C}^{(i)}$ in an undirected model is associated with a factor $\phi^{(i)} (\mathcal{C^(i)})$. These factors are just functions, not probability distributions. The output of each factor must be non-negative, but there is no constraint that the factor must sum or integrate to 1 like a probability distribution.
+__Undirected__ models or __Undirected Graphical Models (UGM)__ also known as __Markov Random Fields__ use graphs with undirected edges, these edges give _correlations_ between variables and they represent factorization into a set of functionals unlike in the directed case, these functions are usually not probability distributions of any kind. Any set of nodes that are all connected to each other in <MathInline formula={String.raw`\mathcal{G}`} /> is called a clique. Each clique <MathInline formula={String.raw`\mathcal{C}^{(i)}`} /> in an undirected model is associated with a factor <MathInline formula={String.raw`\phi^{(i)} (\mathcal{C^(i)})`} />. These factors are just functions, not probability distributions. The output of each factor must be non-negative, but there is no constraint that the factor must sum or integrate to 1 like a probability distribution.
 
-The probability of a configuration of random variables is proportional to the product of all these factors and since there is no guarantee that this product will sum to 1, we divide by a normalizing constant $Z$, defined to be the sum or integral over all states of the product of the $\phi$ functions, in order to obtain a normalized probability distribution:
+The probability of a configuration of random variables is proportional to the product of all these factors and since there is no guarantee that this product will sum to 1, we divide by a normalizing constant <MathInline formula={String.raw`Z`} />, defined to be the sum or integral over all states of the product of the <MathInline formula={String.raw`\phi`} /> functions, in order to obtain a normalized probability distribution:
 
-$$\color{orange}{p(x) = \frac{1}{Z} \prod_i \phi^{(i)} (\mathcal{C}^{(i)}) \tag{32}}$$
+<MathBlock formula={String.raw`p(x) = \frac{1}{Z} \prod_i \phi^{(i)} (\mathcal{C}^{(i)}) \tag{32}`} />
 
-<Image src="./fig0314c.PNG" alt="Undirected graph example" />
+![Undirected graph example](./fig0314c.PNG)
 
 This graph corresponds to probability distributions that can be factored as:
 
-$p(a, b, c, d, e) = \frac{1}{Z} \phi^{(1)} (a, b, c) \phi^{(2)} (b, d) \phi^{(3)} (c, e)$
+<MathBlock formula={String.raw`p(a, b, c, d, e) = \frac{1}{Z} \phi^{(1)} (a, b, c) \phi^{(2)} (b, d) \phi^{(3)} (c, e)`} />
 
 An application of undirected graph is in social network analysis, like facebook:
 
-<Image src="./fig0314e.png" alt="Undirected graph example facebook" />
+![Undirected graph example facebook](./fig0314e.png)
 
 Some of the other example include, protein interaction networks, modeling the game Go and information retrieval.
 

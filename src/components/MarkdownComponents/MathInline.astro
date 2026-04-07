@@ -1,0 +1,16 @@
+---
+import katex from "katex";
+
+interface Props {
+	formula: string;
+}
+
+const { formula } = Astro.props;
+
+const html = katex.renderToString(formula, {
+	displayMode: false,
+	throwOnError: false,
+});
+---
+
+<Fragment set:html={html} />

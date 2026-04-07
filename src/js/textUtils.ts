@@ -45,3 +45,26 @@ export function formatDate(date: string | number | Date): string {
 		day: "numeric",
 	});
 }
+
+const WORDS_PER_MINUTE = 200;
+
+/**
+ * * returns an estimated read time for markdown or MDX content.
+ * @param content: string | undefined - raw markdown/mdx body content
+ */
+export function getReadingTimeText(content?: string): string {
+	if (!content) return "1 min read";
+
+	const plainText = content
+		.replace(/```[\s\S]*?```/g, " ")
+		.replace(/`[^`]*`/g, " ")
+		.replace(/<[^>]+>/g, " ")
+		.replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+		.replace(/\[[^\]]*\]\([^)]*\)/g, " ")
+		.replace(/[#>*_\-\n\r]/g, " ");
+
+	const wordCount = plainText.trim().match(/\b[\w'-]+\b/g)?.length ?? 0;
+	const minutes = Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE));
+
+	return `${minutes} min read`;
+}

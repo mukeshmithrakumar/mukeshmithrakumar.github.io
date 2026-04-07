@@ -20,6 +20,7 @@ interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	socialImage?: string;
 	authorsData?: CollectionEntry<"authors">[];
 	postFrontmatter?: CollectionEntry<"blog">["data"];
 	noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
@@ -30,6 +31,7 @@ const {
 	title,
 	description,
 	image,
+	socialImage,
 	authorsData,
 	postFrontmatter,
 	noindex = false,
@@ -44,6 +46,7 @@ const {
 			title={title}
 			description={description}
 			image={image ? image : undefined}
+			socialImage={socialImage}
 			authors={authorsData ? authorsData : undefined}
 			postFrontmatter={postFrontmatter ? postFrontmatter : undefined}
 			noindex={noindex}

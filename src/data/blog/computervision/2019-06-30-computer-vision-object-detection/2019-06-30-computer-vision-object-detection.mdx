@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-30
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - cv
 ---
@@ -19,7 +19,7 @@ The goal of object detection is to detect the presence of object from certain se
 
 To check whether the detection is correct, we compare the predicted bounding box with the ground truth bounding box. The metric is intersection over union.
 
-$$\color{orange}{IoU = \frac{\text{Area of Overlap}}{\text{Area of Union}} \tag{1}}$$
+<MathBlock formula={String.raw`IoU = \frac{\text{Area of Overlap}}{\text{Area of Union}} \tag{1}`} />
 
 ### What is Intersection over Union?
 
@@ -33,7 +33,7 @@ To compare two detectors correctly, you should compare their precision-recall cu
 
 Another charting metric used is the plot of a miss rate with false detections per image. The curve is constructed similar to the precision-recall curve by varying the threshold on the detection score.
 
-<Image src="./20190630a.png" alt="Miss rate vs FPPI plot" />
+![Miss rate vs FPPI plot](./20190630a.png)
 
 ### What are some of the detectors?
 
@@ -83,7 +83,7 @@ Dalal and Triggs, in 2005 proposed to compute histograms of object gradients ori
 Viola-Jones detector combines four key ideas:
 1. The simple Haar features: Haar features form a very large set of simple function. Each feature specify a set of rectangles in image window. We divide these rectangles into two groups, white and black. Feature value is calculated as difference between sum of pixels in white rectangles and sum of pixels in black rectangles. We define weak classifiers by thresholding Haar features. Such weak classifiers are sensitive to image gradients and other critical features in the image.
 
-<Image src="./20190630b.png" alt="Haar features" />
+![Haar features](./20190630b.png)
 
 2. The use of integral images for fast feature computation: The integral image computes the value at each pixel, that is the sum of pixel values above and to the left of this pixel inclusive.
 
@@ -91,7 +91,7 @@ Viola-Jones detector combines four key ideas:
 
 4. Attentional cascade for fast rejection of windows without faces: We start with simple classifiers which reject many of the negative windows while detecting almost all positive windows. The positive response from the first classifier triggers the evaluation of the second classifier, which is more complex and so on. A negative outcome at any point leads to immediate rejection of the window. Such attentional cascade allow us to apply slow classifiers only to a small subset of windows, which gives significant speedup to the algorithm.
 
-<Image src="./20190630c.png" alt="Attentional cascade" />
+![Attentional cascade](./20190630c.png)
 
 Beyond Viola-Jones detector:
 - Gradient-based features in form of integral channel features has been added to the detector.
@@ -104,7 +104,7 @@ CNN classifiers are very slow, so it is impractical to use them in sliding windo
 
 In order to reach real-time performance, neural networks at the first stages should be very simple and fast. The number of stages can be reduced by using bounding box regression between stages. Bounding box regression take window as input and regress new bounding box position.
 
-<Image src="./20190630d.png" alt="Classifier networks" />
+![Classifier networks](./20190630d.png)
 
 We can add separate neural networks after each stage of the Cascade to refine the bounding box of the proposal. In this particular algorithm, refinement of bounding box, is formulated as a classification problem. The classifier selects a transformation from a predefined set of transformations. Such classifiers are called calibration networks.
 
@@ -112,7 +112,7 @@ We can add separate neural networks after each stage of the Cascade to refine th
 
 In seminal work of Girshick et al, it was proposed to use external object proposal generator to obtain object proposals per image. Features are then extracted with convolutional neural network from these proposals and classified with SVM classifier. This method is called region-based convolution network or R-CNN.
 
-<Image src="./20190630e.png" alt="R-CNN architecture" />
+![R-CNN architecture](./20190630e.png)
 
 In R-CNN, a selective search algorithm was used. Selective search is one of the generic object proposal generation methods. Such methods can provide high recall rate but very low precision. Thus they cannot be used as object detectors themselves, but they can be used as a first step in the detection pipeline.
 
@@ -133,7 +133,7 @@ Problems with the R-CNN:
 
 Base CNN classifier used in R-CNN model due to fully convolutional layers requires an image with fixed resolution of 224 by 224 pixels as input. So, after objects proposals are extracted, they should be re-scaled to the fixed resolution, such a scaling changes object appearance and increased variability of images. But we can adapt any CNN classifier to various image resolutions by changing the last pooling layer, to the Spatial Pyramid Pooling or SPP layer.
 
-<Image src="./20190630f.png" alt="Spatial Pyramid Pooling" />
+![Spatial Pyramid Pooling](./20190630f.png)
 
 Spatial Pyramid is constructed on top of the region of interest. First level of the pyramid is a region of interest itself. On second level, the region is divided into four cells with two by two grid. On third level, region is divided into 16 cells on four by four grid. Average pooling is applied to each cell. So, if the last convolutional layer has 256 maps, then pooling in each cell produce one vector with length, 256. Feature vectors for all cells are concatenated, and then passed as input to the fully convolutional layer. Thus, we obtain fixed length feature representation for input images of various resolutions.
 
@@ -150,15 +150,15 @@ Training Procedure:
 
 Fast R-CNN can be trained to this multi-task loss:
 
-$$\color{orange}{L(p,u,t^u,v) = L_{cls}(p,u) + \lambda[u \geq 1]L_{loc}(t^u, v) \tag{2}}$$
+<MathBlock formula={String.raw`L(p,u,t^u,v) = L_{cls}(p,u) + \lambda[u \geq 1]L_{loc}(t^u, v) \tag{2}`} />
 
 This multi-task loss is the rate of sum of classification loss:
 
-$$\color{orange}{L_{cls}(p,u) = -logp_u \tag{3}}$$
+<MathBlock formula={String.raw`L_{cls}(p,u) = -logp_u \tag{3}`} />
 
 And bounding box regression loss:
 
-$$\color{orange}{L_{loc}(t^u,v) = \sum_{i \in (x,y,w,h)}smooth_{L_1} (t_i^u - v_i) \tag{4}}$$
+<MathBlock formula={String.raw`L_{loc}(t^u,v) = \sum_{i \in (x,y,w,h)}smooth_{L_1} (t_i^u - v_i) \tag{4}`} />
 
 where $t^u = (t_x^u, t_y^u, t_w^u, t_h^u)$
 
@@ -172,13 +172,13 @@ Problems with the Fast R-CNN:
 
 Faster R-CNN is Fast R-CNN plus Region Proposal Network. In Faster R-CNN, the last main problem of R-CNN approach is solved. The dependency from the external hypothesis generation method is removed. Objects are detected in a single pass with a single neural network.
 
-<Image src="./20190630g.png" alt="Faster R-CNN" />
+![Faster R-CNN](./20190630g.png)
 
 RPN is a simple fully convolutional network which is trained to its multitask loss, similar to Fast R-CNN, and serves as a proposal generator.
 
 The Region Proposal Network is a small network that is slid over convolutional feature map.
 
-<Image src="./20190630h.png" alt="Region Proposal Network" />
+![Region Proposal Network](./20190630h.png)
 
 This small network takes its input and then by N spatial window usually N equals 3. RPN simultaneously classify corresponding region as object or non object in the regress bounding box location.
 
@@ -195,7 +195,7 @@ Problem with the Faster R-CNN:
 
 We can solve this problem by training a set of RPN for various scales. Each RPN will take different convolutional layer or set of layers as input so the receptive field will be of different size. This will significantly improve detection of small and large objects so one Faster-RCN model can detect simultaneously objects from small to large sizes.
 
-<Image src="./20190630i.png" alt="Multi Path architecture" />
+![Multi Path architecture](./20190630i.png)
 
 ### What is Region-based fully-convolutional network?
 
@@ -207,7 +207,7 @@ To make strong classifier, a committee of region-based position-sensitive classi
 
 Full regional fully convolutional network model contains RPN and region-based classifiers. All components of the model can be jointly trained to multitask loss.
 
-<Image src="./20190630j.png" alt="Region-Based Fully Convolutional Network" />
+![Region-Based Fully Convolutional Network](./20190630j.png)
 
 The main advantage of this meta-architecture compared to the faster R-CNN model is that it's computational speed is weakly dependent on the number of proposals, which can significantly increase the number of the proposal whereas some RPN network show only moderate increase in computational time for the whole detector.
 

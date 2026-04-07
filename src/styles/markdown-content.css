@@ -67,7 +67,12 @@
 
 /* code block styling */
 .markdown-content .expressive-code:not(:where(.not-content *)) {
-	@apply mt-4;
+	@apply relative mt-4;
+	--ec-frm-inlBtnFg: var(--color-primary-400);
+	--ec-frm-inlBtnBg: var(--color-base-900);
+	--ec-frm-inlBtnBrd: var(--color-primary-600);
+	--ec-frm-inlBtnBgHoverOrFocusOpa: 0.9;
+	--ec-frm-inlBtnBgActOpa: 0.95;
 }
 
 .markdown-content pre:not(:where(.not-content *)) {
@@ -85,6 +90,161 @@
 	&::-webkit-scrollbar-thumb:hover {
 		@apply bg-base-500;
 	}
+}
+
+.markdown-content .math-block .copy {
+	@apply absolute z-10;
+	inset-block-start: calc(var(--ec-brdWd) + 0.4rem);
+	inset-inline-end: calc(var(--ec-brdWd) + var(--ec-uiPadInl) / 2);
+	display: flex;
+	gap: 0.25rem;
+	flex-direction: row;
+	direction: ltr;
+	unicode-bidi: isolate;
+}
+
+.markdown-content .math-block .copy button {
+	@apply relative opacity-75;
+	align-self: flex-end;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 0.2rem;
+	z-index: 1;
+	cursor: pointer;
+	transition-property: opacity, background, border-color;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	width: 2rem;
+	height: 2rem;
+	background: transparent;
+}
+
+.markdown-content .math-block:hover .copy button,
+.markdown-content .math-block:focus-within .copy button {
+	@apply opacity-100;
+}
+
+.markdown-content .math-block .copy button div {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: var(--color-base-900);
+	opacity: 0;
+	transition-property: inherit;
+	transition-duration: inherit;
+	transition-timing-function: inherit;
+}
+
+.markdown-content .math-block .copy button::before {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	inset: 0;
+	border-radius: inherit;
+	border: var(--ec-brdWd) solid var(--color-primary-600);
+	opacity: 0.4;
+}
+
+.markdown-content .math-block .copy button::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	inset: 0;
+	background-color: var(--color-primary-400);
+	-webkit-mask-image: var(--ec-frm-copyIcon);
+	-webkit-mask-repeat: no-repeat;
+	mask-image: var(--ec-frm-copyIcon);
+	mask-repeat: no-repeat;
+	margin: 0.475rem;
+	line-height: 0;
+}
+
+.markdown-content .math-block .copy button:hover,
+.markdown-content .math-block .copy button:focus-visible {
+	@apply outline-none;
+	box-shadow: 0 0 0 2px var(--color-primary-600);
+}
+
+.markdown-content .math-block .copy button:hover div,
+.markdown-content .math-block .copy button:focus-visible div {
+	opacity: 0.9;
+}
+
+.markdown-content .math-block .copy .feedback {
+	--tooltip-arrow-size: 0.35rem;
+	--tooltip-bg: #098656;
+	color: white;
+	pointer-events: none;
+	user-select: none;
+	-webkit-user-select: none;
+	position: relative;
+	align-self: center;
+	background-color: var(--tooltip-bg);
+	z-index: 99;
+	padding: 0.125rem 0.75rem;
+	border-radius: 0.2rem;
+	margin-inline-end: var(--tooltip-arrow-size);
+	opacity: 0;
+	visibility: hidden;
+	transition-property: opacity, transform;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transform: translate3d(0, 0.25rem, 0);
+	white-space: nowrap;
+}
+
+.markdown-content .math-block .copy .feedback::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	top: calc(50% - var(--tooltip-arrow-size));
+	inset-inline-end: calc(-2 * (var(--tooltip-arrow-size) - 0.5px));
+	border: var(--tooltip-arrow-size) solid transparent;
+	border-inline-start-color: var(--tooltip-bg);
+}
+
+.markdown-content .math-block .copy .feedback.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translate3d(0, 0, 0);
+}
+
+.markdown-content .math-block .copy .feedback[data-state="error"] {
+	--tooltip-bg: #7f1d1d;
+}
+
+@media (hover: hover) {
+	.markdown-content .math-block .copy button {
+		opacity: 0;
+	}
+
+	.markdown-content .math-block:hover .copy button:not(:hover),
+	.markdown-content .math-block:focus-within .copy button:not(:hover),
+	.markdown-content .math-block .copy .feedback.show ~ button:not(:hover) {
+		opacity: 0.75;
+	}
+}
+
+.markdown-content .expressive-code .copy button {
+	@apply rounded-md transition-shadow;
+}
+
+.markdown-content .expressive-code .copy button:hover,
+.markdown-content .expressive-code .copy button:focus-visible {
+	@apply outline-none;
+	box-shadow: 0 0 0 2px var(--color-primary-600);
+}
+
+.markdown-content .math-block {
+	@apply relative my-4 overflow-visible rounded-lg border border-base-700 bg-base-900/40 px-4 py-6;
+	--ec-brdWd: 1.5px;
+	--ec-uiPadInl: 1rem;
+	--ec-frm-copyIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.75'%3E%3Cpath%20d%3D'M3%2019a2%202%200%200%201-1-2V2a2%202%200%200%201%201-1h13a2%202%200%200%201%202%201'%2F%3E%3Crect%20x%3D'6'%20y%3D'5'%20width%3D'16'%20height%3D'18'%20rx%3D'1.5'%20ry%3D'1.5'%2F%3E%3C%2Fsvg%3E");
+}
+
+.markdown-content .math-block .katex-display {
+	@apply m-0 block overflow-x-auto overflow-y-hidden pr-10;
 }
 
 /* reset styling for code blocks */

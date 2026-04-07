@@ -11,6 +11,7 @@ interface BaseProps {
 	title: string;
 	description: string;
 	noindex?: boolean;
+	socialImage?: string;
 }
 
 interface GenProps extends BaseProps {
@@ -25,7 +26,14 @@ interface BlogProps extends BaseProps {
 	postFrontmatter: CollectionEntry<"blog">["data"];
 }
 
-const { type, title, description, image, noindex = false } = Astro.props as GenProps | BlogProps;
+const {
+	type,
+	title,
+	description,
+	image,
+	noindex = false,
+	socialImage,
+} = Astro.props as GenProps | BlogProps;
 
 let optimizedImage;
 let jsonLD;
@@ -66,8 +74,14 @@ function trimEndSlash(str: string) {
 }
 
 // put together the image URL
-const imageUrl =
+const defaultImageUrl =
 	trimEndSlash(Astro.site?.toString() || "") + (optimizedImage?.src || siteData.defaultImage.src);
+const imageUrl = socialImage
+	? trimEndSlash(Astro.site?.toString() || "") + socialImage
+	: defaultImageUrl;
+const socialImageType = socialImage ? "image/png" : "image/webp";
+const socialImageWidth = socialImage ? "1200" : (optimizedImage?.attributes.width ?? "1200");
+const socialImageHeight = socialImage ? "630" : (optimizedImage?.attributes.height ?? "800");
 ---
 
 <SEO
@@ -86,9 +100,9 @@ const imageUrl =
 			siteName: siteData.title,
 		},
 		image: {
-			type: "image/webp",
-			width: optimizedImage?.attributes.width || "1200",
-			height: optimizedImage?.attributes.height || "800",
+			type: socialImageType,
+			width: socialImageWidth,
+			height: socialImageHeight,
 			alt: title,
 		},
 	}}

@@ -35,6 +35,10 @@ const expressiveCodeOptions = {
 // https://astro.build/config
 export default defineConfig({
 	site: "https://www.mukeshmithrakumar.com/",
+	markdown: {
+		remarkPlugins: [remarkMath],
+		rehypePlugins: [rehypeKatex],
+	},
 	redirects: {
 	},
 	integrations: [
@@ -44,6 +48,9 @@ export default defineConfig({
 				// https://github.com/delucis/astro-auto-import
 				"@components/Admonition/Admonition.astro",
 				"@components/Cta/Newsletter.astro",
+				"@components/MarkdownComponents/MathBlock.astro",
+				"@components/MarkdownComponents/MathInline.astro",
+				"@components/MarkdownComponents/ResultToggle.astro",
 			],
 		}),
 		icon({
@@ -69,10 +76,7 @@ export default defineConfig({
 			],
 		}),
 		expressiveCode(expressiveCodeOptions),
-		mdx({
-			remarkPlugins: [remarkMath],
-			rehypePlugins: [rehypeKatex],
-		}),
+		mdx(),
 		react(),
 		sitemap(),
 		compress({

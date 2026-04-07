@@ -118,6 +118,59 @@ export function arePostsRelated(
 
 // --------------------------------------------------------
 /**
+ * * returns related blog posts ranked by shared tags and recency
+ */
+export function getRelatedPosts(
+	currentPost: CollectionEntry<"blog">,
+	posts: CollectionEntry<"blog">[],
+	limit: number = 3,
+): CollectionEntry<"blog">[] {
+	const currentTags = currentPost.data.tags.map((tag) => slugify(tag));
+
+	return posts
+		.filter((post) => arePostsRelated(currentPost, post))
+		.map((post) => {
+			const relatedTags = post.data.tags.map((tag) => slugify(tag));
+			const sharedTagCount = currentTags.filter((tag) => relatedTags.includes(tag)).length;
+
+			return { post, sharedTagCount };
+		})
+		.sort((a, b) => {
+			if (b.sharedTagCount !== a.sharedTagCount) {
+				return b.sharedTagCount - a.sharedTagCount;
+			}
+
+			return new Date(b.post.data.pubDate).getTime() - new Date(a.post.data.pubDate).getTime();
+		})
+		.slice(0, limit)
+		.map(({ post }) => post);
+}
+
+// --------------------------------------------------------
+/**
+ * * returns adjacent posts from a date-sorted posts array
+ */
+export function getAdjacentPosts(
+	currentPost: CollectionEntry<"blog">,
+	posts: CollectionEntry<"blog">[],
+): {
+	previousPost?: CollectionEntry<"blog">;
+	nextPost?: CollectionEntry<"blog">;
+} {
+	const currentPostIndex = posts.findIndex((post) => getPostSlug(post) === getPostSlug(currentPost));
+
+	if (currentPostIndex === -1) {
+		return {};
+	}
+
+	return {
+		previousPost: posts[currentPostIndex + 1],
+		nextPost: posts[currentPostIndex - 1],
+	};
+}
+
+// --------------------------------------------------------
+/**
  * * returns an array of processed items, sorted by count
  * @param items: string[] - array of items to count and sort
  * note: return looks like { productivity: 2, 'cool-code': 1 }

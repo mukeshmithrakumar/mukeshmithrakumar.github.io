@@ -6,10 +6,13 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-16
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - cv
 ---
+
+import { Image } from "astro:assets";
+import animatedConvolutionImage from "./20190616a.png";
 
 ### What is face recognition?
 
@@ -26,11 +29,11 @@ Face recognition performance is reported in three standard tasks:
 - Similarity scores $s_{ij}$ are computed
 - Verification rate for gallery probes $p_j \in P_G:$
 
-$$\color{Orange}{P_V(\tau) = \frac{|{p_j:s_{ij} \geq \tau, id(g_i) = id(p_j)}|}{|P_G|} \tag{1}}$$
+<MathBlock formula={String.raw`P_V(\tau) = \frac{|\{p_j:s_{ij} \geq \tau, id(g_i) = id(p_j)\}|}{|P_G|} \tag{1}`} />
 
 - False accept rate for non gallery probes $p_j \in P_N:$
 
-$$\color{Orange}{P_{FA}(\tau) = \frac{|{p_j:s_{ij} \geq \tau, id(g_i) \neq id(p_j)}|}{(|P_N|-1)|G|} \tag{2}}$$
+<MathBlock formula={String.raw`P_{FA}(\tau) = \frac{|\{p_j:s_{ij} \geq \tau, id(g_i) \neq id(p_j)\}|}{(|P_N|-1)|G|} \tag{2}`} />
 
 ### How is face verification solved?
 
@@ -51,7 +54,7 @@ A triplet consists of 2 matching and 1 non-matching thumbnail images.
 - We want $||f(a) - f(p)||_2^2 + \alpha < ||f(a) - f(n)||_2^2$
 - Minimize triplet loss:
 
-$$\color{Orange}{\sum_{i=1}^n [||f(a) - f(p)||_2^2 - ||f(a) - f(n)||_2^2 + \alpha]_+ \rightarrow min_f \tag{3}}$$
+<MathBlock formula={String.raw`\sum_{i=1}^n [||f(a) - f(p)||_2^2 - ||f(a) - f(n)||_2^2 + \alpha]_+ \rightarrow min_f \tag{3}`} />
 
 ### What is the re-identification problem?
 
@@ -72,7 +75,7 @@ A standard approach to re-identification generally follows the pipeline sent by 
 
 Given two person images, they are sent to Siamese convolutional neural network. A neural network architecture which consists of two copies of the same network.
 
-<img src="./20190616a.png" alt="Example of animated convolution" class="center-image">
+<Image src={animatedConvolutionImage} alt="Example of animated convolution" class="center-image" />
 
 For two images, x and y, a Siamese network can predict a label to denote whether the image pair comes from the same subject or not. Siamese network is composed of two convolutional neural networks connected by a connection function. Connection function is used to evaluate the relationship between two samples. And cost function is used to convert the relationship into a cost.
 

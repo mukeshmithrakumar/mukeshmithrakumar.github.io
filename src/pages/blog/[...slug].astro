@@ -1,15 +1,21 @@
 ---
 import { render } from "astro:content";
 import { type InferGetStaticPropsType } from "astro";
+import { Image } from "astro:assets";
 
 // layout
 import BlogLayout from "@layouts/BlogLayoutSidebar.astro";
 
 // components
+import Admonition from "@components/Admonition/Admonition.astro";
+import Newsletter from "@components/Cta/Newsletter.astro";
 import ExternalLink from "@components/MarkdownComponents/ExternalLink.astro";
+import MathBlock from "@components/MarkdownComponents/MathBlock.astro";
+import MathInline from "@components/MarkdownComponents/MathInline.astro";
+import ResultToggle from "@components/MarkdownComponents/ResultToggle.astro";
 
 // utils
-import { getAllPosts, getPostSlug } from "@js/blogUtils";
+import { getAdjacentPosts, getAllPosts, getPostSlug, getRelatedPosts } from "@js/blogUtils";
 
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
@@ -23,8 +29,27 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const post = Astro.props as Props;
 const { Content, headings } = await render(post);
+const allPosts = await getAllPosts();
+const relatedPosts = getRelatedPosts(post, allPosts, 3);
+const { previousPost, nextPost } = getAdjacentPosts(post, allPosts);
 ---
 
-<BlogLayout post={post} headings={headings}>
-	<Content components={{ a: ExternalLink }} />
+<BlogLayout
+	post={post}
+	headings={headings}
+	relatedPosts={relatedPosts}
+	previousPost={previousPost}
+	nextPost={nextPost}
+>
+	<Content
+		components={{
+			a: ExternalLink,
+			Admonition,
+			Image,
+			MathBlock,
+			MathInline,
+			Newsletter,
+			ResultToggle,
+		}}
+	/>
 </BlogLayout>

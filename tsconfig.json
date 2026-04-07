@@ -10,14 +10,14 @@
 		"module": "esnext",
 		"target": "es2022",
 		"paths": {
-			"@config/*": ["src/config/*"],
-			"@js/*": ["src/js/*"],
-			"@layouts/*": ["src/layouts/*"],
-			"@components/*": ["src/components/*"],
-			"@assets/*": ["src/assets/*"],
-			"@images/*": ["src/assets/images/*"],
-			"@videos/*": ["src/assets/videos/*"],
-			"@/*": ["src/*"]
+			"@config/*": ["./src/config/*"],
+			"@js/*": ["./src/js/*"],
+			"@layouts/*": ["./src/layouts/*"],
+			"@components/*": ["./src/components/*"],
+			"@assets/*": ["./src/assets/*"],
+			"@images/*": ["./src/assets/images/*"],
+			"@videos/*": ["./src/assets/videos/*"],
+			"@/*": ["./src/*"]
 		}
 	}
 }

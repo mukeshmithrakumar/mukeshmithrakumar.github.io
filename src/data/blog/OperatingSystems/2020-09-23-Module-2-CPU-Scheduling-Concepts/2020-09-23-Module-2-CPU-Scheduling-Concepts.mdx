@@ -6,7 +6,7 @@ draft: true
 authors:
   - mithraics
 pubDate: 2020-09-23
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - OS
 ---
@@ -149,7 +149,7 @@ When a process is running, we run a timer in parallel and we can write a softwar
 a specific time, we can invoke a service routine, that is the context switch service routine and after context switch
 exits, the CPU will be in process B.
 
-<Image src="./20200923b.PNG" alt="Context Switching Example" />
+![Context Switching Example](./20200923b.PNG)
 
 But how process B?
 This happens because the program counter has the instruction pointer of B. Only then will it execute Process B.
@@ -187,7 +187,7 @@ There are certain restrictions on what we call a process.
 During an I/O burst the CPU is idle so you can run another process. There are two types of processes depending on the
 relative time of CPU and I/O burst.
 - CPU total time >> I/O total time -> CPU Bound
-- CPU total time << I/O total time -> I/O Bound
+- CPU total time \<< I/O total time -> I/O Bound
 
 ### What are the differences between pre-emptive and non-pre-emptive scheduling
 
@@ -245,7 +245,7 @@ Time blocked, waiting for I/O, is not part of the waiting time.
 - _Service time_: The amount of CPU time that a process will need before it either finishes or voluntarily
 exits the CPU, such as to wait for input / output.
 
-<Image src="./20200923c.PNG" alt="scheduling metrics calculation example" />
+![scheduling metrics calculation example](./20200923c.PNG)
 
 The chart that shows the processes in a time line is called the _Gantt Chart_.
 

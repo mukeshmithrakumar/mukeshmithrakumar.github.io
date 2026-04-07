@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-09
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - cv
 ---
@@ -17,7 +17,7 @@ Content based image retrieval is the task of retrieving images from a large data
 
 Content based image retrieval pipeline is shown below:
 
-<Image src="./20190609a.png" alt="CBIR pipeline" />
+![CBIR pipeline](./20190609a.png)
 
 ### How do you define image similarity?
 
@@ -58,7 +58,7 @@ Another issue is the retrieval performance. Linear search that considers billion
 
 If two images produce feature activation vectors with a small Euclidean separation, we can say that the higher levels of the neural network consider them to be similar. The crude image search algorithm that uses deep convolutional neural network works as follows:
 
-<Image src="./20190609b.png" alt="Neural codes for image retrieval" />
+![Neural codes for image retrieval](./20190609b.png)
 
 Let us fix some layer in the network whose activations are to be used as semantic image features. Then we use the output of layers 5, 6 or 7 in the AlexNet network prior to ReLU transform. These high dimensional vectors represent a deep descriptor or a neural code of an input image. For each image we extract multiple sub-patches of different sizes at different locations whose union covers the whole image. For each computed sub-patch we compute a CNN representation and we compute distances between eah queries sub-patch and the reference sub-patch. Then we average over sub-patches to compute distance between query and reference images.
 
@@ -68,7 +68,7 @@ Last convolutional layers are usually high dimensional for example the sixth lay
 
 Below is the algorithm for a compact neural descriptor ([Babenko et al. ICCV2015])
 1. Extract neural codes fom Conv-5: $\Psi_1(I) = Conv_5(I)$
-2. Sum-pool each map: $\Psi_2(I) = \sum_k \sum_l (\Psi_1(I))^{k,l}$
+2. Sum-pool each map: <MathBlock formula={String.raw`\Psi_2(I) = \sum_k \sum_l (\Psi_1(I))^{k,l}`} />
 3. $L_2$ normalize
 4. PCA compression + whitening: $\Psi_3(I) = diag(s_1,\dots,s_N)^{-1} M_{PCA} \Psi_2(I)$
 5. $L_2$ normalize
@@ -77,7 +77,7 @@ Below is the algorithm for a compact neural descriptor ([Babenko et al. ICCV2015
 
 We start by mapping the set of all vectors to cluster centroids, equivalent to representing every object wih a number corresponding to a cluster. The simplest possible way to perform clustering is to split the space of descriptors with a uniform grid along each dimension. Yet this is not optimal for image descriptors that will form natural cluster of images with similar content. Thus, some kind of adaptive quantization, such as k-mean quantization is required. K-means quantization splits the space of descriptors into a tessellation using the well know k-means clustering procedure.
 
-<Image src="./20190609c.png" alt="Vector quantization" />
+![Vector quantization](./20190609c.png)
 
 After we have clustered the space of descriptors into groups, it is convenient to represent our index in inverted form. We represent the set of descriptors as K lists where each list i contains images clustered into $i_{th}$ cluster.
 
@@ -117,7 +117,7 @@ An intuitive extension of K-means and LSH would be to combine them into a more e
 
 This is how GIST Indexing Structure works.
 
-<Image src="./20190609d.png" alt="GIST IS 2009" />
+![GIST IS 2009](./20190609d.png)
 
 To retrieve images by query, we first quantize the query descriptor and pick a few hundred closest clusters. In practice, this elects around 2.5% of images instead of ideally picking 1% of that if the distribution of clusters were uniform. Having the cluster selected, we can compute the binary codes for the difference between the image and each of the cluster centers and search through the binary codes for each cluster that we store in memory.
 

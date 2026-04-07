@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-05-19
-heroImage: ../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
 tags:
   - DL
 ---
@@ -52,17 +52,17 @@ __Scalars:__ are just a single number. For example temperature, which is denoted
 
 __Vectors:__ are an array of numbers. The numbers are arranged in order and we can identify each individual number by its index in that ordering. We can think of vectors as identifying points in space, with each element giving the coordinate along a different axis. In simple terms, a vector is an arrow representing a quantity that has both magnitude and direction wherein the length of the arrow represents the magnitude and the orientation tells you the direction. For example wind, which has a direction and magnitude.
 
-__Matrices:__ A matrix is a 2D-array of numbers, so each element is identified by two indices instead of just one. If a real valued matrix $A$ has a height of *m* and a width of *n*, then we say that $A \in \mathbb{R}^{m \times n}$. We identify the elements of the matrix as $A_{m,n}$ where *m* represents the row and *n* represents the column.
+__Matrices:__ A matrix is a 2D-array of numbers, so each element is identified by two indices instead of just one. If a real valued matrix <MathInline formula={String.raw`A`} /> has a height of *m* and a width of *n*, then we say that <MathBlock formula={String.raw`A \in \mathbb{R}^{m \times n}`} />. We identify the elements of the matrix as <MathBlock formula={String.raw`A_{m,n}`} /> where *m* represents the row and *n* represents the column.
 
-<Image src="./fig0201a.png" alt="Scalars, Vectors, Matrices and Tensors" />
+![Scalars, Vectors, Matrices and Tensors](./fig0201a.png)
 
-__Tensors:__ In the general case, are an array of numbers arranged on a regular grid with a variable number of axes is knows as a tensor. We identify the elements of a tensor $A$ at coordinates(*i, j, k*) by writing $A_{i, j, k}$. But to truly understand tensors, we need to expand the way we think of vectors as only arrows with a magnitude and direction. Remember that a vector can be represented by three components, namely the x, y and z components (basis vectors). If you have a pen and a paper, let's do a small experiment, place the pen vertically on the paper and slant it by some angle and now shine a light from top such that the shadow of the pen falls on the paper, this shadow, represents the x component of the vector "pen" and the height from the paper to the tip of the pen is the y component. Now, let's take these components to describe tensors, imagine, you are Indiana Jones or a treasure hunter and you are trapped in a cube and there are three arrows flying towards you from the three faces (to represent x, y, z axis) of the cube 😬, I know this will be the last thing you would think in such a situation but you can think of those three arrows as vectors pointing towards you from the three faces of the cube and you can represent those vectors (arrows) in x, y and z components, now that is a rank 2 tensor (matrix) with 9 components. Remember that this is a very very simple explanation of tensors. Following is a representation of a tensor:
+__Tensors:__ In the general case, are an array of numbers arranged on a regular grid with a variable number of axes is knows as a tensor. We identify the elements of a tensor <MathInline formula={String.raw`A`} /> at coordinates(*i, j, k*) by writing <MathBlock formula={String.raw`A_{i, j, k}`} />. But to truly understand tensors, we need to expand the way we think of vectors as only arrows with a magnitude and direction. Remember that a vector can be represented by three components, namely the x, y and z components (basis vectors). If you have a pen and a paper, let's do a small experiment, place the pen vertically on the paper and slant it by some angle and now shine a light from top such that the shadow of the pen falls on the paper, this shadow, represents the x component of the vector "pen" and the height from the paper to the tip of the pen is the y component. Now, let's take these components to describe tensors, imagine, you are Indiana Jones or a treasure hunter and you are trapped in a cube and there are three arrows flying towards you from the three faces (to represent x, y, z axis) of the cube 😬, I know this will be the last thing you would think in such a situation but you can think of those three arrows as vectors pointing towards you from the three faces of the cube and you can represent those vectors (arrows) in x, y and z components, now that is a rank 2 tensor (matrix) with 9 components. Remember that this is a very very simple explanation of tensors. Following is a representation of a tensor:
 
-<Image src="./fig0201b.PNG" alt="Tensors" />
+![Tensors](./fig0201b.PNG)
 
 We can add matrices to each other as long as they have the same shape, just by adding their corresponding elements:
 
-$$\color{Orange}{C = A + B \ where \ C_{i,j} = A_{i,j} + B_{i,j} \tag{1}}$$
+<MathBlock formula={String.raw`C = A + B \ where \ C_{i,j} = A_{i,j} + B_{i,j} \tag{1}`} />
 
 If you have trouble viewing the equations in the browser you can also read the chapter in [Jupyter nbviewer](https://nbviewer.jupyter.org/github/adhiraiyan/DeepLearningWithTF2.0/blob/master/notebooks/02.00-Linear-Algebra.ipynb) in its entirety. If not, let's continue.
 
@@ -87,7 +87,7 @@ rank_2_tensor_C = tf.add(rank_2_tensor_A, rank_2_tensor_B, name='MatrixC')
 print("Rank 2 Tensor C with shape={} and elements: \n{}".format(rank_2_tensor_C.shape, rank_2_tensor_C))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 3x3 Rank 2 Tensor A:
 [[1. 1. 1.]
@@ -104,8 +104,7 @@ Rank 2 Tensor C with shape=(3, 3) and elements:
  [ 5.  6.  7.]
  [ 8.  9. 10.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-1" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ```python
 # Let's see what happens if the shapes are not the same
@@ -117,16 +116,15 @@ except:
     """.format(two_by_three.shape, rank_2_tensor_B.shape))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Incompatible shapes to add with two_by_three of shape (2, 3) and 3x3 Rank 2 Tensor B of shape (3, 3)
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-2" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 We can also add a scalar to a matrix or multiply a matrix by a scalar, just by performing that operation on each element of a matrix:
 
-$$\color{Orange}{D = a \cdot B + c \ where  \ D_{i,j} = a \cdot B_{i,j} + c \tag{2}}$$
+<MathBlock formula={String.raw`D = a \cdot B + c \ where  \ D_{i,j} = a \cdot B_{i,j} + c \tag{2}`} />
 
 ```python
 # Create scalar a, c and Matrix B
@@ -144,7 +142,7 @@ Rank 2 Tensor for aB: \n{2} \n\nScalar c: {3} \nRank 2 Tensor D = aB + c: \n{4}
 """.format(rank_2_tensor_B, rank_0_tensor_a, multiply_scalar, rank_0_tensor_c, rank_2_tensor_D))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Original Rank 2 Tensor B:
 [[1. 2. 3.]
@@ -163,10 +161,9 @@ Rank 2 Tensor D = aB + c:
  [11. 13. 15.]
  [17. 19. 21.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-3" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-One important operation on matrices is the __transpose__. The transpose of a matrix is the mirror image of the matrix across a diagonal line, called the __main diagonal__. We denote the transpose of a matrix $A$ as $A^{\top}$ and is defined as such: $$(A^{\top})_{i, j} = A_{j, i}$$
+One important operation on matrices is the __transpose__. The transpose of a matrix is the mirror image of the matrix across a diagonal line, called the __main diagonal__. We denote the transpose of a matrix <MathInline formula={String.raw`A`} /> as <MathBlock formula={String.raw`A^{\top}`} /> and is defined as such: <MathBlock formula={String.raw`(A^{\top})_{i, j} = A_{j, i}`} />
 
 ```python
 # Creating a Matrix E
@@ -178,7 +175,7 @@ print("""Rank 2 Tensor E of shape: {0} and elements: \n{1}\n
 Transpose of Rank 2 Tensor E of shape: {2} and elements: \n{3}""".format(rank_2_tensor_E.shape, rank_2_tensor_E, transpose_E.shape, transpose_E))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Rank 2 Tensor E of shape: (2, 3) and elements:
 [[1 2 3]
@@ -189,10 +186,9 @@ Transpose of Rank 2 Tensor E of shape: (3, 2) and elements:
  [2 5]
  [3 6]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-4" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-In deep learning we allow the addition of matrix and a vector, yielding another matrix where $C_{i, j} = A_{i, j} + b_{j}$. In other words, the vector $b$ is added to each row of the matrix. This implicit copying of $b$ to many locations is called __broadcasting__
+In deep learning we allow the addition of matrix and a vector, yielding another matrix where <MathInline formula={String.raw`C_{i, j} = A_{i, j} + b_{j}`} />. In other words, the vector <MathInline formula={String.raw`b`} /> is added to each row of the matrix. This implicit copying of <MathInline formula={String.raw`b`} /> to many locations is called __broadcasting__
 
 ```python
 # Creating a vector b
@@ -204,7 +200,7 @@ print("""Rank 2 tensor A: \n{0}\n \nRank 1 Tensor b: \n{1}
 \nRank 2 tensor F = A + b:\n{2}""".format(rank_2_tensor_A, rank_1_tensor_b, rank_2_tensor_F))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Rank 2 tensor A:
 [[1. 1. 1.]
@@ -221,18 +217,17 @@ Rank 2 tensor F = A + b:
  [6. 6. 6.]
  [7. 7. 7.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-5" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 02.02 - Multiplying Matrices and Vectors
 
-To define the matrix product of matrices $A \ \text{and} \ B, \ A$ must have the same number of columns as $B$. If $A$ is of shape *m x n* and $B$ is of shape *n x p*, then $C$ is of shape *m x p*.
+To define the matrix product of matrices <MathInline formula={String.raw`A \ \text{and} \ B, \ A`} /> must have the same number of columns as <MathInline formula={String.raw`B`} />. If <MathInline formula={String.raw`A`} /> is of shape *m x n* and <MathInline formula={String.raw`B`} /> is of shape *n x p*, then <MathInline formula={String.raw`C`} /> is of shape *m x p*.
 
-$$\color{Orange}{C_{i, j} = \displaystyle\sum_k A_{i, k} B_{k, j} \tag{3}}$$
+<MathBlock formula={String.raw`C_{i, j} = \displaystyle\sum_k A_{i, k} B_{k, j} \tag{3}`} />
 
 If you do not recall how matrix multiplication is performed, take a look at:
 
-<Image src="./fig0202a.jpg" alt="Multiplying Matrices" />
+![Multiplying Matrices](./fig0202a.jpg)
 
 ```python
 # Matrix A and B with shapes (2, 3) and (3, 4)
@@ -246,7 +241,7 @@ print("""Matrix A: shape {0} \nelements: \n{1} \n\nMatrix B: shape {2} \nelement
 \nMatrix C: shape {4} \nelements: \n{5}""".format(mmv_matrix_A.shape, mmv_matrix_A, mmv_matrix_B.shape, mmv_matrix_B, matrix_multiply_C.shape, matrix_multiply_C))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A: shape (2, 3)
 elements:
@@ -264,10 +259,9 @@ elements:
 [[ 3.  6.  9. 12.]
  [ 3.  6.  9. 12.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-6" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-To get a matrix containing the product of the individual elements, we use __element wise product__ or __Hadamard product__ and is denoted as $A \odot B$.
+To get a matrix containing the product of the individual elements, we use __element wise product__ or __Hadamard product__ and is denoted as <MathInline formula={String.raw`A \odot B`} />.
 
 ```python
 """
@@ -285,7 +279,7 @@ print("""Matrix A: shape {0} \nelements: \n{1} \n\nMatrix A: shape {2} \nelement
 Matrix C: shape {4} \nelements: \n{5}""".format(element_matrix_A.shape, element_matrix_A, element_matrix_B.shape, element_matrix_B, element_wise_C.shape, element_wise_C))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A: shape (3, 3)
 elements:
@@ -305,12 +299,11 @@ elements:
  [4. 5. 6.]
  [7. 8. 9.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-7" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-To compute the dot product between $A$ and $B$ we compute $C_{i, j}$ as the dot product between row *i* of $A$ and column *j* of $B$.
+To compute the dot product between <MathInline formula={String.raw`A`} /> and <MathInline formula={String.raw`B`} /> we compute <MathInline formula={String.raw`C_{i, j}`} /> as the dot product between row *i* of <MathInline formula={String.raw`A`} /> and column *j* of <MathInline formula={String.raw`B`} />.
 
-<Image src="./fig0202b.jpg" alt="Dot Product" />
+![Dot Product](./fig0202b.jpg)
 
 ```python
 # Creating Matrix A and B with shapes (3, 3)
@@ -324,7 +317,7 @@ print("""Matrix A: shape {0} \nelements: \n{1} \n\nMatrix B: shape {2} \nelement
 Matrix C: shape {4} \nelements: \n{5}""".format(dot_matrix_A.shape, dot_matrix_A, dot_matrix_B.shape, dot_matrix_B, dot_product_C.shape, dot_product_C))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A: shape (3, 3)
 elements:
@@ -344,12 +337,11 @@ elements:
  [12. 15. 18.]
  [12. 15. 18.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-8" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Some properties of matrix multiplication (Distributive Property):
 
-$$\color{Orange}{A(B +C) = AB + AC \tag{4}}$$
+<MathBlock formula={String.raw`A(B +C) = AB + AC \tag{4}`} />
 
 ```python
 # Common Matrices to check all the matrix Properties
@@ -387,7 +379,7 @@ RHS: AB + AC: \n{} \n\nis NOT Equal to LHS: A(B+C): \n{}""".format(distributive_
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[1 2]
@@ -410,12 +402,11 @@ LHS: A(B+C):
 [[32 29]
  [78 65]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-9" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Some properties of matrix multiplication (Associative property):
 
-$$\color{Orange}{A(BC) = (AB)C \tag{5}}$$
+<MathBlock formula={String.raw`A(BC) = (AB)C \tag{5}`} />
 
 ```python
 # Associative property
@@ -441,7 +432,7 @@ RHS: (AB)C: \n{} \n\nLHS: A(BC): \n{}""".format(associative_RHS, associative_LHS
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[1 2]
@@ -464,12 +455,11 @@ LHS: A(BC):
 [[215  85]
  [487 193]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-10" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Some properties of matrix multiplication (Matrix multiplication is not commutative):
 
-$$\color{Orange}{AB \neq BA \tag{6}}$$
+<MathBlock formula={String.raw`AB \neq BA \tag{6}`} />
 
 ```python
 # Matrix multiplication is not commutative
@@ -491,7 +481,7 @@ RHS: (AB): \n{} \n\nLHS: (BA): \n{}""".format(commutative_RHS, commutative_LHS))
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[1 2]
@@ -510,12 +500,11 @@ LHS: (BA):
 [[23 34]
  [31 46]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-11" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Some properties of matrix multiplication (Transpose):
 
-$$\color{Orange}{(AB)^{\top} = B^{\top} A^{\top} \tag{7}}$$
+<MathBlock formula={String.raw`(AB)^{\top} = B^{\top} A^{\top} \tag{7}`} />
 
 ```python
 # Transpose of a matrix
@@ -537,7 +526,7 @@ RHS: (AB):^T \n{} \n\nLHS: (B^T A^T): \n{}""".format(transpose_RHS, transpose_LH
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[1 2]
@@ -556,18 +545,17 @@ LHS: (B^T A^T):
 [[19 43]
  [22 50]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-12" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 02.03 - Identity and Inverse Matrices
 
-Linear algebra offers a powerful tool called __matrix inversion__ that enables us to analytically solve $Ax = b$ for many values of $A$.
+Linear algebra offers a powerful tool called __matrix inversion__ that enables us to analytically solve <MathInline formula={String.raw`Ax = b`} /> for many values of <MathInline formula={String.raw`A`} />.
 
 To describe matrix inversion, we first need to define the concept of an __identity matrix__. An identity matrix is a matrix that does not change any vector when we multiply that vector by that matrix.
 
 Such that:
 
-$$\color{Orange}{I_n \in \mathbb{R}^{n \times n} \ \text{and} \ \forall x \in \mathbb{R}^n, I_n x = x \tag{8}}$$
+<MathBlock formula={String.raw`I_n \in \mathbb{R}^{n \times n} \ \text{and} \ \forall x \in \mathbb{R}^n, I_n x = x \tag{8}`} />
 
 The structure of the identity matrix is simple: all the entries along the main diagonal are 1, while all the other entries are zero.
 
@@ -585,7 +573,7 @@ iim_matrix_C = tf.matmul(identity_matrix_I, iim_vector_x, name='MatrixC')
 print("Matrix C from Ix: \n{}".format(iim_matrix_C))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Identity matrix I:
 [[1. 0. 0.]
@@ -602,12 +590,11 @@ Matrix C from Ix:
  [5.]
  [6.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-13" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-The __matrix inverse__ of $A$ is denoted as $A^{-1}$, and it is defined as the matrix such that:
+The __matrix inverse__ of <MathInline formula={String.raw`A`} /> is denoted as <MathInline formula={String.raw`A^{-1}`} />, and it is defined as the matrix such that:
 
-$$\color{Orange}{A^{-1} A = I_n \tag{9}}$$
+<MathBlock formula={String.raw`A^{-1} A = I_n \tag{9}`} />
 
 ```python
 iim_matrix_A = tf.constant([[2, 3], [2, 2]], name='MatrixA', dtype=tf.float32)
@@ -634,7 +621,7 @@ except:
     \nLHS: (A^(-1) A): \n{}""".format(iim_matrix_A, inverse_matrix_A, iim_RHS, iim_LHS))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 A^-1 times A equals the Identity Matrix
 Matrix A:
@@ -653,24 +640,21 @@ LHS: A^(-1) A:
 [[1. 0.]
  [0. 1.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-14" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-If you try different values for Matrix A, you will see that, not all $A$ has an inverse and we will discuss the conditions for the existence of $A^{-1}$ in the following section.
+If you try different values for Matrix A, you will see that, not all <MathInline formula={String.raw`A`} /> has an inverse and we will discuss the conditions for the existence of <MathInline formula={String.raw`A^{-1}`} /> in the following section.
 
-We can then solve the equation $Ax = b$ as:
+We can then solve the equation <MathInline formula={String.raw`Ax = b`} /> as:
 
-$$
-\color{Orange}{A^{-1} Ax = A^{-1} b} \\
-\color{Orange}{I_n x = A^{-1} b} \\
-\color{Orange}{x  =A^{-1} b \tag{10}}
-$$
+<MathBlock formula={String.raw`{A^{-1} Ax = A^{-1} b} \\
+{I_n x = A^{-1} b} \\
+{x  =A^{-1} b \tag{10}}`} />
 
-This process depends on it being possible to find $A^{-1}$.
+This process depends on it being possible to find <MathInline formula={String.raw`A^{-1}`} />.
 
 We can calculate the inverse of a matrix by:
 
-<Image src="./fig0203a.PNG" alt="Matrix Inverse" />
+![Matrix Inverse](./fig0203a.PNG)
 
 Lets see how we can solve a simple linear equation: 2x + 3y = 6 and 4x + 9y = 15
 
@@ -685,7 +669,7 @@ sys_x = tf.matmul(tf.linalg.inv(sys_matrix_A), sys_vector_B)
 print("Vector x is: \n{} \nWhere x = {} and y = {}".format(sys_x, sys_x[0], sys_x[1]))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[2. 3.]
@@ -700,33 +684,32 @@ Vector x is:
  [1. ]]
 Where x = [1.5] and y = [1.]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-15" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 02.04 - Linear Dependence and Span
 
-For $A^{-1}$ to exits, $Ax = b$ must have exactly one solution for every value of $b$. It is also possible for the system of equations to have no solutions or infinitely many solutions for some values of $b$. This is simply because we are dealing with linear systems and two lines can't cross more than once. So, they can either cross once, cross never, or have infinite crossing, meaning the two lines are superimposed.
+For <MathInline formula={String.raw`A^{-1}`} /> to exits, <MathInline formula={String.raw`Ax = b`} /> must have exactly one solution for every value of <MathInline formula={String.raw`b`} />. It is also possible for the system of equations to have no solutions or infinitely many solutions for some values of <MathInline formula={String.raw`b`} />. This is simply because we are dealing with linear systems and two lines can't cross more than once. So, they can either cross once, cross never, or have infinite crossing, meaning the two lines are superimposed.
 
-Hence if both $x$ and $y$ are solutions then:
+Hence if both <MathInline formula={String.raw`x`} /> and <MathInline formula={String.raw`y`} /> are solutions then:
 
-$z = \alpha x + (1 - \alpha)y$ is also a solution for any real $\alpha$
+<MathInline formula={String.raw`z = \alpha x + (1 - \alpha)y`} /> is also a solution for any real <MathInline formula={String.raw`\alpha`} />
 
-<Image src="./fig0204a.png" alt="Linear Dependence" />
+![Linear Dependence](./fig0204a.png)
 
 The span of a set of vectors is the set of all linear combinations of the vectors. Formally, a __linear combination__ of some set of vectors
-$\{ v^1, \cdots, v^n\}$ is given by multiplying each vecor $v^{(i)}$ by a corresponding scalar coefficient and adding the results:
+<MathInline formula={String.raw`\{ v^1, \cdots, v^n\}`} /> is given by multiplying each vecor <MathInline formula={String.raw`v^{(i)}`} /> by a corresponding scalar coefficient and adding the results:
 
-$$\color{Orange}{\displaystyle\sum_i c_i v^{(i)} \tag{11}}$$
+<MathBlock formula={String.raw`\displaystyle\sum_i c_i v^{(i)} \tag{11}`} />
 
-Determining whether $Ax = b$ has a solution thus amounts to testing whether $b$ is in the span of the columns of $A$. This particular span is known as the __column space__ or the __range__, of $A$.
+Determining whether <MathInline formula={String.raw`Ax = b`} /> has a solution thus amounts to testing whether <MathInline formula={String.raw`b`} /> is in the span of the columns of <MathInline formula={String.raw`A`} />. This particular span is known as the __column space__ or the __range__, of <MathInline formula={String.raw`A`} />.
 
-In order for the system $Ax = b$ to have a solution for all values of $b \in \mathbb{R}^m$, we require that the column space of $A$ be all of $\mathbb{R}^m$.
+In order for the system <MathInline formula={String.raw`Ax = b`} /> to have a solution for all values of <MathInline formula={String.raw`b \in \mathbb{R}^m`} />, we require that the column space of <MathInline formula={String.raw`A`} /> be all of <MathInline formula={String.raw`\mathbb{R}^m`} />.
 
-A set of vectors $\{ v^1, \cdots, v^n\}$ is __linearly independent__ if the only solution to the vector equation $\lambda_1 v^1 + \cdots \lambda_n v^n = 0 \ \text{is} \ \lambda_i=0 \ \forall  i$. If a set of vectors is not linearly independent, then it is __linearly dependent__.
+A set of vectors <MathInline formula={String.raw`\{ v^1, \cdots, v^n\}`} /> is __linearly independent__ if the only solution to the vector equation <MathInline formula={String.raw`\lambda_1 v^1 + \cdots \lambda_n v^n = 0 \ \text{is} \ \lambda_i=0 \ \forall  i`} />. If a set of vectors is not linearly independent, then it is __linearly dependent__.
 
 For the matrix to have an inverse, the matrix must be __square__, that is, we require that *m = n* and that all the columns be linearly independent. A square matrix with linearly dependent columns is known as __singular__.
 
-If $A$ is not square or is square but singular, solving the equation is still possible, but we cannot use the method of matrix inversion to find the solution.
+If <MathInline formula={String.raw`A`} /> is not square or is square but singular, solving the equation is still possible, but we cannot use the method of matrix inversion to find the solution.
 
 So far we have discussed matrix inverses as being multiplied on the left. It is also possible to define an inverse that is multiplied on the right. For square matrixes, the left inverse and right inverse are equal.
 
@@ -756,7 +739,7 @@ Vector x: {} \n\nA^(-1)b: \n{}""".format(lds_vector_x, verify_x))
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A is successfully inverted:
 [[ 0.40000004 -0.20000002]
@@ -774,31 +757,28 @@ b:
 [[6. 3.]
  [2. 6.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-16" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Note that, finding inverses can be a challenging process if you want to calculate it, but using tensorflow or any other library, you can easily check if the inverse of the matrix exists. If you know the conditions and know how to solve matrix equations using tensorflow, you should be good, but for the reader who wants to go deeper, check [Linear Dependence and Span
 ](https://math.ryerson.ca/~danziger/professor/MTH141/Handouts/depend.pdf) for further examples and definitions.
 
 ### 02.05 - Norms
 
-In machine learning if we need to measure the size of vectors, we use a function called a __norm__. And norm is what is generally used to evaluate the error of a model. Formally, the $L^P$ norm is given by:
+In machine learning if we need to measure the size of vectors, we use a function called a __norm__. And norm is what is generally used to evaluate the error of a model. Formally, the <MathInline formula={String.raw`L^P`} /> norm is given by:
 
-$$\color{Orange}{||x||_p = \big(\displaystyle\sum_i |x_i|^p\big)^{1/p}| \tag{12}}$$
+<MathBlock formula={String.raw`||x||_p = \big(\displaystyle\sum_i |x_i|^p\big)^{1/p}| \tag{12}`} />
 
-for $p \in \mathbb{R}, p \geq 1$
+for <MathInline formula={String.raw`p \in \mathbb{R}, p \geq 1`} />
 
-On an intuitive level, the norm of a vector $x$ measures the distance from the origin to the point $x$.
+On an intuitive level, the norm of a vector <MathInline formula={String.raw`x`} /> measures the distance from the origin to the point <MathInline formula={String.raw`x`} />.
 
-More rigorously, a norm is any function $f$ that satisfies the following properties:
+More rigorously, a norm is any function <MathInline formula={String.raw`f`} /> that satisfies the following properties:
 
-$$
-\color{Orange}{f(x) = 0 \implies x=0} \\
-\color{Orange}{f(x +y) \leq f(x) + f(y)} \\
-\color{Orange}{\forall \alpha \in \mathbb{R}, f(\alpha x) = |\alpha|f(x)  \tag{13}}
-$$
+<MathBlock formula={String.raw`{f(x) = 0 \implies x=0} \\
+{f(x +y) \leq f(x) + f(y)} \\
+{\forall \alpha \in \mathbb{R}, f(\alpha x) = |\alpha|f(x)  \tag{13}}`} />
 
-The $L^2$ norm with *p=2* is known as the __Euclidean norm__. Which is simply the Euclidean distance from the origin to the point identified by $x$. It is also common to measure the size of a vector using the squared $L^2$ norm, which can be calculated simply as $x^{\top} x$
+The <MathInline formula={String.raw`L^2`} /> norm with *p=2* is known as the __Euclidean norm__. Which is simply the Euclidean distance from the origin to the point identified by <MathInline formula={String.raw`x`} />. It is also common to measure the size of a vector using the squared <MathInline formula={String.raw`L^2`} /> norm, which can be calculated simply as <MathBlock formula={String.raw`x^{\top} x`} />
 
 ```python
 # Euclidean distance between square root(3^2 + 4^2) calculated by setting ord='euclidean'
@@ -810,17 +790,16 @@ vector_size = tf.multiply(tf.transpose([3., 4.]), [3., 4.])
 print("Vector Size: {}".format(vector_size))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Euclidean Distance: 5.0
 Vector Size: [ 9. 16.]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-17" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-In many contexts, the squared $L^2$ norm may be undesirable, because it increases very slowly near the origin. In many machine learning applications, it is important to discriminate between elements that are exactly zero and elements that are small but nonzero. In these cases, we turn to a function that grows at the same rate in all locations, but retains mathematical simplicity: the $L^1$ norm, which can be simplified to:
+In many contexts, the squared <MathInline formula={String.raw`L^2`} /> norm may be undesirable, because it increases very slowly near the origin. In many machine learning applications, it is important to discriminate between elements that are exactly zero and elements that are small but nonzero. In these cases, we turn to a function that grows at the same rate in all locations, but retains mathematical simplicity: the <MathInline formula={String.raw`L^1`} /> norm, which can be simplified to:
 
-$$\color{Orange}{||x||_1 = \displaystyle\sum_i |x_i| \tag{14}}$$
+<MathBlock formula={String.raw`||x||_1 = \displaystyle\sum_i |x_i| \tag{14}`} />
 
 ```python
 def SE(x,y,intc,beta):
@@ -855,29 +834,27 @@ plt.legend()
 fig1.show()
 ```
 
-<Image src="./output_45_0.png" alt="The graph of each of the norms" />
+![The graph of each of the norms](./output_45_0.png)
 
-One other norm that commonly arises in machine learning is the $L^{\infty}$ norm, also known as the __max norm__. This norm simplifies to the absolute value of the element with the largest magnitude in the vector,
+One other norm that commonly arises in machine learning is the <MathBlock formula={String.raw`L^{\infty}`} /> norm, also known as the __max norm__. This norm simplifies to the absolute value of the element with the largest magnitude in the vector,
 
-$$\color{Orange}{\parallel x \\parallel_{\infty} = max_i |x_i| \tag{15}}$$
+<MathBlock formula={String.raw`\parallel x \\parallel_{\infty} = max_i |x_i| \tag{15}`} />
 
 If we wish to measure the size of a matrix, in context of deep learning, the most common way to do this is with the __Frobenius norm__:
 
-$$\color{Orange}{\parallel A \parallel_F = \sqrt{\displaystyle\sum_{i, j} A^2_{i, j}} \tag{16}}$$
+<MathBlock formula={String.raw`\parallel A \parallel_F = \sqrt{\displaystyle\sum_{i, j} A^2_{i, j}} \tag{16}`} />
 
-which is analogous to the $L^{2}$ norm of a vector.
+which is analogous to the <MathInline formula={String.raw`L^{2}`} /> norm of a vector.
 
 Meaning for example for a matrix:
-$$
-A =
+<MathBlock formula={String.raw`A =
 \begin{pmatrix}
 2 & -1 & 5 \\
 0 & 2 & 1 \\
 3  & 1 & 1  \\
-\end{pmatrix}
-$$
+\end{pmatrix}`} />
 
-$\parallel A \parallel = [2^2 + (-1^2) + 5^2 + 0^2 + 2^2 + 1^2 + 3^2 + 1^2 + 1^2]^{1/2}$
+<MathInline formula={String.raw`\parallel A \parallel = [2^2 + (-1^2) + 5^2 + 0^2 + 2^2 + 1^2 + 3^2 + 1^2 + 1^2]^{1/2}`} />
 
 ```python
 n_matrix_A = tf.constant([[2, -1, 5], [0, 2, 1], [3, 1, 1]], name="matrix_A", dtype=tf.float32)
@@ -887,18 +864,17 @@ frobenius_norm = tf.norm(n_matrix_A, ord='fro', axis=(0, 1))
 print("Frobenius norm: {}".format(frobenius_norm))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Frobenius norm: 6.78233003616333
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-19" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The dot product of two vectors can be rewritten in terms of norms as:
 
-$$\color{Orange}{x^{\top} y = ||x||_2 ||y||_2 cos\theta \tag{17}}$$
+<MathBlock formula={String.raw`x^{\top} y = ||x||_2 ||y||_2 cos\theta \tag{17}`} />
 
-where $\theta$ is the angle between $x$ and $y$.
+where <MathInline formula={String.raw`\theta`} /> is the angle between <MathInline formula={String.raw`x`} /> and <MathInline formula={String.raw`y`} />.
 
 ```python
 # for x(0, 2) and y(2, 2) cos theta = 45 degrees
@@ -930,24 +906,23 @@ plt.quiver(*origin, n_vector_x, n_vector_y, color=['#FF9A13','#1190FF'], scale=8
 plt.show()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Dot Product can be rewritten in terms of norms, where
 RHS: 4.0
 LHS: [[4.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-20" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_49_1.png" alt="Dot Product Example" />
+![Dot Product Example](./output_49_1.png)
 
 ### 02.06 - Special Kinds of Matrices and Vectors
 
-__Diagonal__ matrices consist mostly of zeros and have nonzero entries only along the main diagonal. Identity matrix is an example of diagonal matrix. We write $diag(v)$ to denote a square diagonal matrix whose diagonal entries are given by the entries of the vector *v*.
+__Diagonal__ matrices consist mostly of zeros and have nonzero entries only along the main diagonal. Identity matrix is an example of diagonal matrix. We write <MathInline formula={String.raw`diag(v)`} /> to denote a square diagonal matrix whose diagonal entries are given by the entries of the vector *v*.
 
-To compute $diag(v)x$ we only need to scale each element $x_i$ by $v_i$. In other words:
+To compute <MathInline formula={String.raw`diag(v)x`} /> we only need to scale each element <MathInline formula={String.raw`x_i`} /> by <MathInline formula={String.raw`v_i`} />. In other words:
 
-$$\color{orange}{diag(v)x = v \odot x \tag{18}}$$
+<MathBlock formula={String.raw`diag(v)x = v \odot x \tag{18}`} />
 
 ```python
 # create vector v and x
@@ -968,7 +943,7 @@ def false_print(): print("Diagonal of v times x: \n{} \n\nis NOT equal to vector
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Vector v: [1 3 8 5 3]
 Vector x: [9 0 4 1 4]
@@ -987,12 +962,11 @@ is equal to vector v dot vector x:
  [ 0  0  0  5  0]
  [ 0  0  0  0 12]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-21" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Inverting a square diagonal matrix is also efficient. The inverse exists only if every diagonal entry is nonzero, and in that case:
 
-$$\color{orange}{diag(v)^{-1} = diag([1/v_1, \cdots , 1/v_n]^{\top}) \tag{19}}$$
+<MathBlock formula={String.raw`diag(v)^{-1} = diag([1/v_1, \cdots , 1/v_n]^{\top}) \tag{19}`} />
 
 ```python
 try:
@@ -1015,7 +989,7 @@ except:
     print("The inverse exists only if every diagonal is nonzero, your vector looks: \n{}".format(d_vector_v))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Vector v: [1.9077636 9.731502  8.638878  1.4345318 1.4367076]
 The inverse of LHS:
@@ -1032,14 +1006,13 @@ Match the inverse of RHS:
  [0.         0.         0.         0.6970915  0.        ]
  [0.         0.         0.         0.         0.69603586]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-22" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-Not all diagonal matrices need be square. It is possible to construct a rectangular diagonal matrix. Nonsquare diagonal matrices do not have inverses, but we can still multiply by them cheaply. For a nonsquare diagonal matrix $D$, the product $Dx$ will involve scaling each element of $x$ and either concatenating some zeros to the result, if $D$ is taller than it is wide, or discarding some of the last elements of the vector, if $D$ is wider than it is tall.
+Not all diagonal matrices need be square. It is possible to construct a rectangular diagonal matrix. Nonsquare diagonal matrices do not have inverses, but we can still multiply by them cheaply. For a nonsquare diagonal matrix <MathInline formula={String.raw`D`} />, the product <MathInline formula={String.raw`Dx`} /> will involve scaling each element of <MathInline formula={String.raw`x`} /> and either concatenating some zeros to the result, if <MathInline formula={String.raw`D`} /> is taller than it is wide, or discarding some of the last elements of the vector, if <MathInline formula={String.raw`D`} /> is wider than it is tall.
 
-A __symmetric__ matrix is any matrix that is equal to its own transpose: $A = A^{\top}$
+A __symmetric__ matrix is any matrix that is equal to its own transpose: <MathBlock formula={String.raw`A = A^{\top}`} />
 
-Symmetric matrices often arise when the entries are generated by some function of two arguments that does not depend on the order of the arguments. For example, if $A$ is a matrix of distance measurements, with $A_{i,j}$ giving the distance from point *i* to point *j*, then $A_{i, j} = A_{j, i}$ because distance functions are symmetric.
+Symmetric matrices often arise when the entries are generated by some function of two arguments that does not depend on the order of the arguments. For example, if <MathInline formula={String.raw`A`} /> is a matrix of distance measurements, with <MathInline formula={String.raw`A_{i,j}`} /> giving the distance from point *i* to point *j*, then <MathInline formula={String.raw`A_{i, j} = A_{j, i}`} /> because distance functions are symmetric.
 
 ```python
 # create a symmetric matrix
@@ -1055,7 +1028,7 @@ def false_print(): print("Matrix A: \n{} \n\nDoes Not match the the transpose of
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[0 1 3]
@@ -1067,10 +1040,9 @@ Matches the the transpose of Matrix A:
  [1 2 4]
  [3 4 5]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-23" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-A vector $x$ and a vector $y$ are __*orthogonal*__ to each other if $x^{\top} y = 0$. If both vectors have nonzero norm, this means that they are at a 90 degree angle to each other.
+A vector <MathInline formula={String.raw`x`} /> and a vector <MathInline formula={String.raw`y`} /> are __*orthogonal*__ to each other if <MathBlock formula={String.raw`x^{\top} y = 0`} />. If both vectors have nonzero norm, this means that they are at a 90 degree angle to each other.
 
 ```python
 # Lets create two vectors
@@ -1105,7 +1077,7 @@ if tf.logical_and(ortho_norm_x > 0, ortho_norm_y > 0):
     plt.show()
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Vector x: [2. 2.]
 Vector y: [ 2. -2.]
@@ -1117,20 +1089,19 @@ Norm y: 2.8284270763397217
 
 Angle between vector x and vector y is: 90.0 degrees
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-24" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_59_1.png" alt="Angle between vector x and vector y" />
+![Angle between vector x and vector y](./output_59_1.png)
 
-A __unit vector__ is a vector with a __unit norm__: $\parallel x \parallel_2 = 1$.
+A __unit vector__ is a vector with a __unit norm__: <MathInline formula={String.raw`\parallel x \parallel_2 = 1`} />.
 
 If two vectors are not only are orthogonal but also have unit norm, we call them __orthonormal__.
 
 A __orthogonal matrix__ is a square matrix whose rows are mutually orthonormal and whose columns are mutually orthonormal:
 
-$$\color{Orange}{A^{\top} A = AA^{\top} = I \tag{20}}$$
+<MathBlock formula={String.raw`A^{\top} A = AA^{\top} = I \tag{20}`} />
 
-which implies $A^{-1} = A^{\top}$
+which implies <MathBlock formula={String.raw`A^{-1} = A^{\top}`} />
 
 so orthogonal matrices are of interest because their inverse is very cheap to compute.
 
@@ -1179,7 +1150,7 @@ def false_print(): print("Inverse of Matrix A: \n{} \n\nDoes not equal the trans
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 <tf.Variable 'matrixA:0' shape=(2, 2) dtype=float32, numpy=
@@ -1189,12 +1160,11 @@ array([[ 0.87758255, -0.47942555],
 Columns are orthogonal: 0.0
 Rows are orthogonal: 0.0
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-25" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_62_1.png" alt="Orthogonal Matrix Proof" />
+![Orthogonal Matrix Proof](./output_62_1.png)
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Inverse of Matrix A:
 [[ 0.87758255  0.47942555]
@@ -1204,8 +1174,7 @@ Equals the transpose of Matrix A:
 [[ 0.87758255  0.47942555]
  [-0.47942555  0.87758255]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-26" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 02.07 - Eigendecomposition
 
@@ -1213,11 +1182,11 @@ We can represent a number, for example 12 as 12 = 2 x 2 x 3. The representation 
 
 Similarly, we can also decompose matrices in ways that show us information about their functional properties that is not obvious from the representation of the matrix as an array of elements. One of the most widely used kinds of matrix decomposition is called __eigendecomposition__, in which we decompose a matrix into a set of eigenvectors and eigenvalues.
 
-An __eigenvector__ of a square matrix $A$ is a nonzero vector $v$ such that multiplication by $A$ alters only the scale of $v$, in short this is a special vector that doesn't change the direction of the matrix when applied to it :
+An __eigenvector__ of a square matrix <MathInline formula={String.raw`A`} /> is a nonzero vector <MathInline formula={String.raw`v`} /> such that multiplication by <MathInline formula={String.raw`A`} /> alters only the scale of <MathInline formula={String.raw`v`} />, in short this is a special vector that doesn't change the direction of the matrix when applied to it :
 
-$$\color{Orange}{Av = \lambda v \tag{21}}$$
+<MathBlock formula={String.raw`Av = \lambda v \tag{21}`} />
 
-The scale $\lambda$ is known as the __eigenvalue__ corresponding to this eigenvector.
+The scale <MathInline formula={String.raw`\lambda`} /> is known as the __eigenvalue__ corresponding to this eigenvector.
 
 ```python
 # Let's see how we can compute the eigen vectors and values from a matrix
@@ -1233,7 +1202,7 @@ Av = tf.tensordot(e_matrix_A, eigen_vectors_A, axes=0)
 vector_plot([tf.reshape(Av, [-1]), tf.reshape(eigen_vectors_A, [-1])], 10, 10)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[5.450138 9.455662]
@@ -1246,12 +1215,11 @@ Eigen Vectors:
 Eigen Values:
 [-2.8208985 17.494429 ]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-27" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_65_1.png" alt="Eigen Vectors" />
+![Eigen Vectors](./output_65_1.png)
 
-If $v$ is an eigenvector of $A$, then so is any rescaled vector $sv$ for $s \in \mathbb{R}, s \neq 0$.
+If <MathInline formula={String.raw`v`} /> is an eigenvector of <MathInline formula={String.raw`A`} />, then so is any rescaled vector <MathInline formula={String.raw`sv`} /> for <MathInline formula={String.raw`s \in \mathbb{R}, s \neq 0`} />.
 
 ```python
 # Lets us multiply our eigen vector by a random value s and plot the above graph again to see the rescaling
@@ -1259,11 +1227,11 @@ sv = tf.multiply(5, eigen_vectors_A)
 vector_plot([tf.reshape(Av, [-1]), tf.reshape(sv, [-1])], 10, 10)
 ```
 
-<Image src="./output_67_0.png" alt="Eigen Vectors rescaled" />
+![Eigen Vectors rescaled](./output_67_0.png)
 
-Suppose that a matrix $A$ has $n$ linearly independent eigenvectors $\{v^{(1)}, \cdots, v^{(n)}\}$ with corresponding eigenvalues $\{\lambda_{(1)}, \cdots, \lambda_{(n)}\}$. We may concatenate all the eigenvectors to form a matrix $V$ with one eigenvector per column: $V = [v^{(1)}, \cdots, v^{(n)}]$. Likewise, we can concatenate the eigenvalues to form a vector $\lambda = [\lambda_{(1)}, \cdots, \lambda_{(n)}]^{\top}$. The __eigendecomposition__ of $A$ is then given by
+Suppose that a matrix <MathInline formula={String.raw`A`} /> has <MathInline formula={String.raw`n`} /> linearly independent eigenvectors <MathInline formula={String.raw`\{v^{(1)}, \cdots, v^{(n)}\}`} /> with corresponding eigenvalues <MathInline formula={String.raw`\{\lambda_{(1)}, \cdots, \lambda_{(n)}\}`} />. We may concatenate all the eigenvectors to form a matrix <MathInline formula={String.raw`V`} /> with one eigenvector per column: <MathInline formula={String.raw`V = [v^{(1)}, \cdots, v^{(n)}]`} />. Likewise, we can concatenate the eigenvalues to form a vector <MathBlock formula={String.raw`\lambda = [\lambda_{(1)}, \cdots, \lambda_{(n)}]^{\top}`} />. The __eigendecomposition__ of <MathInline formula={String.raw`A`} /> is then given by
 
-$$\color{Orange}{A = V diag(\lambda)V^{-1} \tag{22}}$$
+<MathBlock formula={String.raw`A = V diag(\lambda)V^{-1} \tag{22}`} />
 
 ```python
 # Creating a matrix A to find it's decomposition
@@ -1282,7 +1250,7 @@ decomp_A = tf.tensordot(tf.tensordot(eigen_vectors_A, diag_lambda, axes=1), tf.l
 print("The decomposition Matrix A: \n{}".format(decomp_A))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Eigen Values of Matrix A: [0.8377223 7.1622777]
 
@@ -1298,16 +1266,15 @@ The decomposition Matrix A:
 [[-3.3302479 -3.195419 ]
  [-4.786382  -2.7909322]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-28" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Not every matrix can be decomposed into eigenvalues and eigenvectors. In some cases, the decomposition exists but involves complex rather than real numbers.
 
 In this book, we usually need to decompose only a specific class of matrices that have a simple decomposition. Specifically, every real symmetric matrix can be decomposed into an expression using only real-valued eigenvectors and eigenvalues:
 
-$$\color{Orange}{A = Q \Lambda Q^{\top} \tag{23}}$$
+<MathBlock formula={String.raw`A = Q \Lambda Q^{\top} \tag{23}`} />
 
-where $Q$ is an orthogonal matrix composed of eigenvectors of $A$ and $\Lambda$ is a diagonal matrix. The eigenvalue $\Lambda_{i,i}$ is associated with the eigenvector in column *i* of $Q$, denoted as $Q_{:, i}$. Because $Q$ is an orthogonal matrix, we can think of $A$ as scaling space by $\Lambda_i$ in direction $v^{(i)}$.
+where <MathInline formula={String.raw`Q`} /> is an orthogonal matrix composed of eigenvectors of <MathInline formula={String.raw`A`} /> and <MathInline formula={String.raw`\Lambda`} /> is a diagonal matrix. The eigenvalue <MathInline formula={String.raw`\Lambda_{i,i}`} /> is associated with the eigenvector in column *i* of <MathInline formula={String.raw`Q`} />, denoted as <MathBlock formula={String.raw`Q_{:, i}`} />. Because <MathInline formula={String.raw`Q`} /> is an orthogonal matrix, we can think of <MathInline formula={String.raw`A`} /> as scaling space by <MathInline formula={String.raw`\Lambda_i`} /> in direction <MathInline formula={String.raw`v^{(i)}`} />.
 
 ```python
 # In section 2.6 we manually created a matrix to verify if it is symmetric, but what if we don't know the exact values and want to create a random symmetric matrix
@@ -1335,7 +1302,7 @@ def false_print(): print("Condition FAILED. \nRHS: \n{} \n\nLHS: \n{}".format(sy
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Symmetric Matrix A:
 [[4.517448  3.3404353]
@@ -1358,32 +1325,31 @@ LHS:
 [[4.517448  3.3404353]
  [3.3404353 7.411926 ]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-29" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-The eigendecomposition of a matrix tells us many useful facts about the matrix. The matrix is singular if and only if any of the eigenvalues are zero. The eigendecomposition of a real symmetric matrix can also be used to optimize quadratic expressions of the form$f(x) = x^{\top} Ax$ subject to $\parallel x \parallel_2 = 1$.
+The eigendecomposition of a matrix tells us many useful facts about the matrix. The matrix is singular if and only if any of the eigenvalues are zero. The eigendecomposition of a real symmetric matrix can also be used to optimize quadratic expressions of the form <MathBlock formula={String.raw`f(x) = x^{\top} Ax`} /> subject to <MathInline formula={String.raw`\parallel x \parallel_2 = 1`} />.
 
-The above equation can be solved as following, we know that if $x$ is an Eigenvector of $A$ and $\lambda$ is the corresponding eigenvalue, then $Ax = \lambda x$, therefore $f(x) = x^{\top} Ax = x^{\top} \lambda x = x^{\top} x \lambda$ and since $\parallel x \parallel_2 = 1$ and $x^{\top} x =1$, the above equation boils down to $f(x) = \lambda$
+The above equation can be solved as following, we know that if <MathInline formula={String.raw`x`} /> is an Eigenvector of <MathInline formula={String.raw`A`} /> and <MathInline formula={String.raw`\lambda`} /> is the corresponding eigenvalue, then <MathInline formula={String.raw`Ax = \lambda x`} />, therefore <MathBlock formula={String.raw`f(x) = x^{\top} Ax = x^{\top} \lambda x = x^{\top} x \lambda`} /> and since <MathInline formula={String.raw`\parallel x \parallel_2 = 1`} /> and <MathBlock formula={String.raw`x^{\top} x =1`} />, the above equation boils down to <MathInline formula={String.raw`f(x) = \lambda`} />
 
-Whenever $x$ is equal to an eigenvector of $A, \ f$ takes on the value of the corresponding eigenvalue and its minimum value within the constraint region is the minimum eigenvalue.
+Whenever <MathInline formula={String.raw`x`} /> is equal to an eigenvector of <MathInline formula={String.raw`A, \ f`} /> takes on the value of the corresponding eigenvalue and its minimum value within the constraint region is the minimum eigenvalue.
 
-A matrix whose eigenvalues are all positive is called __positive definite__. A matrix whose eigenvalues are all positive or zero valued is called __positive semidefinite__. Likewise, if all eigenvalues are negative, the matrix is __negative definite__, and if all eigenvalues are negative or zero valued, it is __negative semidefinite__. Positive semidefinite matrices are interesting because they guarantee that $\forall x, x^{\top} Ax \geq 0$. Positive definite matrices additionally guarantee that $x^T Ax = 0 \implies x=0$.
+A matrix whose eigenvalues are all positive is called __positive definite__. A matrix whose eigenvalues are all positive or zero valued is called __positive semidefinite__. Likewise, if all eigenvalues are negative, the matrix is __negative definite__, and if all eigenvalues are negative or zero valued, it is __negative semidefinite__. Positive semidefinite matrices are interesting because they guarantee that <MathBlock formula={String.raw`\forall x, x^{\top} Ax \geq 0`} />. Positive definite matrices additionally guarantee that <MathInline formula={String.raw`x^T Ax = 0 \implies x=0`} />.
 
-<Image src="./fig0207a.PNG" alt="Eigenvalue plots" />
+![Eigenvalue plots](./fig0207a.PNG)
 
 ### 02.08 - Singular Value Decomposition
 
 The __singular value decomposition (SVD)__ provides another way to factorize a matrix into  __singular vectors__ and __singular values__. The SVD enables us to discover some of the same kind of information as the eigendecomposition reveals, however, the SVD is more generally applicable. Every real matrix has a singular value decomposition, but the same is not true of the eigenvalue decomposition. SVD can be written as:
 
-$$\color{Orange}{A = UDV^{\top} \tag{24}}$$
+<MathBlock formula={String.raw`A = UDV^{\top} \tag{24}`} />
 
-Suppose $A$ is an *m x n* matrix, then $U$ is defined to be an *m x m* rotation matrix, $D$ to be an *m x n* matrix scaling & projecting matrix, and $V$ to be an *n x n* rotation matrix.
+Suppose <MathInline formula={String.raw`A`} /> is an *m x n* matrix, then <MathInline formula={String.raw`U`} /> is defined to be an *m x m* rotation matrix, <MathInline formula={String.raw`D`} /> to be an *m x n* matrix scaling & projecting matrix, and <MathInline formula={String.raw`V`} /> to be an *n x n* rotation matrix.
 
-Each of these matrices is defined to have a special structure. The matrices $U$ and $V$ are both defined to be orthogonal matrices $(U^{\top} = U^{-1} \ \text{and} \ V^{\top} = V^{-1})$. The matrix $D$ is defined to be a diagonal matrix.
+Each of these matrices is defined to have a special structure. The matrices <MathInline formula={String.raw`U`} /> and <MathInline formula={String.raw`V`} /> are both defined to be orthogonal matrices <MathBlock formula={String.raw`(U^{\top} = U^{-1} \ \text{and} \ V^{\top} = V^{-1})`} />. The matrix <MathInline formula={String.raw`D`} /> is defined to be a diagonal matrix.
 
-The elements along the diagonal of $D$ are known as the __singular values__ of the matrix $A$. The columns of $U$ are known as the __left-singular vectors__. The columns of $V$ are known as as the __right-singular vectors__.
+The elements along the diagonal of <MathInline formula={String.raw`D`} /> are known as the __singular values__ of the matrix <MathInline formula={String.raw`A`} />. The columns of <MathInline formula={String.raw`U`} /> are known as the __left-singular vectors__. The columns of <MathInline formula={String.raw`V`} /> are known as as the __right-singular vectors__.
 
-<Image src="./fig0208a.png" alt="Singular Value Decomposition" />
+![Singular Value Decomposition](./fig0208a.png)
 
 ```python
 # mxn matrix A
@@ -1395,7 +1361,7 @@ d, u, v = tf.linalg.svd(svd_matrix_A, full_matrices=True, compute_uv=True)
 print("Diagonal D: \n{} \n\nMatrix U: \n{} \n\nMatrix V^T: \n{}".format(d, u, v))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[2. 3.]
@@ -1414,8 +1380,7 @@ Matrix V^T:
 [[ 0.63453555  0.7728936 ]
  [ 0.7728936  -0.63453555]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-30" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ```python
 # Lets see if we can bring back the original matrix from the values we have
@@ -1442,7 +1407,7 @@ def false_print(): print("Condition FAILED. \nRHS: \n{} \n\nLHS: \n{}".format(tf
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Orthogonal Matrix U:
 [[ 0.30449855 -0.86058956  0.40824753]
@@ -1469,16 +1434,15 @@ LHS:
  [4. 5.]
  [6. 7.]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-31" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-Matrix $A$ can be seen as a linear transformation. This transformation can be decomposed into three sub-transformations:
+Matrix <MathInline formula={String.raw`A`} /> can be seen as a linear transformation. This transformation can be decomposed into three sub-transformations:
 
 1. Rotation,
 2. Re-scaling and projecting,
 3. Rotation.
 
-These three steps correspond to the three matrices $U, D \ \text{and} \ V$
+These three steps correspond to the three matrices <MathInline formula={String.raw`U, D \ \text{and} \ V`} />
 
 Let's see how these transformations are taking place in order
 
@@ -1510,20 +1474,19 @@ plot_transform(trans_1, trans_2,"$U \cdot D \cdot V^T \cdot Square$", "$D \cdot 
 plt.show()
 ```
 
-{% capture text-capture %}
-<Image src="./output_79_0.png" alt="Rotation" />
+<ResultToggle>
+![Rotation](./output_79_0.png)
 
-<Image src="./output_79_1.png" alt="Scaling and Projecting" />
+![Scaling and Projecting](./output_79_1.png)
 
-<Image src="./output_79_2.png" alt="Second Rotation" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-32" button-text="Toggle to see results" toggle-text=text-capture%}
+![Second Rotation](./output_79_2.png)
+</ResultToggle>
 
 The above sub transformations can be found for each matrix as follows:
 
-- $U$ corresponds to the eigenvectors of $A A^{\top}$
-- $V$ corresponds to the eigenvectors of $A^{\top} A$
-- $D$ corresponds to the eigenvalues $A A^{\top}$  or $A^{\top} A$ which are the same.
+- <MathInline formula={String.raw`U`} /> corresponds to the eigenvectors of <MathBlock formula={String.raw`A A^{\top}`} />
+- <MathInline formula={String.raw`V`} /> corresponds to the eigenvectors of <MathBlock formula={String.raw`A^{\top} A`} />
+- <MathInline formula={String.raw`D`} /> corresponds to the eigenvalues <MathBlock formula={String.raw`A A^{\top}`} />  or <MathBlock formula={String.raw`A^{\top} A`} /> which are the same.
 
 As an exercise try proving this is the case.
 
@@ -1531,19 +1494,19 @@ Perhaps the most useful feature of the SVD is that we can use it to partially ge
 
 ### 02.09 - The Moore-Penrose Pseudoinverse
 
-Matrix inversion is not defined for matrices that are not square. Suppose we want to make a left-inverse $B$ of a matrix $A$ so that we can solve a linear equation $Ax = Y$ by left multiplying each side to obtain $x = By$.
+Matrix inversion is not defined for matrices that are not square. Suppose we want to make a left-inverse <MathInline formula={String.raw`B`} /> of a matrix <MathInline formula={String.raw`A`} /> so that we can solve a linear equation <MathInline formula={String.raw`Ax = Y`} /> by left multiplying each side to obtain <MathInline formula={String.raw`x = By`} />.
 
-Depending on the structure of the problem, it may not be possible to design a unique mapping from $A$ to $B$.
+Depending on the structure of the problem, it may not be possible to design a unique mapping from <MathInline formula={String.raw`A`} /> to <MathInline formula={String.raw`B`} />.
 
-The __Moore-Penrose pseudoinverse__ enables use to make some headway in these cases. The pseudoinverse of $A$ is defined as a matrix:
+The __Moore-Penrose pseudoinverse__ enables use to make some headway in these cases. The pseudoinverse of <MathInline formula={String.raw`A`} /> is defined as a matrix:
 
-$$\color{Orange}{A^+ = lim_{\alpha \rightarrow 0} (A^{\top} A + \alpha I)^{-1} A^{\top} \tag{25}}$$
+<MathBlock formula={String.raw`A^+ = lim_{\alpha \rightarrow 0} (A^{\top} A + \alpha I)^{-1} A^{\top} \tag{25}`} />
 
 Practical algorithms for computing the pseudoinverse are based not on this definition, but rather on the formula:
 
-$$\color{Orange}{A^+ = VD^+U^{\top} \tag{26}}$$
+<MathBlock formula={String.raw`A^+ = VD^+U^{\top} \tag{26}`} />
 
-where $U, D$ and $V$ are the singular decomposition of $A$ and the pseudoinverse of $D^+$ of a diagonal matrix $D$ is obtained by taking the reciprocal of its nonzero elements then taking the transpose of the resulting matrix.
+where <MathInline formula={String.raw`U, D`} /> and <MathInline formula={String.raw`V`} /> are the singular decomposition of <MathInline formula={String.raw`A`} /> and the pseudoinverse of <MathInline formula={String.raw`D^+`} /> of a diagonal matrix <MathInline formula={String.raw`D`} /> is obtained by taking the reciprocal of its nonzero elements then taking the transpose of the resulting matrix.
 
 ```python
 # Matrix A
@@ -1564,7 +1527,7 @@ matrix_A_star = tf.matmul(tf.matmul(mpp_v, d_plus, transpose_a=True), mpp_u, tra
 print("The Moore-Penrose pseudoinverse of Matrix A: \n{}".format(matrix_A_star))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[6.1130576 2.7441363]
@@ -1588,10 +1551,9 @@ The Moore-Penrose pseudoinverse of Matrix A:
 [[-0.27460322 -0.0080738   0.2083109 ]
  [-0.39717284 -0.06446922  0.20524703]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-33" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-When $A$ has more columns than rows, then solving a linear equation using the pseudoinverse provides one of the many possible solutions. Specifically, it provides the solution $x = A^+y$ with minimal Euclidean norm $\parallel x \parallel_2$ among all possible solutions.
+When <MathInline formula={String.raw`A`} /> has more columns than rows, then solving a linear equation using the pseudoinverse provides one of the many possible solutions. Specifically, it provides the solution <MathInline formula={String.raw`x = A^+y`} /> with minimal Euclidean norm <MathInline formula={String.raw`\parallel x \parallel_2`} /> among all possible solutions.
 
 ```python
 mpp_vector_y = tf.constant([[2], [3], [4]], dtype=tf.float32)
@@ -1601,7 +1563,7 @@ mpp_vector_x = tf.matmul(matrix_A_star, mpp_vector_y)
 print("Vector x: \n{}".format(mpp_vector_x))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Vector y:
 [[2.]
@@ -1612,16 +1574,15 @@ Vector x:
 [[ 0.2598158 ]
  [-0.16676521]]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-34" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-When $A$ has more rows than columns, it is possible for there to be no solution. In this case, using the pseudoinverse gives us the $x$ for which $Ax$ is as close as possible to $y$ in terms of Euclidean norm $\parallel Ax - y \parallel_2$
+When <MathInline formula={String.raw`A`} /> has more rows than columns, it is possible for there to be no solution. In this case, using the pseudoinverse gives us the <MathInline formula={String.raw`x`} /> for which <MathInline formula={String.raw`Ax`} /> is as close as possible to <MathInline formula={String.raw`y`} /> in terms of Euclidean norm <MathInline formula={String.raw`\parallel Ax - y \parallel_2`} />
 
 ### 02.10 - The Trace Operator
 
 The trace operator gives the sum of all the diagonal entries of a matrix:
 
-$$\color{Orange}{Tr(A) = \displaystyle\sum_i A_{i,i} \tag{27}}$$
+<MathBlock formula={String.raw`Tr(A) = \displaystyle\sum_i A_{i,i} \tag{27}`} />
 
 ```python
 # random 3x3 matrix A
@@ -1633,7 +1594,7 @@ trace_matrix_A = tf.linalg.trace(to_matrix_A)
 print("Trace of Matrix A: \n{} \nis: {}".format(to_matrix_A, trace_matrix_A))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Trace of Matrix A:
 [[1.0423017 9.2543545 9.264312 ]
@@ -1641,13 +1602,12 @@ Trace of Matrix A:
  [8.285712  6.5746584 8.217355 ]]
 is: 17.46532440185547
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-35" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The trace operator is useful for a variety of reasons. Some operations that are difficult to specify without resorting to summation notation can be specified using matrix products and the trace operator. For example, the trace operator provides
 an alternative way of writing the Frobenius norm of a matrix:
 
-$$\color{Orange}{||A||_F = \sqrt{Tr(AA^{\top})} \tag{28}}$$
+<MathBlock formula={String.raw`||A||_F = \sqrt{Tr(AA^{\top})} \tag{28}`} />
 
 ```python
 # Frobenius Norm of A
@@ -1662,18 +1622,17 @@ def false_print(): print("Condition FAILED. \nRHS: {} \nLHS: {}".format(frobeniu
 
 tf.cond(predictor, true_print, false_print)
 ```
-{% capture text-capture %}
+<ResultToggle>
 ```python
 It WORKS.
 RHS: 22.71059799194336
 LHS: 22.710599899291992
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-36" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 Writing an expression in terms of the trace operator opens up opportunities to manipulate the expression using many useful identities. For example, the trace operator is invariant to the transpose operator:
 
-$$\color{Orange}{Tr(A) = Tr(A^{\top}) \tag{29}}$$
+<MathBlock formula={String.raw`Tr(A) = Tr(A^{\top}) \tag{29}`} />
 
 ```python
 # Transpose of Matrix A
@@ -1689,18 +1648,17 @@ def false_print(): print("Condition FAILED. \nRHS: {} \nLHS: {}".format(trace_ma
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 It WORKS.
 RHS: 17.46532440185547
 LHS: 17.46532440185547
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-37" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The trace of a square matrix composed of many factors is also invariant to moving the last factor into the first position, if the shapes of the corresponding matrices allow the resulting product to be defined:
 
-$$\color{Orange}{Tr(ABC) = Tr(CAB) = TR(BCA) \tag{30}}$$
+<MathBlock formula={String.raw`Tr(ABC) = Tr(CAB) = TR(BCA) \tag{30}`} />
 
 ```python
 # random 3x3 matrix B and matrix C
@@ -1728,17 +1686,16 @@ def false_print(): print("Condition FAILED. \nABC: {} \nCAB: {} \nBCA: {}".forma
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 It WORKS.
 ABC: 5854.24609375
 CAB: 5854.24609375
 BCA: 5854.24609375
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-38" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-This invariance to cyclic permutation holds even if the resulting product has a different shape. For example, for $A \in \mathbb{R}^{m \times n}$ and $B \in \mathbb{R}^{n \times m}$, we have $Tr(AB) = Tr(BA)$ even though $AB \in \mathbb{R}^{m \times m}$ and $BA \in \mathbb{R}^{n \times n}$
+This invariance to cyclic permutation holds even if the resulting product has a different shape. For example, for <MathBlock formula={String.raw`A \in \mathbb{R}^{m \times n}`} /> and <MathBlock formula={String.raw`B \in \mathbb{R}^{n \times m}`} />, we have <MathInline formula={String.raw`Tr(AB) = Tr(BA)`} /> even though <MathBlock formula={String.raw`AB \in \mathbb{R}^{m \times m}`} /> and <MathBlock formula={String.raw`BA \in \mathbb{R}^{n \times n}`} />
 
 ```python
 # mxn matrix A
@@ -1760,7 +1717,7 @@ def false_print(): print("Condition FAILED. \nAB: {} \nBA: {}".format(ab, ba))
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 3x2 Matrix A:
 [[1.4351392  2.850753  ]
@@ -1775,18 +1732,17 @@ It WORKS.
 AB: 123.61897277832031
 BA: 123.61897277832031
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-39" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 ### 02.11 - The Determinant
 
-The determinant of a square matrix, denoted det($A$), is a function that maps matrices to real scalars. You can calculate the determinant of a  2 x 2 matrix as:
+The determinant of a square matrix, denoted det(<MathInline formula={String.raw`A`} />), is a function that maps matrices to real scalars. You can calculate the determinant of a  2 x 2 matrix as:
 
-<Image src="./fig0211a.png" alt="Determinant for 2by2 Matrix" />
+![Determinant for 2by2 Matrix](./fig0211a.png)
 
 For a 3 x 3 matrix:
 
-<Image src="./fig0211b.png" alt="Determinant for 3by3 Matrix" />
+![Determinant for 3by3 Matrix](./fig0211b.png)
 
 ```python
 # calculate det of a matrix
@@ -1797,17 +1753,16 @@ print("Matrix A: \n{} \nDeterminant of Matrix A: \n{}".format(det_matrix_A, det_
 vector_plot(det_matrix_A, 5, 5)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Matrix A:
 [[3. 1.]
  [0. 3.]]
 Determinant of Matrix A: 9.0
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-40" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
-<Image src="./output_100_1.png" alt="Determinant of A" />
+![Determinant of A](./output_100_1.png)
 
 The determinant is equal to the product of all the eigenvalues of the matrix.
 
@@ -1824,7 +1779,7 @@ def false_print(): print("Condition FAILED. \nRHS: \n{} \n\nLHS: \n{}".format(ei
 tf.cond(predictor, true_print, false_print)
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 It WORKS.
 RHS:
@@ -1833,8 +1788,7 @@ RHS:
 LHS:
 9.0
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-41" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The absolute value of the determinant can be thought of
 as a measure of how much multiplication by the matrix expands or contracts space. If the determinant is 0, then space is contracted completely along at least one dimension, causing it to lose all its volume. If the determinant is 1, then the transformation preserves volume.
@@ -1845,10 +1799,9 @@ as a measure of how much multiplication by the matrix expands or contracts space
 vector_plot(tf.multiply(tf.abs(det_A), det_matrix_A), 50, 50)
 ```
 
-{% capture text-capture %}
-<Image src="./output_104_0.png" alt="Vector Plot" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-42" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Vector Plot](./output_104_0.png)
+</ResultToggle>
 
 ### 02.12 - Example: Principal Components Analysis
 
@@ -1873,10 +1826,9 @@ plt.plot(X[:,0], X[:,1], '+', color='b')
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_108_0.png" alt="raw data for PCA" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-43" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![raw data for PCA](./output_108_0.png)
+</ResultToggle>
 
 We start by standardizing the data. Even though the data we created are on the same scales, its always a good practice to start by standardizing the data because most of the time the data you will be working with will be in different scales.
 
@@ -1893,22 +1845,21 @@ plt.plot(normalized_data[:,0], normalized_data[:,1], '+', color='b')
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_110_0.png" alt="PCA normalized" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-44" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![PCA normalized](./output_110_0.png)
+</ResultToggle>
 
-Recall that PCA can be thought of as applying lossy compression to a collection of $x$ data points. The way we can minimize the loss of precision is by finding some decoding function $f(x) \approx c$ where $c$ will be the corresponding vector.
+Recall that PCA can be thought of as applying lossy compression to a collection of <MathInline formula={String.raw`x`} /> data points. The way we can minimize the loss of precision is by finding some decoding function <MathInline formula={String.raw`f(x) \approx c`} /> where <MathInline formula={String.raw`c`} /> will be the corresponding vector.
 
-PCA is defined by our choice of this decoding function. Specifically, to make the decoder very simple, we chose to use matrix multiplication to map $c$ and define $g(c) = Dc$. Our goal is to minimize the distance between the input point $x$ to its reconstruction and to do that we use $L^2$ norm. Which boils down to our encoding function $c = D^{\top} x$.
+PCA is defined by our choice of this decoding function. Specifically, to make the decoder very simple, we chose to use matrix multiplication to map <MathInline formula={String.raw`c`} /> and define <MathInline formula={String.raw`g(c) = Dc`} />. Our goal is to minimize the distance between the input point <MathInline formula={String.raw`x`} /> to its reconstruction and to do that we use <MathInline formula={String.raw`L^2`} /> norm. Which boils down to our encoding function <MathBlock formula={String.raw`c = D^{\top} x`} />.
 
-Finally, to reconstruct the PCA we use the same matrix $D$ to decode all the points and to solve this optimization problem, we use eigendecomposition.
+Finally, to reconstruct the PCA we use the same matrix <MathInline formula={String.raw`D`} /> to decode all the points and to solve this optimization problem, we use eigendecomposition.
 
 Please note that the following equation is the final version of a lot of matrix transformations. I don't provide the derivatives because the goal is to focus on the mathematical implementation, rather than the derivation. But for the curious, You can read about the derivation in [Chapter 2 Section 11](https://www.deeplearningbook.org/contents/linear_algebra.html).
 
-$$\color{Orange}{d^* = argmax_d \ Tr(d^{\top} X^{\top} Xd) \ \text{subject to} \ dd^{\top} = 1 \tag{31}}$$
+<MathBlock formula={String.raw`d^* = argmax_d \ Tr(d^{\top} X^{\top} Xd) \ \text{subject to} \ dd^{\top} = 1 \tag{31}`} />
 
-To find $d$ we can calculate the eigenvectors $X^TX$.
+To find <MathInline formula={String.raw`d`} /> we can calculate the eigenvectors <MathInline formula={String.raw`X^TX`} />.
 
 ```python
 # Finding the Eigne Values and Vectors for the data
@@ -1917,7 +1868,7 @@ eigen_values, eigen_vectors = tf.linalg.eigh(tf.tensordot(tf.transpose(normalize
 print("Eigen Vectors: \n{} \nEigen Values: \n{}".format(eigen_vectors, eigen_values))
 ```
 
-{% capture text-capture %}
+<ResultToggle>
 ```python
 Eigen Vectors:
 [[-0.8908606  -0.45427683]
@@ -1925,14 +1876,13 @@ Eigen Vectors:
 Eigen Values:
 [   16500.715 11025234.   ]
 ```
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-45" button-text="Toggle to see results" toggle-text=text-capture%}
+</ResultToggle>
 
 The eigenvectors (principal components) determine the directions of the new feature space, and the eigenvalues determine their magnitude.
 
 Now, let's use these Eigenvectors to rotate our data. The goal of the rotation is to end up with a new coordinate system where data is uncorrelated and thus where the basis axes gather all the variance. Thereby reducing the dimension.
 
-Recall our encoding function $c = D^{\top} x$, where $D$ is the matrix containing the eigenvectors that we have calculated before.
+Recall our encoding function <MathBlock formula={String.raw`c = D^{\top} x`} />, where <MathInline formula={String.raw`D`} /> is the matrix containing the eigenvectors that we have calculated before.
 
 ```python
 X_new = tf.tensordot(tf.transpose(eigen_vectors), tf.transpose(normalized_data), axes=1)
@@ -1943,10 +1893,9 @@ plt.ylim(-700, 700)
 plt.grid()
 ```
 
-{% capture text-capture %}
-<Image src="./output_114_0.png" alt="Principle Component Analysis" />
-{% endcapture %}
-{% include toggle-field.html toggle-name="toggle-46" button-text="Toggle to see results" toggle-text=text-capture%}
+<ResultToggle>
+![Principle Component Analysis](./output_114_0.png)
+</ResultToggle>
 
 That is the transformed data and that's it folks for our chapter on Linear Algebra 😉.
 

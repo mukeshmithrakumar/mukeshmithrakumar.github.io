@@ -6,21 +6,33 @@ import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 
 // components
+import BlogEngagement from "@components/BlogEngagement/BlogEngagement.astro";
+import BlogShare from "@components/BlogShare/BlogShare.astro";
 import Button from "@components/Button/Button.astro";
+import CopyEnhancements from "@components/CopyEnhancements/CopyEnhancements.astro";
+import PostPagination from "@components/PostPagination/PostPagination.astro";
+import RelatedPosts from "@components/RelatedPosts/RelatedPosts.astro";
 import Tag from "@components/Tag/Tag.astro";
 
 // utils
-import { formatDate, humanize, slugify } from "@js/textUtils";
-import { getAllAuthorsData } from "@js/blogUtils";
+import { formatDate, getReadingTimeText } from "@js/textUtils";
+import { getAllAuthorsData, getPostUrl } from "@js/blogUtils";
+import { getPostSocialPreviewUrl } from "@js/socialPreview";
 
 interface Props {
 	post: CollectionEntry<"blog">;
+	relatedPosts?: CollectionEntry<"blog">[];
+	previousPost?: CollectionEntry<"blog">;
+	nextPost?: CollectionEntry<"blog">;
 }
 
-const { post } = Astro.props as Props;
+const { post, relatedPosts = [], previousPost, nextPost } = Astro.props as Props;
 const { title, description, authors, tags, pubDate, updatedDate, heroImage } = post.data;
 
 const authorsData = await getAllAuthorsData(authors);
+const readTimeText = getReadingTimeText(post.body);
+const shareUrl = new URL(getPostUrl(post), Astro.site).toString();
+const socialImage = getPostSocialPreviewUrl(post);
 ---
 
 <BaseLayout
@@ -28,6 +40,7 @@ const authorsData = await getAllAuthorsData(authors);
 	title={title}
 	description={description}
 	image={heroImage}
+	socialImage={socialImage}
 	authorsData={authorsData}
 	postFrontmatter={post.data}
 >
@@ -63,11 +76,14 @@ const authorsData = await getAllAuthorsData(authors);
 							))
 						}
 
-						<!-- Date -->
-						<time class="my-auto h-full opacity-80" datetime={pubDate.toISOString()}
-							>{formatDate(pubDate)}
-						</time>
+						<div class="my-auto flex h-full items-center gap-3 opacity-80">
+							<time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+							<span aria-hidden="true">&bull;</span>
+							<span>{readTimeText}</span>
+						</div>
 					</div>
+
+					<BlogShare title={title} url={shareUrl} />
 				</div>
 			</div>
 
@@ -99,6 +115,10 @@ const authorsData = await getAllAuthorsData(authors);
 					<section id="blog-post-content" class="markdown-content mx-auto">
 						<slot />
 					</section>
+					<CopyEnhancements />
+					<BlogEngagement title={title} url={shareUrl} />
+					<RelatedPosts posts={relatedPosts} />
+					<PostPagination previousPost={previousPost} nextPost={nextPost} />
 
 					<!-- button to go back to all posts -->
 					<div class="mt-16 flex justify-center">
