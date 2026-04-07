@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-09
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -111,6 +111,8 @@ $+$ Fast Computation
 
 $-$ Asymptotic approximation, may require long signatures.
 
+<Newsletter />
+
 ### GIST IS for indexing large image collections.
 
 An intuitive extension of K-means and LSH would be to combine them into a more efficient data structure for search. Instead of quantizing the original vectors, we may quantize the difference between the vector and its associated cluster. Hence, we will describe the location of a vector within the cluster computed by K-means. We first apply K-means clustering to decompose the entire input set of descriptors into clusters and then apply semantic hashing procedure for each cluster independently. To approximate the difference between the descriptor and the centroid of the cluster, the descriptor got quantized to.
@@ -123,4 +125,3 @@ To retrieve images by query, we first quantize the query descriptor and pick a f
 
 We then select the images whose binary codes differ from the query in less than 200 and 20 bits, for example, that would leave us with approximately 5% of images. In the end, we return images sorted by hamming distance or, alternatively, we may load the original neural codes of the disk and re-rank the search results with respect to the original Euclidean distance between the query and the selected images, which would be fast.
 
-<Newsletter />

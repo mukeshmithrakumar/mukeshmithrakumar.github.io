@@ -48,7 +48,7 @@ A strong next batch would be:
 - [x] Copy-to-clipboard buttons for code and math blocks.
 - [x] share button and lightweight reactions
 - [x] Auto-generated social preview images per post.
-- [ ] “Last updated” emphasis for older technical content.
+- [ ] "Last updated" emphasis for older technical content.
 - [ ] Search across blog posts, tags, and maybe projects.
 - [ ] Reading progress bar for long technical posts.
 - [ ] Newsletter or RSS subscribe callout after the article.
@@ -258,7 +258,12 @@ Description: {{DESCRIPTION}}
 Headings:
 {{HEADINGS}}
 Theme: {{THEME}}
-Visual metaphor: {{VISUAL_METAPHOR}}
+
+Primary concept:
+- MUST center the composition around this metaphor:
+{{VISUAL_METAPHOR}}
+- interpret as a single cohesive visual, not multiple scenes
+
 Visual keywords:
 {{VISUAL_KEYWORDS}}
 
@@ -268,7 +273,38 @@ Style direction:
 - premium
 - slightly anime-inspired
 - polished and intentional
-- suitable for a serious software engineering blog
+- serious software engineering aesthetic
+
+Rendering quality:
+- ultra sharp, high detail, crisp edges
+- clean geometry, no noise
+- controlled glow (no bloom overload)
+- high contrast but balanced lighting
+- smooth gradients, no grain
+- physically plausible lighting
+- ray-traced reflections
+- depth of field with sharp focal plane
+- 8k, studio-quality render
+
+Composition rules:
+- one dominant focal element
+- 2–3 supporting elements maximum
+- strong directional flow (left→right or center→out)
+- clear layered depth (foreground / midground / background)
+- include negative space for clarity
+- avoid dense or chaotic layouts
+
+Camera & framing:
+- wide cinematic aspect ratio (16:9 or 21:9)
+- slightly angled perspective
+- medium focal length
+- shallow depth of field
+
+Lighting constraints:
+- neon accents only on edges and flows
+- avoid full-scene glow
+- no overexposure
+- preserve deep dark regions
 
 Color direction:
 - Primary neon orange: #FF7A1A
@@ -276,31 +312,22 @@ Color direction:
 - Hot magenta: #FF4FD8
 - Neon pink: #FF73C6
 - Electric violet accent: #8B5CFF
-- Soft text / light glow: #E8ECFF
-- deep navy: #090B14
-- indigo: #111526
-- near-black: #06080D
-- charcoal: #1A1F2B
+- Soft glow: #E8ECFF
+- dark base tones: #090B14, #111526, #06080D, #1A1F2B
 
-Important:
-- the site branding is primarily green, so the image should still feel compatible with a green-led website
-- primary site green references:
-  brand green: #2AD017
-  bright accent green: #52E840
-  dark support green: #1A870E
-  deepest green: #043102
-- green does not need to be dominant
-- if helpful, include only a subtle green or teal secondary glow using the brand green family above
-- do not let green overpower the main palette in the color direction section
-- prioritize the orange, amber, magenta, pink, violet, and dark base tones first, with green only as a supporting brand-consistency accent when appropriate
+Color usage:
+- use 2 dominant colors + 1 accent only
+- green only as subtle accent if needed
 
-Composition and constraints:
-- wide blog hero image
-- strong focal point
-- clean layered depth
-- visually rich but not cluttered
-- no text, labels, logos, or watermark
-- no stock-photo look
-- avoid generic person-at-laptop scenes unless strongly relevant
-- prefer conceptual technical imagery built around the theme and visual metaphor
+Brand compatibility:
+- optional subtle green glow (#2AD017 family)
+- must not dominate palette
+
+Avoid:
+- text, labels, logos
+- fake UI elements
+- excessive particles or noise
+- blurry or soft images
+- stock-photo style
+- cluttered compositions
 ```

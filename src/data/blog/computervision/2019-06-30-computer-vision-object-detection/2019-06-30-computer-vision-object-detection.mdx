@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-30
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -221,6 +221,8 @@ For more dense object detection, a user could set K or N to a higher number base
 
 This is done in a single pass through the image at inference time. Thus, the joint detection and classification leads to better optimization of the learning objective (the loss function) as well as real-time performance.
 
+<Newsletter />
+
 ### How does 3D Object Detection work?
 
 LiDAR and Depth Sensors gives 3D information of the world around it, which can't be directly captured by passive 2D camera setup. The techniques we discussed are trying to detect the objects in the raw point clouds without any texture information (just with the representation of the position (x,y,z)).
@@ -233,4 +235,3 @@ There are few reasons why it is a good idea to look into 3D detection directly o
 
 A typical point cloud consists of four different values (x, y, z and r) corresponding to the x, y and z co-ordinates of the point of which the light ray was reflected off and r being the reflectance.
 
-<Newsletter />

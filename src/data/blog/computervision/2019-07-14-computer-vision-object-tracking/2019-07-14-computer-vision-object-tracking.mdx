@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-07-14
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -116,6 +116,8 @@ Then optical flow from downscaled images can be used as a starting point for opt
 In EpicFlow, edge-preserving guided interpolation is applied to sparse matches between images.
 
 Guided upscaling of optical flow map can be performed by EpicFlow. But, in this paper, authors have additionally used homography based interpolation. For this, the image is first segmented and homography transformation is fit to semi-dense matches in each segment. If homography fits pixels of the segment well, then this segment has simple shape and upscaling is performed in this homography. Otherwise EpicFlow is used for this segment.
+
+<Newsletter />
 
 ### What is Visual Object Tracking?
 
@@ -271,6 +273,8 @@ Addition of appearance similarity to affinity cost to this simple SORT algorithm
 
 The detector and affinity score functions are two main components in multiple objects tracking methods. For both of these components, deep learning now demonstrate the best results. If we use a real time detector and the affinity estimate, then simple association method can be used in online tracking framework to achieve both real time performance and good tracking accuracy.
 
+<Newsletter />
+
 ### How does object tracking using Kalman filters work?
 
 Kalman Filters, also known as linear quadratic estimation (LQE), is an algorithm that helps us to obtain more reliable estimates from sequence of observed measurements(sensor measurements). It can be used to track the position and velocity of a moving pedestrian over time and also measure the uncertainty associated with them. It is basically a two-step iterative process.
@@ -293,4 +297,3 @@ Since here we approximate around only one point i.e. mean, the Gaussian we get d
 
 When a Gaussian is passed through a non linear function, it does not remains a Gaussian anymore but we approximate the Gaussian from the resulting figure, so in UKF a process called Unscented Transform helps us to perform this task.
 
-<Newsletter />

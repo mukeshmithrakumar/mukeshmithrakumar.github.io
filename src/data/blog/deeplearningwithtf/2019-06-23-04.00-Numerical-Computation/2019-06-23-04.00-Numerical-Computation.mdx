@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-23
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - DL
 ---
@@ -212,6 +212,8 @@ We can see how the solution changes dramatically for a small increase in value
 Condition Number of A: 1623.00927734375
 ```
 </ResultToggle>
+
+<Newsletter />
 
 ### 04.03 - Gradient-Based Optimization
 
@@ -849,6 +851,8 @@ A simple set of properties describe the optimal points of constrained optimizati
 - All constraints on both <MathInline formula={String.raw`x`} /> and the KKT multipliers are satisfied
 - The inequality constraints exhibit "complementary slackness": <MathInline formula={String.raw`\alpha \odot h(x) = 0`} />
 
+<Newsletter />
+
 ### 04.05 - Example: Linear Least Squares
 
 Let's see how we can find the value of <MathInline formula={String.raw`x`} /> that minimizes:
@@ -1037,7 +1041,6 @@ We can then find the magnitude of <MathInline formula={String.raw`\lambda`} /> b
 
 When the norm of <MathInline formula={String.raw`x`} /> exceeds 1, this derivative is positive, so to follow the derivative uphill and increase the Lagrangian with respect to <MathInline formula={String.raw`\lambda`} />, we increase <MathInline formula={String.raw`\lambda`} />. Because the coefficient on the <MathInline formula={String.raw`x^{\top} x`} /> penatly has increased, solving the linear equation for <MathInline formula={String.raw`x`} /> will now yield a solution with a smaller norm. The process of solving the linear equation and adjusting <MathInline formula={String.raw`\lambda`} /> continues until <MathInline formula={String.raw`x`} /> has the correct norm and the derivative on <MathInline formula={String.raw`\lambda`} /> is 0.
 
-<Newsletter />
 
 ## 💫 Congratulations
 

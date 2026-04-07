@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-07-28
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -117,6 +117,8 @@ The max pooling operation is not invertible. Different approaches to the inverse
 - Restore max pooling as a "Bed of nails" where we either duplicate or fill the empty block with the entry value in the top left corner and the rows elsewhere.
 - We record the position called max location switches where we located the biggest values during normal max pooling. And then use their positions to reconstruct the data from the layer above.
 
+<Newsletter />
+
 ### How does U-Net for image segmentation work?
 
 U-Net is a downsampling-upsampling architecture.
@@ -127,4 +129,3 @@ The downsampling part follows the typical architecture of a convolutional networ
 
 Every step in the upsampling part consists of a transposed convolution of the feature map followed by a two-by-two convolution that has the number of feature channels and upsamples the data, and concatenates with the correspondingly cropped feature map from the downsampling part, and this is implemented via skip connections. This is then convolved by two three-by-three convolutional layer each followed by a rectifier linear unit. The cropping is necessary due to the loss of border pixels in every convolution. Of the final layer, a one-by-one convolution is used to map each 64-component feature vector to the desired number of classes.
 
-<Newsletter />

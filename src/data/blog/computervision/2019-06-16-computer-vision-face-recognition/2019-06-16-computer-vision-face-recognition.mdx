@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-06-16
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -102,6 +102,8 @@ To start with, for each face part, such as eyes, or mouth, we can construct loca
 
 The second step in recognition would be to gather them into a complete facial shape. We can formulate facial part localization as a bayesian inference that combines the output of local detectors with a prior model of face shape and build a statistical model of facial shape.
 
+<Newsletter />
+
 ### How to build a statistical model of facial shape?
 
 - Point distribution model: scatter keypoints to represent shapes as a sequence of connected landmarks or points in the surface of a face. $x = (x_1 \dots , x_n, y1, \dots , y_n)^T$
@@ -114,4 +116,3 @@ To compute a prior model of facial shape, we can use active shape or active appe
 
 Couple of disadvantages of active shape model are, one, the initial shape may be far from the target position, and the update may end up being in a local minimum. And two, visual features extracted at each step are not discriminative or not reliable enough to predict facial points.
 
-<Newsletter />

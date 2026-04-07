@@ -6,7 +6,7 @@ draft: false
 authors:
   - mithraics
 pubDate: 2019-05-07
-heroImage: ../../best-vscode-extensions-front-end-developers/heroImage.png
+heroImage: ./heroImage.png
 tags:
   - cv
 ---
@@ -160,6 +160,8 @@ The solution then is to apply Gaussian smooths first to reduce the noise and the
 
 Gradient Magnitude Estimation is not a complete edge detector because they miss the connectivity information that link neighboring points into real edges. This problem was addressed by Canny Edge Detector.
 
+<Newsletter />
+
 ###  What is a Canny Edge Detector?
 
 The Canny Edge Detector has two steps for gradient estimation.
@@ -178,4 +180,3 @@ By varying the sigma in gradient computation or the size of Gaussian smoothing o
 
 Change in intensity is not the only source of edge detection. Change in color or texture also gives us visible edges in images. But such changes can't be detected by image gradient or canny operator. Advanced techniques see this as a pixel classification problem and use machine learning techniques. But for many computer vision tasks canny edge detector proves to be sufficient. For example it is often used as a feature extractor and produce features which are later used for image recognition.
 
-<Newsletter />
