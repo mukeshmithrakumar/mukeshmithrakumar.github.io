@@ -56,6 +56,21 @@ A strong next batch would be:
 - [ ] Series support for multi-part topics like computer vision or deep learning.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 
+## Next Step: Image Optimization
+
+When revisiting performance work, focus on source-image cleanup before considering Git LFS.
+
+- [ ] Audit the largest source images in `src/data/blog/` and `src/assets/images/`, especially oversized `heroImage.png` files.
+- [ ] Resize hero images to the largest real display width needed on the site instead of keeping full-resolution originals in the repo.
+- [ ] Convert photographic or illustration-heavy PNG/JPEG assets to `webp` or `avif` where transparency is not required.
+- [ ] Keep diagrams, screenshots, and line art in formats that preserve clarity; avoid converting technical graphics if it introduces visible artifacts.
+- [ ] Prefer `astro:assets` for images rendered through Astro components so responsive sizes and optimization stay automatic.
+- [ ] Review images referenced directly from Markdown/MDX and migrate high-value ones to optimized Astro image usage where practical.
+- [ ] Check whether duplicate copies exist across `public/`, `src/assets/`, and generated output, and remove unnecessary source duplication.
+- [ ] Exclude generated build output like `dist/` from any image-size audit so only source assets drive decisions.
+- [ ] Rebuild and visually compare updated images on desktop and mobile before committing format or compression changes.
+- [ ] Consider Git LFS only if the repository starts accumulating much larger binaries or frequent binary revisions; it helps Git storage, not served image quality.
+
 ## Search
 
 I’d add it in two places, with one being the primary entry point.
