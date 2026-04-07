@@ -1,120 +1,44 @@
-# Welcome to Quantum!
+# Mukesh Mithrakumar Website
 
-1. To get started, first install all necessary packages with `npm install`, then run an initial build to make sure the setup works `npm run build`.
-2. Now you can setup the site to your liking!
-   - [Style customization](https://cosmicthemes.com/docs/styles/)
-   - [Content editing](https://cosmicthemes.com/docs/data/)
-   - [Animations](https://cosmicthemes.com/docs/animations/)
-   - [Keystatic CMS](https://cosmicthemes.com/docs/keystatic/) - if you don't want Keystatic you can run `npm run remove-keystatic`
-   - [Forms](https://cosmicthemes.com/docs/contact-form/)
+This repository contains my personal website and technical blog, built with Astro. It is where I publish projects, long-form notes, and writing across machine learning, computer vision, deep learning, and systems topics.
 
-Should you need any assistance, send me a message at support@cosmicthemes.com
+## Project Overview
 
-## Code Intro
+The site is content-first, with most of the day-to-day work happening in the content and config layers:
 
-I have created a few code tours to introduce you to the codebase. You will need the extension [Code Tour](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) to view them in VSCode.
+- `src/data/blog/` stores blog posts and their local assets.
+- `src/data/projects/` stores project entries showcased on the site.
+- `src/data/authors/` and `src/data/otherPages/` hold supporting content collections.
+- `src/config/siteData.json.ts` contains global site metadata, SEO defaults, and social links.
+- `src/pages/`, `src/layouts/`, and `src/components/` make up the Astro page structure and reusable UI.
+- `scripts/generate-social-previews.mjs` generates per-post social share images from frontmatter data.
 
-The source files have the following setup. Note that not all files are included - it is already long, no one wants it to be longer.
+## Local Development
 
-```
-.
-├── .tours/
-│   └── code-intro.tour
-├── .vscode/
-│   └── extensions.json
-├── public/
-│   ├── favicons/
-│   │   └── favicon.ico
-│   ├── images/
-│   └── robots.txt
-├── src/
-│   ├── assets/
-│   │   └── images/
-│   │       └── hero.jpg
-│   ├── components/
-│   │   ├── Hero/
-│   │   │   ├── HeroSideImage.astro
-│   │   │   └── HeroTinyImage.astro
-│   │   └── Footer/
-│   │       └── Footer.astro
-│   ├── config/
-│   │   ├── siteData.json.ts
-│   │   └── navData.json.ts
-│   ├── data/
-│   │   ├── authors/
-│   │   ├── blog/
-│   │   ├── otherPages/
-│   │   └── config.ts
-│   ├── js/
-│   │   └── blogUtils.ts
-│   ├── layouts/
-│   │   └── BaseLayout.astro
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── blog/
-│   │   │   ├── [...slug].astro
-│   │   │   └── index.astro
-│   │   ├── tags/
-│   │   │   ├── [tag].astro
-│   │   │   └── index.astro
-│   │   ├── [page].astro
-│   │   ├── 404.astro
-│   │   ├── contact.astro
-│   │   ├── index.astro
-│   │   └── rss.xml.ts
-│   └── styles/
-│       └── global.scss
-├── .gitignore
-├── .prettierrc.mjs
-├── astro.config.mjs
-├── netlify.toml
-├── package.json
-├── package-lock.json
-├── README.md
-├── tailwind.config.cjs
-└── tsconfig.json
-```
+Install dependencies once with `npm install`, then use the commands below from the project root.
 
-For robots like Google to see the correct sitemap, you will want to edit the `public/robots.txt` file to use your website domain.
+| Command                         | Action                                                  |
+| :------------------------------ | :------------------------------------------------------ |
+| `npm run dev`                   | Start the local Astro dev server                        |
+| `npm run build`                 | Build the production site into `dist/`                  |
+| `npm run preview`               | Preview the built site locally                          |
+| `npm run lint`                  | Run ESLint across the codebase                          |
+| `npm run format`                | Format the repository with Prettier                     |
+| `npm run generate:social-previews` | Generate blog social preview images manually         |
 
-## Other Resources
+## Notes
 
-- See my blog post on [recommended Astro web development setup](https://cosmicthemes.com/blog/astro-web-development-setup/).
-- You can learn more information from the [theme docs](https://cosmicthemes.com/docs/) page on the [Cosmic Themes Website](https://cosmicthemes.com/).
-- For support, see the [support page](https://cosmicthemes.com/support/).
-- [License details](https://cosmicthemes.com/license/)
+- `npm run build` automatically runs social preview generation first through the `prebuild` hook.
+- Blog posts should include frontmatter like `title`, `description`, `slug`, and `heroImage` so previews and metadata stay complete.
+- Generated preview images are written to `public/social-previews/blog/`.
 
-## General Astro Info
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory. I also frequently use `src/assets` for images when using Astro asssets for image optimization.
-
-### 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-### 👀 Want to learn more?
-
-Feel free to check out the [Astro documentation](https://docs.astro.build).
-
-### Social Preview Generation
+## Social Preview Generation
 
 `npm run generate:social-previews` generates preview
 
 
-### Features to Add
+## Features to Add
 
 For this blog setup, the highest-value additions are the ones that improve reading, discovery, and reuse.
 
@@ -132,7 +56,7 @@ A strong next batch would be:
 - [ ] Series support for multi-part topics like computer vision or deep learning.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 
-### Search
+## Search
 
 I’d add it in two places, with one being the primary entry point.
 
@@ -292,3 +216,91 @@ If you want, I can sketch the exact architecture for Astro next:
 - what shape the JSON should have
 - how the search page/component should query and rank results
 
+## Hero Image:
+
+Yes, I see what you want now: just **two clean paste-ready templates with placeholders**, not instructions about output formatting.
+
+Use these as-is.
+
+**1. Extract Content Template**
+
+```text
+From this blog post, extract a compact image brief for a hero image.
+
+Return:
+- Title
+- Short description
+- H2/H3 headings
+- Main theme
+- One visual metaphor
+- 6 to 10 visual keywords
+
+Rules:
+- Use the existing title
+- Use the existing description if available, otherwise write a short 1 to 2 sentence summary
+- Extract only meaningful H2 and H3 headings in order
+- Ignore code blocks, imports, and implementation details
+- Keep the theme short and specific
+- Make the visual metaphor concrete and visually representable
+- Make the visual keywords technical and image-friendly, not generic art words
+
+Blog content:
+{{BLOG_CONTENT}}
+```
+
+**2. Generate Image Template**
+
+```text
+Create a custom hero image for a technical blog post using this content:
+
+Title: {{TITLE}}
+Description: {{DESCRIPTION}}
+Headings:
+{{HEADINGS}}
+Theme: {{THEME}}
+Visual metaphor: {{VISUAL_METAPHOR}}
+Visual keywords:
+{{VISUAL_KEYWORDS}}
+
+Style direction:
+- futuristic
+- cinematic
+- premium
+- slightly anime-inspired
+- polished and intentional
+- suitable for a serious software engineering blog
+
+Color direction:
+- Primary neon orange: #FF7A1A
+- Amber highlight: #FFB347
+- Hot magenta: #FF4FD8
+- Neon pink: #FF73C6
+- Electric violet accent: #8B5CFF
+- Soft text / light glow: #E8ECFF
+- deep navy: #090B14
+- indigo: #111526
+- near-black: #06080D
+- charcoal: #1A1F2B
+
+Important:
+- the site branding is primarily green, so the image should still feel compatible with a green-led website
+- primary site green references:
+  brand green: #2AD017
+  bright accent green: #52E840
+  dark support green: #1A870E
+  deepest green: #043102
+- green does not need to be dominant
+- if helpful, include only a subtle green or teal secondary glow using the brand green family above
+- do not let green overpower the main palette in the color direction section
+- prioritize the orange, amber, magenta, pink, violet, and dark base tones first, with green only as a supporting brand-consistency accent when appropriate
+
+Composition and constraints:
+- wide blog hero image
+- strong focal point
+- clean layered depth
+- visually rich but not cluttered
+- no text, labels, logos, or watermark
+- no stock-photo look
+- avoid generic person-at-laptop scenes unless strongly relevant
+- prefer conceptual technical imagery built around the theme and visual metaphor
+```
