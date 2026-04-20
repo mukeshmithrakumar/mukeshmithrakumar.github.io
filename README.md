@@ -48,13 +48,18 @@ A strong next batch would be:
 - [x] Copy-to-clipboard buttons for code and math blocks.
 - [x] share button and lightweight reactions
 - [x] Auto-generated social preview images per post.
-- [ ] "Last updated" emphasis for older technical content.
+- [x] Updated projects page
+- [x] added previous/next post to the projects
+- [x] added technical dive deeper sections to the projects
+- [x] added updated date for the blogs
+- [ ] Dark and Light Mode
 - [ ] Search across blog posts, tags, and maybe projects.
-- [ ] Reading progress bar for long technical posts.
-- [ ] Newsletter or RSS subscribe callout after the article.
-- [ ] Commenting.
 - [ ] Series support for multi-part topics like computer vision or deep learning.
+- [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
+- [ ] Reading progress bar for long technical posts.
+- [ ] "Last updated" emphasis for older technical content.
+- [ ] Commenting.
 
 ## Next Step: Image Optimization
 

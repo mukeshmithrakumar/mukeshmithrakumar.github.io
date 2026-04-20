@@ -1,0 +1,113 @@
+---
+title: Text Summarization System using BERT
+description: A production-ready extractive summarization system leveraging BERT to generate concise summaries from large documents.
+draft: false
+pubDate: 2025-01-20
+updatedDate: 2026-03-27
+heroImage: ./research-paper-summarization.png
+client: Internal / Enterprise Use Case
+role: Machine Learning Engineer
+year: 2024
+duration: ~3–4 months
+projectUrl:
+repoUrl:
+---
+
+## Overview
+
+Developed a text summarization system to automatically generate concise summaries from large documents. The system uses a BERT-based extractive approach to identify and rank the most important sentences in a document.
+
+The goal was to reduce the time required to process long-form content while preserving key information and improving accessibility of insights.
+
+## Problem
+
+- Users had to manually read and extract insights from long documents.
+- Important information was often buried within large volumes of text.
+- Existing keyword-based approaches failed to capture contextual importance.
+- Need for consistent, high-quality summaries across documents.
+
+## Constraints
+
+- Documents varied significantly in length and structure.
+- Required preserving factual accuracy (no hallucination risk).
+- Latency constraints for generating summaries on demand.
+- Limited labeled data for supervised summarization tasks.
+
+## Approach
+
+Framed the problem as **extractive summarization**, selecting the most important sentences rather than generating new text.
+
+Used a BERT-based architecture to:
+- Encode contextual relationships between tokens
+- Generate sentence-level representations
+- Rank sentences based on importance
+
+Focused on:
+- Leveraging pre-trained language models for contextual understanding
+- Building a lightweight summarization layer on top of BERT
+- Optimizing inference for production deployment
+
+## System Design
+
+The system follows a simple inference pipeline:
+
+1. Input document is tokenized and segmented into sentences  
+2. Sentences are encoded using a BERT encoder  
+3. Sentence representations are passed through a classification layer  
+4. Top-ranked sentences are selected to form the summary  
+
+The system is deployed as an API:
+
+- **API Gateway:** Routes incoming requests  
+- **Lambda:** Handles preprocessing and request orchestration  
+- **Model Service:** Runs BERT inference and returns summaries  
+- **Load Balancing:** Managed through Elastic Beanstalk  
+
+## Key Decisions
+
+### Use extractive summarization instead of abstractive
+
+Extractive summarization avoids hallucination and ensures factual consistency, which is critical for enterprise use cases.
+
+Abstractive methods were considered but rejected due to reliability concerns and higher complexity.
+
+### Build on top of pre-trained BERT
+
+Using BERT allowed leveraging strong contextual embeddings without requiring large-scale training from scratch.
+
+This significantly reduced development time while maintaining high-quality outputs.
+
+### Optimize for inference performance
+
+BERT models are computationally expensive, so optimizations such as batching and model tuning were necessary.
+
+This enabled acceptable latency for real-time or near real-time usage.
+
+## Results & Impact
+
+- **Efficiency:** Reduced time required to process long documents
+- **Consistency:** Standardized summary quality across inputs
+- **Usability:** Enabled faster access to key insights
+
+The system made it easier for users to consume large volumes of information without manual effort.
+
+## Tradeoffs
+
+- Extractive summaries can feel less natural compared to abstractive ones.
+- Model performance depends on sentence segmentation quality.
+- BERT inference introduced latency and compute overhead.
+- Limited ability to compress highly complex or nuanced documents.
+
+## Learnings
+
+- Pre-trained models provide strong baselines for NLP tasks with limited data.
+- Extractive approaches are more reliable in high-precision domains.
+- Inference optimization is critical when deploying transformer models.
+- Simplicity in architecture can lead to faster iteration and deployment.
+
+## Future Work
+
+- Explore abstractive summarization with stronger guardrails
+- Improve sentence ranking using more advanced architectures
+- Introduce domain-specific fine-tuning for better relevance
+- Optimize model performance using quantization or distillation

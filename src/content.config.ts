@@ -19,10 +19,12 @@ const blogCollection = defineCollection({
 				.transform((val) => new Date(val)),
 			updatedDate: z
 				.string()
+				.or(z.date())
 				.optional()
-				.transform((str) => (str ? new Date(str) : undefined)),
+				.transform((val) => (val ? new Date(val) : undefined)),
 			heroImage: image(),
 			tags: z.array(z.string()),
+			relatedProjects: z.array(reference("projects")).optional(),
 			// blog posts will be excluded from build if draft is "true"
 			draft: z.boolean().optional(),
 		}),
@@ -44,7 +46,13 @@ const projectsCollection = defineCollection({
 				.optional()
 				.transform((val) => (val ? new Date(val) : undefined)),
 			heroImage: image(),
-			projectUrl: z.string().url().optional(),
+			client: z.string().optional(),
+			role: z.string(),
+			year: z.number().int().positive(),
+			duration: z.string().optional(),
+			projectUrl: z.union([z.string().url(), z.literal(""), z.null()]).optional(),
+			repoUrl: z.union([z.string().url(), z.literal(""), z.null()]).optional(),
+			// project pages will be excluded from build if draft is "true"
 			draft: z.boolean().optional(),
 		}),
 });

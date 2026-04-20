@@ -1,0 +1,106 @@
+---
+title: Demand Forecasting System for Pharma Sales
+description: A large-scale demand forecasting system leveraging deep learning and gradient boosting models to improve inventory planning and sales outcomes.
+draft: false
+pubDate: 2025-01-20
+updatedDate: 2026-03-27
+heroImage: ./demand-forecasting.png
+client: IQVIA
+role: Lead ML Engineer
+year: 2025
+duration: ~6–9 months
+projectUrl:
+repoUrl:
+---
+
+## Overview
+
+Led the development and productization of a demand forecasting system used by pharmaceutical sales teams across Europe. The system predicts short-term demand across 100,000+ products, enabling better inventory planning and more informed sales decisions.
+
+The platform combined deep learning models with scalable data pipelines to deliver accurate forecasts that directly impacted supply chain efficiency and revenue.
+
+## Problem
+
+- Demand planning was largely manual or based on simple heuristics, leading to frequent overstocking and stockouts.
+- Forecast accuracy was insufficient for short-term (30-day) planning at product-level granularity.
+- Sales and supply chain teams lacked a unified system to translate historical data into actionable forecasts.
+- Inefficient inventory allocation led to lost sales, excess holding costs, and operational inefficiencies.
+
+## Constraints
+
+- Large-scale forecasting across 100,000+ SKUs with varying demand patterns.
+- Highly noisy and sparse time series data across regions and products.
+- Need for reliable short-term forecasts (≈30-day horizon).
+- System had to be productionized for non-technical sales teams.
+- Cross-region variability in demand patterns and seasonality.
+
+## Approach
+
+Framed the problem as a multi-horizon time series forecasting task at scale.
+
+Built a hybrid modeling approach combining:
+- Deep learning models (Temporal Convolutional Networks, Temporal Fusion Transformer) for capturing temporal patterns
+- Gradient boosting models for structured/tabular signals and robustness
+
+Focused on:
+- Feature engineering (temporal signals, seasonality, product and regional context)
+- Model ensembling to improve generalization across product categories
+- Building a production pipeline that could reliably retrain and serve forecasts
+
+## System Design
+
+The system follows an offline training and batch inference architecture.
+
+Historical sales data is ingested and transformed into time series features, including lag features, seasonal indicators, and product-level metadata. Models are trained periodically and generate forecasts for a fixed horizon (e.g., 30 days).
+
+Forecast outputs are stored and exposed through downstream tools used by sales and inventory planning teams.
+
+## Key Decisions
+
+### Use a hybrid modeling approach instead of a single model
+
+Different product categories exhibited very different demand patterns. Deep learning models captured long-term temporal dependencies, while gradient boosting models handled structured features more reliably.
+
+Combining both approaches improved robustness and overall accuracy across the full product catalog.
+
+### Optimize for short-term forecasting accuracy
+
+Focused specifically on 30-day forecasts rather than longer horizons.
+
+This aligned better with operational decision-making (inventory and sales planning) and allowed models to perform more reliably with available data.
+
+### Prioritize feature engineering over model complexity
+
+Feature quality (lags, seasonality, product context) had a larger impact than incremental model improvements.
+
+Investing in feature pipelines improved both deep learning and tree-based models, making the system more stable and easier to iterate on.
+
+## Results & Impact
+
+- **Forecast Accuracy:** ~95% accuracy for 30-day forecasts
+- **Inventory Efficiency:** +25% improvement in inventory management efficiency
+- **Revenue Impact:** $1M+ annual revenue contribution
+- **Operational Impact:** Reduced stockouts and overstock across regions
+
+The system enabled more precise inventory allocation, reduced waste in perishable products, and improved alignment between supply and demand.
+
+## Tradeoffs
+
+- Deep learning models increased training complexity and infrastructure requirements.
+- Batch forecasting limited responsiveness to sudden demand shifts.
+- Model performance varied across long-tail products with sparse historical data.
+- Explainability was limited for deep learning components, requiring additional interpretation layers.
+
+## Learnings
+
+- Hybrid modeling is critical when dealing with heterogeneous demand patterns at scale.
+- Short-term forecasting is often more actionable and reliable than long-horizon predictions.
+- Feature engineering drives more impact than model selection in many real-world systems.
+- Productionization (pipelines, retraining, monitoring) is as important as model performance.
+
+## Future Work
+
+- Introduce online updates for faster adaptation to demand shifts.
+- Improve long-tail product forecasting with transfer learning or hierarchical models.
+- Add explainability layers to improve trust with business users.
+- Explore probabilistic forecasting to better capture uncertainty.

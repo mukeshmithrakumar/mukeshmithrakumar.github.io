@@ -1,0 +1,39 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+import PostCardBasic from "@components/PostCard/PostCardBasic.astro";
+
+interface Props {
+	posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props as Props;
+---
+
+{
+	posts.length > 0 && (
+		<section class="mt-16 border-t border-base-700 pt-10" aria-labelledby="project-deep-dives-title">
+			<div class="flex items-end justify-between gap-4">
+				<div>
+					<p class="text-sm uppercase tracking-[0.2em] text-base-400">Dive deeper</p>
+					<h2 id="project-deep-dives-title" class="h3 mt-2">
+						Technical deep dives
+					</h2>
+					<p class="description mt-3 max-w-2xl">
+						Posts that expand on techniques, systems, or modeling ideas used in this project.
+					</p>
+				</div>
+			</div>
+
+			<ul class="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+				{
+					posts.map((post) => (
+						<li>
+							<PostCardBasic post={post} showDescription={true} />
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	)
+}

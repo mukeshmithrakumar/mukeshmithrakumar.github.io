@@ -2,9 +2,20 @@
 interface Props {
 	title: string;
 	url: string;
+	eyebrow?: string;
+	description?: string;
+	reactionsLabel?: string;
+	storageNamespace?: string;
 }
 
-const { title, url } = Astro.props as Props;
+const {
+	title,
+	url,
+	eyebrow = "Enjoyed this post?",
+	description = "Leave a quick reaction or share it with someone who might find it useful.",
+	reactionsLabel = "Post reactions",
+	storageNamespace = "blog-reactions",
+} = Astro.props as Props;
 
 const reactions = [
 	{ key: "like", emoji: "👍", label: "Helpful" },
@@ -19,15 +30,14 @@ const reactions = [
 	data-engagement-root
 	data-engagement-url={url}
 	data-engagement-title={title}
+	data-engagement-storage-namespace={storageNamespace}
 >
 	<div class="space-y-2">
-		<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Enjoyed this post?</p>
-		<p class="text-foreground/65 max-w-md text-sm">
-			Leave a quick reaction or share it with someone who might find it useful.
-		</p>
+		<p class="text-base-400 text-sm tracking-[0.2em] uppercase">{eyebrow}</p>
+		<p class="text-foreground/65 max-w-md text-sm">{description}</p>
 	</div>
 
-	<div class="flex flex-wrap justify-center gap-3" role="group" aria-label="Post reactions">
+	<div class="flex flex-wrap justify-center gap-3" role="group" aria-label={reactionsLabel}>
 		{
 			reactions.map((reaction) => (
 				<button
@@ -72,7 +82,8 @@ const reactions = [
 			const copyButton = root.querySelector("[data-engagement-copy]");
 			const status = root.querySelector("[data-engagement-status]");
 			const reactionButtons = root.querySelectorAll("[data-reaction-button]");
-			const storageKey = `blog-reactions:${url}`;
+			const storageNamespace = root.dataset.engagementStorageNamespace ?? "blog-reactions";
+			const storageKey = `${storageNamespace}:${url}`;
 
 			if (!(status instanceof HTMLElement)) return;
 

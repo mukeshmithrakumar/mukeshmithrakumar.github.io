@@ -1,0 +1,109 @@
+---
+title: Object Detection for Cardboard Recycling
+description: A computer vision system for detecting cardboard materials in real-time to support recycling workflows.
+draft: true
+pubDate: 2025-01-20
+updatedDate: 2026-03-27
+heroImage: ./cardboard-grade-detection.png
+client: Internal / Prototype
+role: Machine Learning Engineer
+year: 2023
+duration: ~2–3 months
+projectUrl:
+repoUrl:
+---
+
+## Overview
+
+Developed a computer vision system to detect cardboard materials in images and video streams, aimed at supporting recycling and waste classification workflows.
+
+The system uses a deep learning-based object detection model trained on a custom dataset and performs real-time inference using webcam input.
+
+## Problem
+
+- Manual sorting of recyclable materials is inefficient and error-prone.
+- Lack of automated systems for identifying specific materials like cardboard in real-time.
+- Limited availability of labeled datasets for niche object categories.
+
+## Constraints
+
+- Small, custom-built dataset with limited diversity.
+- Real-time inference requirement using webcam input (640×480 resolution).
+- Need to generalize across variations in lighting, orientation, and background.
+- Limited compute resources for training and inference.
+
+## Approach
+
+Framed the problem as an object detection task, identifying bounding boxes around cardboard objects in images.
+
+Used transfer learning on a pre-trained object detection model to:
+- Reduce training time
+- Improve performance with limited data
+
+Focused on:
+- Creating a clean, high-quality labeled dataset
+- Fine-tuning an existing model rather than training from scratch
+- Optimizing for real-time detection performance
+
+## System Design
+
+The system consists of two main components:
+
+**Training pipeline:**
+- Images are collected and manually labeled using annotation tools
+- Dataset is converted into the required format for training
+- A pre-trained model is fine-tuned on the custom dataset
+
+**Inference pipeline:**
+- Webcam captures frames at 640×480 resolution
+- Frames are passed through the trained model
+- Detected cardboard regions are returned with bounding boxes
+
+## Key Decisions
+
+### Use transfer learning instead of training from scratch
+
+Given the small dataset, training a model from scratch would not generalize well.
+
+Using pre-trained weights significantly improved convergence speed and detection quality.
+
+### Invest in dataset quality over dataset size
+
+Manually curating and labeling high-quality images was more impactful than scaling dataset size with noisy data.
+
+This improved model performance despite limited training samples.
+
+### Optimize for real-time inference
+
+Reduced input resolution and tuned model parameters to enable real-time detection from webcam input.
+
+This ensured the system was usable in practical scenarios.
+
+## Results & Impact
+
+- **Real-time Detection:** सक्षम at 640×480 webcam input
+- **Model Performance:** Successfully detected cardboard objects across varied conditions
+- **Prototype Impact:** Demonstrated feasibility of automated material classification
+
+The system served as a functional prototype for applying computer vision to recycling workflows.
+
+## Tradeoffs
+
+- Limited dataset reduced generalization to unseen environments.
+- Model performance degraded under poor lighting conditions.
+- Real-time constraints limited model complexity.
+- Detection accuracy was sensitive to background clutter.
+
+## Learnings
+
+- Transfer learning is essential when working with small, domain-specific datasets.
+- Dataset quality and labeling accuracy are critical for detection performance.
+- Real-time systems require balancing accuracy with latency.
+- Prototyping quickly helps validate feasibility before scaling.
+
+## Future Work
+
+- Expand dataset with more diverse environments and conditions
+- Improve robustness to lighting and occlusion
+- Explore more advanced detection architectures
+- Extend to multi-class waste classification (plastic, metal, etc.)

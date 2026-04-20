@@ -1,0 +1,124 @@
+---
+title: OCR System for Automated Check Deposit
+description: An end-to-end OCR system for extracting printed and handwritten cheque data, combining edge processing with cloud-based ML pipelines.
+draft: false
+pubDate: 2025-01-20
+updatedDate: 2026-03-27
+heroImage: ./ocr-check-deposit.png
+client: Sri Lankan Bank
+role: Machine Learning Engineer
+year: 2024
+duration: ~4–6 months
+projectUrl:
+repoUrl:
+---
+
+## Overview
+
+Built an end-to-end OCR system to automate cheque processing for a banking application. The system extracts both printed and handwritten fields from cheque images captured via mobile devices.
+
+The solution combines lightweight on-device preprocessing with cloud-based OCR pipelines, enabling fast and accurate extraction while maintaining security and usability for banking workflows.
+
+## Problem
+
+- Manual cheque processing required employees to read and verify fields, taking ~10 minutes per cheque.
+- Mobile image quality varied significantly (lighting, angle, defects).
+- Extracting handwritten fields (amount, payee, signature) was highly error-prone.
+- Lack of automation limited scalability and slowed transaction processing.
+
+## Constraints
+
+- High variability in input images (lighting, orientation, defects).
+- Need to support both printed (MICR) and handwritten fields.
+- Language complexity, including Tamil script with compound characters.
+- Strict accuracy requirements for financial transactions.
+- Latency constraints for real-time or near real-time processing.
+
+## Approach
+
+Designed a **two-stage pipeline**:
+1. Edge processing on mobile device for image normalization and validation
+2. Cloud-based OCR pipeline for structured data extraction
+
+Separated the problem into:
+- Printed text extraction (deterministic + CV-heavy)
+- Handwritten text recognition (ML-heavy)
+
+Focused on:
+- Improving input quality before OCR
+- Using specialized pipelines for different field types
+- Introducing human-in-the-loop validation for final approval
+
+## System Design
+
+The system splits processing between edge and cloud.
+
+**On-device (edge):**
+- Detect cheque boundaries and validate capture quality
+- Correct perspective to obtain a top-down view
+- Detect defects (tears, folds, poor lighting)
+- Crop and normalize the cheque image
+
+**Cloud processing:**
+- Preprocess image (binarization, noise reduction)
+- Extract structured fields:
+  - Printed fields (routing/account numbers via MICR detection)
+  - Handwritten fields (amount, payee, signature using deep learning models)
+
+Outputs are structured and presented for human verification before final transaction approval.
+
+## Key Decisions
+
+### Split processing between edge and cloud
+
+Running lightweight preprocessing on-device improved input quality and reduced downstream OCR errors.
+
+This also reduced unnecessary server load by filtering poor-quality images early.
+
+### Use separate pipelines for printed and handwritten text
+
+Printed text (MICR) could be reliably extracted using classical CV techniques, while handwritten text required deep learning models.
+
+Separating these pipelines improved both accuracy and maintainability.
+
+### Introduce human-in-the-loop validation
+
+Given the financial domain, full automation was too risky.
+
+A verification step ensured correctness while still dramatically reducing manual effort.
+
+### Optimize for robustness over model complexity
+
+Handling real-world image variability (lighting, orientation, defects) had a larger impact than improving model architecture alone.
+
+Investments in preprocessing significantly improved overall system performance.
+
+## Results & Impact
+
+- **Processing Time:** ~10 minutes → ~30 seconds per cheque
+- **Adoption:** 5× increase in mobile app downloads
+- **Efficiency:** Significant reduction in manual verification effort
+- **Operational Impact:** Faster transaction processing and improved employee productivity
+
+The system transformed cheque processing from a manual bottleneck into a scalable, semi-automated workflow.
+
+## Tradeoffs
+
+- Handwritten OCR accuracy remained lower than printed text extraction.
+- Language complexity (Tamil compound characters) limited full coverage.
+- Cloud processing introduced dependency on network availability.
+- Human verification step added slight latency but ensured reliability.
+
+## Learnings
+
+- Input quality improvements often outperform model improvements in OCR systems.
+- Separating problem domains (printed vs handwritten) simplifies system design.
+- Edge + cloud hybrid architectures are effective for mobile ML systems.
+- Full automation is not always optimal—human-in-the-loop can provide the best balance.
+
+## Future Work
+
+- Improve handwritten OCR using larger and more diverse training datasets
+- Extend support for complex scripts like Tamil compound characters
+- Explore on-device inference for faster end-to-end processing
+- Introduce confidence-based automation to reduce manual verification further
