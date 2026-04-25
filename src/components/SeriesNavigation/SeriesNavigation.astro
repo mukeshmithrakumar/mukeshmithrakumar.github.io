@@ -1,0 +1,61 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { getPostUrl, getSeriesTitle } from "@js/blogUtils";
+
+interface Props {
+	currentPost: CollectionEntry<"blog">;
+	seriesPosts: CollectionEntry<"blog">[];
+}
+
+const { currentPost, seriesPosts } = Astro.props as Props;
+
+const currentIndex = seriesPosts.findIndex((post) => post.id === currentPost.id);
+const seriesTitle = getSeriesTitle(currentPost);
+---
+
+{
+	seriesPosts.length > 1 && currentIndex >= 0 && seriesTitle && (
+		<section class="theme-divider mt-16 border-t pt-10" aria-labelledby="series-navigation-title">
+			<div class="theme-panel space-y-6 p-6">
+				<div class="space-y-2">
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Read in order</p>
+					<h2 id="series-navigation-title" class="text-base font-medium">
+						{seriesTitle}
+					</h2>
+					<p class="text-foreground/70 text-sm">
+						Part {currentIndex + 1} of {seriesPosts.length}
+					</p>
+				</div>
+
+				<ol class="grid gap-3">
+					{seriesPosts.map((post, index) => {
+						const isCurrent = post.id === currentPost.id;
+
+						return (
+							<li>
+								<a
+									href={getPostUrl(post)}
+									aria-current={isCurrent ? "page" : undefined}
+									class:list={[
+										"theme-panel-muted hover:border-primary-600 flex items-start gap-4 border p-4 transition-colors",
+										isCurrent && "border-primary-600 bg-primary-500/10",
+									]}
+								>
+									<span class="text-base-400 min-w-8 text-sm font-medium">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+									<span class="min-w-0">
+										<span class="block text-lg font-medium">{post.data.title}</span>
+										{isCurrent && (
+											<span class="text-primary-600 mt-1 block text-sm">Current post</span>
+										)}
+									</span>
+								</a>
+							</li>
+						);
+					})}
+				</ol>
+			</div>
+		</section>
+	)
+}

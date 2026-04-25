@@ -24,6 +24,8 @@ const blogCollection = defineCollection({
 				.transform((val) => (val ? new Date(val) : undefined)),
 			heroImage: image(),
 			tags: z.array(z.string()),
+			series: z.string().optional(),
+			seriesOrder: z.number().int().positive().optional(),
 			relatedProjects: z.array(reference("projects")).optional(),
 			// blog posts will be excluded from build if draft is "true"
 			draft: z.boolean().optional(),

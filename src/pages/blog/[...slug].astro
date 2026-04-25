@@ -15,7 +15,13 @@ import MathInline from "@components/MarkdownComponents/MathInline.astro";
 import ResultToggle from "@components/MarkdownComponents/ResultToggle.astro";
 
 // utils
-import { getAdjacentPosts, getAllPosts, getPostSlug, getRelatedPosts } from "@js/blogUtils";
+import {
+	getAdjacentPosts,
+	getAllPosts,
+	getPostSlug,
+	getRelatedPosts,
+	getSeriesPosts,
+} from "@js/blogUtils";
 
 export async function getStaticPaths() {
 	const posts = await getAllPosts();
@@ -32,6 +38,7 @@ const { Content, headings } = await render(post);
 const allPosts = await getAllPosts();
 const relatedPosts = getRelatedPosts(post, allPosts, 3);
 const { previousPost, nextPost } = getAdjacentPosts(post, allPosts);
+const seriesPosts = getSeriesPosts(post, allPosts);
 ---
 
 <BlogLayout
@@ -40,6 +47,7 @@ const { previousPost, nextPost } = getAdjacentPosts(post, allPosts);
 	relatedPosts={relatedPosts}
 	previousPost={previousPost}
 	nextPost={nextPost}
+	seriesPosts={seriesPosts}
 >
 	<Content
 		components={{

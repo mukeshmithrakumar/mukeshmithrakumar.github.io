@@ -10,6 +10,8 @@ updatedDate: 2026-04-20
 heroImage: ./heroImage.png
 tags:
   - cv
+series: Computer Vision
+seriesOrder: 1
 relatedProjects:
   - iqvia/demand-forecasting
 ---
@@ -182,4 +184,3 @@ This is done by assuming a point as an edge point, then we construct the tangent
 By varying the sigma in gradient computation or the size of Gaussian smoothing or the size of derivative for Gaussian filter. It can detect edges on different scales, large sigma detects large scale edges. Small sigma detects fine features in images.
 
 Change in intensity is not the only source of edge detection. Change in color or texture also gives us visible edges in images. But such changes can't be detected by image gradient or canny operator. Advanced techniques see this as a pixel classification problem and use machine learning techniques. But for many computer vision tasks canny edge detector proves to be sufficient. For example it is often used as a feature extractor and produce features which are later used for image recognition.
-

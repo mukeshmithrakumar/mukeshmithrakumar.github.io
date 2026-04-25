@@ -10,6 +10,8 @@ updatedDate: 2026-04-20
 heroImage: ./heroImage.png
 tags:
   - cv
+series: Computer Vision
+seriesOrder: 4
 ---
 
 import { Image } from "astro:assets";
@@ -116,4 +118,3 @@ The second step in recognition would be to gather them into a complete facial sh
 To compute a prior model of facial shape, we can use active shape or active appearance models. In active shape model a point distribution model captures the shape variants and gradient distributions for a set of facial keypoints, and describes the local appearance. The shape of the face can then be defined as that property of the configuration of points which is kept unchanged or invariant under some global transformation.
 
 Couple of disadvantages of active shape model are, one, the initial shape may be far from the target position, and the update may end up being in a local minimum. And two, visual features extracted at each step are not discriminative or not reliable enough to predict facial points.
-

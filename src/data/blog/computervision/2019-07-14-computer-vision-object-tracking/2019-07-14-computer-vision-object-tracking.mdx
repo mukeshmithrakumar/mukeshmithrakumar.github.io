@@ -10,6 +10,8 @@ updatedDate: 2026-04-20
 heroImage: ./heroImage.png
 tags:
   - cv
+series: Computer Vision
+seriesOrder: 6
 ---
 
 ### What is video analysis?
@@ -297,4 +299,3 @@ Since here we approximate around only one point i.e. mean, the Gaussian we get d
 **Unscented Kalman Filter (UKF)** proposes a solution to this problem. In UKF we have a concept of Sigma Points. Here we take some points (known as Sigma Points) on source Gaussian and map them on the target Gaussian after passing those points through some non linear function and then we calculate the new mean and variance of transformed Gaussian.
 
 When a Gaussian is passed through a non linear function, it does not remains a Gaussian anymore but we approximate the Gaussian from the resulting figure, so in UKF a process called Unscented Transform helps us to perform this task.
-

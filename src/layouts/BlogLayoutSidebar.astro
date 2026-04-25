@@ -12,6 +12,7 @@ import BlogShare from "@components/BlogShare/BlogShare.astro";
 import CopyEnhancements from "@components/CopyEnhancements/CopyEnhancements.astro";
 import PostPagination from "@components/PostPagination/PostPagination.astro";
 import RelatedPosts from "@components/RelatedPosts/RelatedPosts.astro";
+import SeriesNavigation from "@components/SeriesNavigation/SeriesNavigation.astro";
 import Tag from "@components/Tag/Tag.astro";
 import Button from "@components/Button/Button.astro";
 import TableOfContents from "@components/TableOfContents/TableOfContents.astro";
@@ -27,9 +28,17 @@ interface Props {
 	relatedPosts?: CollectionEntry<"blog">[];
 	previousPost?: CollectionEntry<"blog">;
 	nextPost?: CollectionEntry<"blog">;
+	seriesPosts?: CollectionEntry<"blog">[];
 }
 
-const { post, headings, relatedPosts = [], previousPost, nextPost } = Astro.props as Props;
+const {
+	post,
+	headings,
+	relatedPosts = [],
+	previousPost,
+	nextPost,
+	seriesPosts = [],
+} = Astro.props as Props;
 const { title, description, authors, pubDate, updatedDate, heroImage, tags } = post.data;
 
 const authorsData = await getAllAuthorsData(authors);
@@ -125,6 +134,7 @@ const socialImage = getPostSocialPreviewUrl(post);
 					</section>
 					<CopyEnhancements />
 					<BlogEngagement title={title} url={shareUrl} />
+					<SeriesNavigation currentPost={post} seriesPosts={seriesPosts} />
 					<RelatedPosts posts={relatedPosts} />
 					<PostPagination previousPost={previousPost} nextPost={nextPost} />
 

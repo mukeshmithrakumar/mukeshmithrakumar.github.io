@@ -10,6 +10,8 @@ updatedDate: 2026-04-20
 heroImage: ./heroImage.png
 tags:
   - cv
+series: Computer Vision
+seriesOrder: 7
 relatedProjects:
   - astrum-ai/research-paper-summarization
 ---
@@ -131,4 +133,3 @@ U-Net is a downsampling-upsampling architecture.
 The downsampling part follows the typical architecture of a convolutional network. It consists of the repeated application of two three-by-three unpadded convolutions followed by a rectifier linear unit and a two-by-two max pooling operation with stride two for downsampling. At each downsamplings tab, we double the number of feature channels.
 
 Every step in the upsampling part consists of a transposed convolution of the feature map followed by a two-by-two convolution that has the number of feature channels and upsamples the data, and concatenates with the correspondingly cropped feature map from the downsampling part, and this is implemented via skip connections. This is then convolved by two three-by-three convolutional layer each followed by a rectifier linear unit. The cropping is necessary due to the loss of border pixels in every convolution. Of the final layer, a one-by-one convolution is used to map each 64-component feature vector to the desired number of classes.
-

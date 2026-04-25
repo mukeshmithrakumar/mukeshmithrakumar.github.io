@@ -32,6 +32,41 @@ Install dependencies once with `npm install`, then use the commands below from t
 - Blog posts should include frontmatter like `title`, `description`, `slug`, and `heroImage` so previews and metadata stay complete.
 - Generated preview images are written to `public/social-previews/blog/`.
 
+## Blog Series
+
+Use series metadata when a post belongs to an intentional reading sequence, not just a shared topic.
+
+- Use `series` for the shared series name.
+- Use `seriesOrder` for the reading order within that series.
+- Keep the `series` value identical across every post in the sequence.
+- Keep `tags` for broad categorization like `cv`, `DL`, or `systems`.
+
+Example frontmatter:
+
+```yaml
+---
+title: "Computer Vision: Basic Image Processing"
+slug: computer-vision-basic-image-processing
+description: ""
+draft: false
+authors:
+  - mithraics
+pubDate: 2019-05-07
+updatedDate: 2026-04-20
+heroImage: ./heroImage.png
+tags:
+  - cv
+series: Computer Vision
+seriesOrder: 1
+---
+```
+
+How to decide:
+
+- Use `series` when readers should go through posts in a specific order.
+- Do not add `series` if posts are only loosely related; use tags alone in that case.
+- If you add a new post in the middle of an existing sequence, update the later `seriesOrder` values so the order stays explicit.
+
 
 ## Social Preview Generation
 
@@ -54,14 +89,13 @@ A strong next batch would be:
 - [x] added updated date for the blogs
 - [x] Dark and Light Mode
 - [x] Removing left over content from the template
-- [ ] Search across blog posts, tags, and maybe projects.
-- [ ] Series support for multi-part topics like computer vision or deep learning.
-- [ ] Wire up the newsletter form to a real backend or email workflow.
-- [ ] Wire up the contact form to a real backend or submission workflow.
+- [x] Series support for multi-part topics like computer vision or deep learning.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
-- [ ] Reading progress bar for long technical posts.
+- [ ] Wire up the newsletter form to a real backend or email workflow.
+- [ ] Wire up the contact form to a real backend or submission workflow.
 - [ ] Commenting.
+- [ ] Search across blog posts, tags, and projects.
 
 ## Next Step: Image Optimization
 

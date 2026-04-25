@@ -10,6 +10,8 @@ updatedDate: 2026-04-20
 heroImage: ./heroImage.png
 tags:
   - cv
+series: Computer Vision
+seriesOrder: 3
 ---
 
 ### What is content based image retrieval?
@@ -125,4 +127,3 @@ This is how GIST Indexing Structure works.
 To retrieve images by query, we first quantize the query descriptor and pick a few hundred closest clusters. In practice, this elects around 2.5% of images instead of ideally picking 1% of that if the distribution of clusters were uniform. Having the cluster selected, we can compute the binary codes for the difference between the image and each of the cluster centers and search through the binary codes for each cluster that we store in memory.
 
 We then select the images whose binary codes differ from the query in less than 200 and 20 bits, for example, that would leave us with approximately 5% of images. In the end, we return images sorted by hamming distance or, alternatively, we may load the original neural codes of the disk and re-rank the search results with respect to the original Euclidean distance between the query and the selected images, which would be fast.
-

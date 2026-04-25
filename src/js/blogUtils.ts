@@ -1,7 +1,7 @@
 import { type CollectionEntry, getCollection, getEntry } from "astro:content";
 
 // utils
-import { slugify } from "@js/textUtils";
+import { humanize, slugify } from "@js/textUtils";
 
 // --------------------------------------------------------
 /**
@@ -128,7 +128,9 @@ export function getRelatedPosts(
 	const currentTags = currentPost.data.tags.map((tag) => slugify(tag));
 
 	return posts
-		.filter((post) => arePostsRelated(currentPost, post))
+		.filter(
+			(post) => arePostsRelated(currentPost, post) && !arePostsInSameSeries(currentPost, post),
+		)
 		.map((post) => {
 			const relatedTags = post.data.tags.map((tag) => slugify(tag));
 			const sharedTagCount = currentTags.filter((tag) => relatedTags.includes(tag)).length;
@@ -148,6 +150,70 @@ export function getRelatedPosts(
 
 // --------------------------------------------------------
 /**
+ * * returns the normalized series slug for a blog post if it has one
+ */
+export function getPostSeriesSlug(post: CollectionEntry<"blog">): string | undefined {
+	const series = post.data.series?.trim();
+
+	if (!series) return undefined;
+
+	return slugify(series);
+}
+
+// --------------------------------------------------------
+/**
+ * * returns the display title for a post's series
+ */
+export function getSeriesTitle(post: CollectionEntry<"blog">): string | undefined {
+	const series = post.data.series?.trim();
+
+	if (!series) return undefined;
+
+	return series.includes(" ") ? series : humanize(series);
+}
+
+// --------------------------------------------------------
+/**
+ * * returns true when both posts belong to the same series
+ */
+export function arePostsInSameSeries(
+	postOne: CollectionEntry<"blog">,
+	postTwo: CollectionEntry<"blog">,
+): boolean {
+	const postOneSeries = getPostSeriesSlug(postOne);
+	const postTwoSeries = getPostSeriesSlug(postTwo);
+
+	return Boolean(postOneSeries && postTwoSeries && postOneSeries === postTwoSeries);
+}
+
+// --------------------------------------------------------
+/**
+ * * returns all posts in the same series, ordered by seriesOrder then publish date
+ */
+export function getSeriesPosts(
+	currentPost: CollectionEntry<"blog">,
+	posts: CollectionEntry<"blog">[],
+): CollectionEntry<"blog">[] {
+	const currentSeries = getPostSeriesSlug(currentPost);
+
+	if (!currentSeries) return [];
+
+	return posts
+		.filter((post) => getPostSeriesSlug(post) === currentSeries)
+		.sort((a, b) => {
+			const orderA = a.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+			const orderB = b.data.seriesOrder ?? Number.MAX_SAFE_INTEGER;
+
+			if (orderA !== orderB) {
+				return orderA - orderB;
+			}
+
+			return new Date(a.data.pubDate).getTime() - new Date(b.data.pubDate).getTime();
+		});
+}
+
+// --------------------------------------------------------
+/**
  * * returns adjacent posts from a date-sorted posts array
  */
 export function getAdjacentPosts(
@@ -157,7 +223,9 @@ export function getAdjacentPosts(
 	previousPost?: CollectionEntry<"blog">;
 	nextPost?: CollectionEntry<"blog">;
 } {
-	const currentPostIndex = posts.findIndex((post) => getPostSlug(post) === getPostSlug(currentPost));
+	const currentPostIndex = posts.findIndex(
+		(post) => getPostSlug(post) === getPostSlug(currentPost),
+	);
 
 	if (currentPostIndex === -1) {
 		return {};
