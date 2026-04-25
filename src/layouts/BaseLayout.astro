@@ -5,7 +5,6 @@ import { type CollectionEntry } from "astro:content";
 import BaseHead from "@layouts/BaseHead.astro";
 import Nav from "@components/Nav/Nav.astro";
 import Footer from "@components/Footer/Footer.astro";
-import CookieConsent from "@components/CookieConsent/CookieConsent.astro";
 import ThemeToggle from "@components/ThemeToggle/ThemeToggle.astro";
 
 // style import
@@ -139,8 +138,6 @@ const {
 			},
 		]}
 	>
-		<!-- put cookie consent first so it is seen first by screen readers -->
-		<!-- <CookieConsent /> -->
 		<div class="flex min-h-lvh flex-col justify-between">
 			<div>
 				<Nav />

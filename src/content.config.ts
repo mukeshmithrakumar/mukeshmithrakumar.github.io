@@ -70,20 +70,8 @@ const authorsCollection = defineCollection({
 		}),
 });
 
-// other pages
-const otherPagesCollection = defineCollection({
-	loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/data/otherPages" }),
-	schema: () =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			draft: z.boolean().optional(),
-		}),
-});
-
 export const collections = {
 	blog: blogCollection,
 	projects: projectsCollection,
 	authors: authorsCollection,
-	otherPages: otherPagesCollection,
 };

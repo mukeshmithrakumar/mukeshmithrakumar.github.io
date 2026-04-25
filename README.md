@@ -8,7 +8,7 @@ The site is content-first, with most of the day-to-day work happening in the con
 
 - `src/data/blog/` stores blog posts and their local assets.
 - `src/data/projects/` stores project entries showcased on the site.
-- `src/data/authors/` and `src/data/otherPages/` hold supporting content collections.
+- `src/data/authors/` holds supporting author content.
 - `src/config/siteData.json.ts` contains global site metadata, SEO defaults, and social links.
 - `src/pages/`, `src/layouts/`, and `src/components/` make up the Astro page structure and reusable UI.
 - `scripts/generate-social-previews.mjs` generates per-post social share images from frontmatter data.
@@ -17,14 +17,14 @@ The site is content-first, with most of the day-to-day work happening in the con
 
 Install dependencies once with `npm install`, then use the commands below from the project root.
 
-| Command                         | Action                                                  |
-| :------------------------------ | :------------------------------------------------------ |
-| `npm run dev`                   | Start the local Astro dev server                        |
-| `npm run build`                 | Build the production site into `dist/`                  |
-| `npm run preview`               | Preview the built site locally                          |
-| `npm run lint`                  | Run ESLint across the codebase                          |
-| `npm run format`                | Format the repository with Prettier                     |
-| `npm run generate:social-previews` | Generate blog social preview images manually         |
+| Command                            | Action                                       |
+| :--------------------------------- | :------------------------------------------- |
+| `npm run dev`                      | Start the local Astro dev server             |
+| `npm run build`                    | Build the production site into `dist/`       |
+| `npm run preview`                  | Preview the built site locally               |
+| `npm run lint`                     | Run ESLint across the codebase               |
+| `npm run format`                   | Format the repository with Prettier          |
+| `npm run generate:social-previews` | Generate blog social preview images manually |
 
 ## Notes
 
@@ -52,10 +52,12 @@ A strong next batch would be:
 - [x] added previous/next post to the projects
 - [x] added technical dive deeper sections to the projects
 - [x] added updated date for the blogs
-- [ ] Dark and Light Mode
-- [ ] otherPages, what should I implement, do I need 404s etc?
+- [x] Dark and Light Mode
+- [x] Removing left over content from the template
 - [ ] Search across blog posts, tags, and maybe projects.
 - [ ] Series support for multi-part topics like computer vision or deep learning.
+- [ ] Wire up the newsletter form to a real backend or email workflow.
+- [ ] Wire up the contact form to a real backend or submission workflow.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 - [ ] Reading progress bar for long technical posts.
