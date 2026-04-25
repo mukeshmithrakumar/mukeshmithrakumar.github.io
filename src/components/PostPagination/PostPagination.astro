@@ -13,40 +13,36 @@ const { previousPost, nextPost } = Astro.props as Props;
 {
 	(previousPost || nextPost) && (
 		<nav
-			class="mt-16 grid grid-cols-1 gap-4 border-t border-base-700 pt-10 md:grid-cols-2"
+			class="theme-divider mt-16 grid grid-cols-1 gap-4 border-t pt-10 md:grid-cols-2"
 			aria-label="Post navigation"
 		>
-			{
-				previousPost ? (
-					<a
-						href={getPostUrl(previousPost)}
-						class="theme-panel group border border-base-700 bg-base-900/60 p-4 transition-colors hover:border-primary-600"
-					>
-						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Previous post</p>
-						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">
-							{previousPost.data.title}
-						</h2>
-					</a>
-				) : (
-					<div class="hidden md:block" aria-hidden="true"></div>
-				)
-			}
+			{previousPost ? (
+				<a
+					href={getPostUrl(previousPost)}
+					class="theme-panel group hover:border-primary-600 p-4 transition-colors"
+				>
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Previous post</p>
+					<h2 class="group-hover:text-primary-600 mt-3 text-lg font-medium transition-colors">
+						{previousPost.data.title}
+					</h2>
+				</a>
+			) : (
+				<div class="hidden md:block" aria-hidden="true" />
+			)}
 
-			{
-				nextPost ? (
-					<a
-						href={getPostUrl(nextPost)}
-						class="theme-panel group border border-base-700 bg-base-900/60 p-4 text-left transition-colors hover:border-primary-600 md:text-right"
-					>
-						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Next post</p>
-						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">
-							{nextPost.data.title}
-						</h2>
-					</a>
-				) : (
-					<div class="hidden md:block" aria-hidden="true"></div>
-				)
-			}
+			{nextPost ? (
+				<a
+					href={getPostUrl(nextPost)}
+					class="theme-panel group hover:border-primary-600 p-4 text-left transition-colors md:text-right"
+				>
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Next post</p>
+					<h2 class="group-hover:text-primary-600 mt-3 text-lg font-medium transition-colors">
+						{nextPost.data.title}
+					</h2>
+				</a>
+			) : (
+				<div class="hidden md:block" aria-hidden="true" />
+			)}
 		</nav>
 	)
 }

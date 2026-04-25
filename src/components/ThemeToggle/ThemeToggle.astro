@@ -24,60 +24,43 @@ const { class: className } = Astro.props as Props;
 </button>
 
 <script>
-	const STORAGE_KEY = "theme-preference";
+	type ThemeController = {
+		applyTheme: (theme: "light" | "dark", options?: { persist?: boolean; doc?: Document }) => void;
+		resolveTheme: () => "light" | "dark";
+		syncThemeToggles: (doc?: Document) => void;
+		themeChangeEvent: string;
+	};
 
-	function getStoredTheme() {
-		const storedTheme = window.localStorage.getItem(STORAGE_KEY);
-		return storedTheme === "light" || storedTheme === "dark" ? storedTheme : null;
-	}
-
-	function getResolvedTheme() {
-		return getStoredTheme() ?? "dark";
-	}
-
-	function applyTheme(theme) {
-		const root = document.documentElement;
-		const body = document.body;
-		const isDark = theme === "dark";
-
-		root.classList.toggle("dark", isDark);
-		root.classList.toggle("light", !isDark);
-
-		if (body) {
-			body.classList.toggle("dark", isDark);
-			body.classList.toggle("light", !isDark);
-		}
-	}
-
-	function syncThemeToggles() {
-		const resolvedTheme = getResolvedTheme();
-
-		document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
-			if (!(toggle instanceof HTMLButtonElement)) return;
-
-			toggle.dataset.theme = resolvedTheme;
-			toggle.setAttribute("aria-pressed", String(resolvedTheme === "dark"));
-		});
+	function getThemeController(): ThemeController | null {
+		return (window as Window & { themeController?: ThemeController }).themeController ?? null;
 	}
 
 	function initThemeToggle() {
-		syncThemeToggles();
+		const themeController = getThemeController();
+		if (!themeController) return;
+
+		themeController.syncThemeToggles(document);
 
 		document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
 			if (!(toggle instanceof HTMLButtonElement) || toggle.dataset.bound === "true") return;
 
 			toggle.dataset.bound = "true";
 			toggle.addEventListener("click", () => {
-				const nextTheme = getResolvedTheme() === "dark" ? "light" : "dark";
-				window.localStorage.setItem(STORAGE_KEY, nextTheme);
-				applyTheme(nextTheme);
-				syncThemeToggles();
+				const nextTheme = themeController.resolveTheme() === "dark" ? "light" : "dark";
+				themeController.applyTheme(nextTheme);
 			});
 		});
 	}
 
 	initThemeToggle();
-	document.addEventListener("astro:page-load", initThemeToggle);
+	document.addEventListener("astro:after-swap", initThemeToggle);
+
+	const themeController = getThemeController();
+	if (themeController) {
+		document.addEventListener(themeController.themeChangeEvent, () => {
+			themeController.syncThemeToggles(document);
+		});
+	}
 </script>
 
 <style>
@@ -85,12 +68,12 @@ const { class: className } = Astro.props as Props;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		border: 1px solid var(--color-base-600);
-		background: rgb(from var(--color-base-900) r g b / 0.92);
+		border: 1px solid var(--theme-toggle-border);
+		background: var(--theme-toggle-background);
 		width: 2.75rem;
 		height: 2.75rem;
-		color: var(--color-base-100);
-		box-shadow: 0 18px 40px rgb(0 0 0 / 0.28);
+		color: var(--theme-toggle-text);
+		box-shadow: var(--theme-toggle-shadow);
 		backdrop-filter: blur(16px);
 		transition:
 			border-color 180ms ease,
@@ -101,21 +84,9 @@ const { class: className } = Astro.props as Props;
 
 	.theme-toggle:hover {
 		border-color: var(--primary);
-		background: var(--primary);
-		color: var(--color-base-950);
+		background: var(--theme-toggle-hover-background);
+		color: var(--theme-toggle-hover-text);
 		transform: translateY(-1px);
-	}
-
-	:global(.light) .theme-toggle {
-		border-color: color-mix(in srgb, var(--color-base-300) 66%, var(--color-primary-400) 34%);
-		background: rgb(255 255 255 / 0.92);
-		color: var(--color-base-900);
-		box-shadow: 0 18px 40px rgb(39 58 32 / 0.12);
-	}
-
-	:global(.light) .theme-toggle:hover {
-		background: var(--primary);
-		color: white;
 	}
 
 	.theme-toggle__icon {

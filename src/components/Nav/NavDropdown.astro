@@ -23,9 +23,7 @@ const { navItem } = Astro.props as Props;
 		<Icon name="tdesign:chevron-down" aria-hidden="true" class="h-5 w-5" />
 	</button>
 	<div class="dropdown-content invisible absolute z-10 opacity-0 transition-all">
-		<ul
-			class="border-primary-600 bg-base-900 mt-4 w-[10rem] max-w-[20rem] min-w-[9rem] border border-solid p-1.5 drop-shadow-md"
-		>
+		<ul class="theme-overlay mt-4 w-[10rem] max-w-[20rem] min-w-[9rem] border border-solid p-1.5">
 			{navItem.dropdown.map((dropdownItem) => <NavLink navItem={dropdownItem} />)}
 		</ul>
 	</div>

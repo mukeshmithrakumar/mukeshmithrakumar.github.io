@@ -44,14 +44,80 @@ const {
 	<head>
 		<script is:inline>
 			(() => {
-				const storageKey = "theme-preference";
-				const root = document.documentElement;
-				const storedTheme = window.localStorage.getItem(storageKey);
-				const theme = storedTheme === "light" ? "light" : "dark";
-				const isDark = theme === "dark";
+				const STORAGE_KEY = "theme-preference";
+				const THEME_CHANGE_EVENT = "theme:change";
 
-				root.classList.toggle("dark", isDark);
-				root.classList.toggle("light", !isDark);
+				const getStoredTheme = () => {
+					const storedTheme = window.localStorage.getItem(STORAGE_KEY);
+					return storedTheme === "light" || storedTheme === "dark" ? storedTheme : null;
+				};
+
+				const resolveTheme = () => getStoredTheme() ?? "dark";
+
+				const applyThemeToDocument = (doc, theme) => {
+					const root = doc.documentElement;
+					const body = doc.body;
+					const isDark = theme === "dark";
+
+					root.classList.toggle("dark", isDark);
+					root.classList.toggle("light", !isDark);
+
+					if (body) {
+						body.classList.toggle("dark", isDark);
+						body.classList.toggle("light", !isDark);
+					}
+				};
+
+				const syncThemeToggles = (doc = document) => {
+					const theme = resolveTheme();
+
+					doc.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+						if (!(toggle instanceof HTMLButtonElement)) return;
+
+						toggle.dataset.theme = theme;
+						toggle.setAttribute("aria-pressed", String(theme === "dark"));
+					});
+				};
+
+				const applyTheme = (theme, options = {}) => {
+					const { persist = true, doc = document } = options;
+
+					if (persist) {
+						window.localStorage.setItem(STORAGE_KEY, theme);
+					}
+
+					applyThemeToDocument(doc, theme);
+
+					if (doc === document) {
+						syncThemeToggles(document);
+						document.dispatchEvent(new CustomEvent(THEME_CHANGE_EVENT, { detail: { theme } }));
+					}
+				};
+
+				const initTheme = () => {
+					applyTheme(resolveTheme(), { persist: false });
+				};
+
+				window.themeController = {
+					applyTheme,
+					applyThemeToDocument,
+					getStoredTheme,
+					initTheme,
+					resolveTheme,
+					storageKey: STORAGE_KEY,
+					syncThemeToggles,
+					themeChangeEvent: THEME_CHANGE_EVENT,
+				};
+
+				initTheme();
+
+				document.addEventListener("astro:before-swap", (event) => {
+					applyThemeToDocument(event.newDocument, resolveTheme());
+				});
+
+				document.addEventListener("astro:after-swap", () => {
+					initTheme();
+				});
 			})();
 		</script>
 		<BaseHead
@@ -90,36 +156,6 @@ const {
 		<script>
 			import siteData from "@config/siteData.json";
 			import MOS from "motion-on-scroll";
-
-			const getStoredTheme = () => {
-				const storedTheme = window.localStorage.getItem("theme-preference");
-				return storedTheme === "light" ? "light" : "dark";
-			};
-
-			const applyThemeToDocument = (doc: Document, theme: "light" | "dark") => {
-				const root = doc.documentElement;
-				const body = doc.body;
-				const isDark = theme === "dark";
-
-				root.classList.toggle("dark", isDark);
-				root.classList.toggle("light", !isDark);
-
-				if (body) {
-					body.classList.toggle("dark", isDark);
-					body.classList.toggle("light", !isDark);
-				}
-			};
-
-			const applyStoredTheme = () => {
-				applyThemeToDocument(document, getStoredTheme());
-			};
-
-			applyStoredTheme();
-			document.addEventListener("astro:before-swap", (event) => {
-				const theme = getStoredTheme();
-				applyThemeToDocument(event.newDocument, theme);
-			});
-			document.addEventListener("astro:after-swap", applyStoredTheme);
 
 			if (siteData.useAnimations === true) {
 				// runs on initial page load

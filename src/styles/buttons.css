@@ -1,18 +1,24 @@
 /* buttons, 4 types "filled", "outline", "ghost", "arrow" */
 .button {
 	@apply flex items-center justify-center px-4 py-1.5 font-medium transition-colors duration-200;
-	@apply focus:ring-offset-base-900 focus:outline-none;
+	--tw-ring-offset-color: var(--theme-focus-ring-offset);
+	@apply focus:outline-none;
 	@apply disabled:pointer-events-none;
 }
 
 .button--primary {
-	@apply border-primary-600 bg-base-900 relative border;
-	@apply hover:bg-primary-600 hover:text-base-950;
+	@apply relative border;
+	background: var(--theme-button-primary-background);
+	border-color: var(--theme-button-primary-border);
+	color: var(--theme-button-primary-text);
+	box-shadow: var(--theme-button-primary-shadow);
+	@apply hover:bg-primary-600;
 	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
 
 	&::after {
 		content: "";
-		@apply bg-primary-600 absolute inset-0 -z-50 h-full w-full translate-x-1 translate-y-1 transition duration-200 ease-out;
+		background: var(--theme-button-primary-after-background);
+		@apply absolute inset-0 -z-50 h-full w-full translate-x-1 translate-y-1 transition duration-200 ease-out;
 	}
 
 	&:hover::after {
@@ -20,68 +26,41 @@
 	}
 }
 
+.button--primary:hover {
+	background: var(--theme-button-primary-hover-background);
+	color: var(--theme-button-primary-hover-text);
+}
+
 .button--secondary {
-	@apply border-base-600 bg-base-900 border;
-	@apply hover:border-primary-600;
+	@apply border;
+	background: var(--theme-button-secondary-background);
+	border-color: var(--theme-button-secondary-border);
+	color: var(--theme-button-secondary-text);
 	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
 }
 
 .button--outline {
-	@apply border-base-600 bg-base-900 border;
-	@apply hover:border-primary-600;
+	@apply border;
+	background: var(--theme-button-secondary-background);
+	border-color: var(--theme-button-secondary-border);
+	color: var(--theme-button-secondary-text);
 	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--secondary:hover,
+.button--outline:hover {
+	border-color: var(--theme-button-secondary-hover-border);
+	color: var(--theme-button-secondary-hover-text);
+	box-shadow: var(--theme-button-secondary-hover-shadow);
 }
 
 .button--ghost {
-	@apply bg-base-800;
-	@apply hover:text-primary-600;
+	background: var(--theme-button-ghost-background);
+	color: var(--theme-button-ghost-text);
 	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
 }
 
-.light .button {
-	@apply focus:ring-offset-base-50;
-}
-
-.light .button--primary {
-	background: #f3f7f3;
-	color: #171717;
-	border-color: var(--color-primary-600);
-	box-shadow:
-		0 18px 40px rgb(24 24 27 / 0.08),
-		0 0 0 1px rgb(34 197 94 / 0.1);
-}
-
-.light .button--primary:hover {
-	background: var(--color-primary-500);
-	color: #f5fff7;
-}
-
-.light .button--primary:hover::after {
-	@apply bg-primary-600;
-}
-
-.light .button--secondary,
-.light .button--outline {
-	background: rgb(240 245 241 / 0.84);
-	border-color: color-mix(in srgb, #cbd5cf 66%, var(--color-primary-500) 34%);
-	color: #292524;
-}
-
-.light .button--secondary:hover,
-.light .button--outline:hover {
-	border-color: var(--color-primary-600);
-	color: var(--color-primary-700);
-	box-shadow:
-		0 0 0 1px rgb(from var(--color-primary-600) r g b / 0.3),
-		0 10px 24px rgb(34 197 94 / 0.08);
-}
-
-.light .button--ghost {
-	background: rgb(235 241 236 / 0.72);
-	color: #292524;
-}
-
-.light .button--ghost:hover {
-	background: rgb(220 252 231 / 0.62);
-	color: var(--color-primary-700);
+.button--ghost:hover {
+	background: var(--theme-button-ghost-hover-background);
+	color: var(--theme-button-ghost-hover-text);
 }

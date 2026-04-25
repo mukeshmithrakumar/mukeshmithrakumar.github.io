@@ -59,7 +59,10 @@
 
 /* code */
 .markdown-content code:not(:where(.not-content *)) {
-	@apply bg-base-100 dark:bg-base-800 border-base-100 dark:border-base-800 rounded-none border-2 border-solid px-0.5 py-0 font-mono;
+	@apply rounded-none border-2 border-solid px-0.5 py-0 font-mono;
+	background: var(--theme-inline-code-background);
+	border-color: var(--theme-inline-code-border);
+	color: var(--theme-inline-code-text);
 }
 .markdown-content :is(h1, h2, h3, h4, h5, h6) code {
 	@apply text-inherit;
@@ -129,7 +132,7 @@
 	position: absolute;
 	inset: 0;
 	border-radius: inherit;
-	background: var(--color-base-900);
+	background: var(--theme-copy-button-background);
 	opacity: 0;
 	transition-property: inherit;
 	transition-duration: inherit;
@@ -237,7 +240,10 @@
 }
 
 .markdown-content .math-block {
-	@apply relative my-4 overflow-visible rounded-lg border border-base-700 bg-base-900/40 px-4 py-6;
+	@apply relative my-4 overflow-visible rounded-lg border px-4 py-6;
+	border-color: var(--theme-math-border);
+	background: var(--theme-math-background);
+	box-shadow: var(--theme-math-shadow);
 	--ec-brdWd: 1.5px;
 	--ec-uiPadInl: 1rem;
 	--ec-frm-copyIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.75'%3E%3Cpath%20d%3D'M3%2019a2%202%200%200%201-1-2V2a2%202%200%200%201%201-1h13a2%202%200%200%201%202%201'%2F%3E%3Crect%20x%3D'6'%20y%3D'5'%20width%3D'16'%20height%3D'18'%20rx%3D'1.5'%20ry%3D'1.5'%2F%3E%3C%2Fsvg%3E");
@@ -387,22 +393,6 @@
 	mask-repeat: no-repeat;
 }
 
-.light .markdown-content code:not(:where(.not-content *)) {
-	background: rgb(235 240 236 / 0.96);
-	border-color: rgb(203 213 207 / 0.9);
-	color: #166534;
-}
-
-.light .markdown-content .math-block {
-	border-color: color-mix(in srgb, #cbd5cf 66%, var(--color-primary-500) 34%);
-	background:
-		linear-gradient(180deg, rgb(243 247 243 / 0.9), rgb(233 239 234 / 0.86));
-	box-shadow: 0 18px 40px rgb(24 24 27 / 0.05);
-}
-
-.light .markdown-content .math-block .copy button div {
-	background: rgb(243 247 243 / 0.96);
-}
 @media (prefers-reduced-motion: no-preference) {
 	.markdown-content summary:not(:where(.not-content *))::before {
 		transition: transform 0.2s ease-in-out;

@@ -118,7 +118,7 @@ function getShareIcon(icon: string) {
 			<>
 				<button
 					type="button"
-					class="blog-share__trigger group border-base-600 bg-base-900/80 text-foreground hover:border-primary-600 hover:text-primary-500 focus-visible:ring-primary-600 focus-visible:ring-offset-base-950 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+					class="blog-share__trigger theme-interactive group hover:text-primary-500 focus-visible:ring-primary-600 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 					aria-haspopup="menu"
 					aria-expanded="false"
 					data-share-trigger
@@ -132,21 +132,21 @@ function getShareIcon(icon: string) {
 				</button>
 
 				<div
-					class="blog-share__menu border-base-700 bg-base-900/95 absolute top-full z-30 mt-3 hidden min-w-[220px] border p-2 shadow-[0_18px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm"
+					class="blog-share__menu theme-overlay absolute top-full z-30 mt-3 hidden min-w-[220px] border p-2"
 					class:list={[align === "center" ? "left-1/2 -translate-x-1/2" : "left-0"]}
 					role="menu"
 					aria-label="Share this post"
 					data-share-menu
 				>
 					<div
-						class="border-base-700 bg-base-900/95 absolute -top-2 h-4 w-4 rotate-45 border-t border-l"
+						class="blog-share__menu-caret absolute -top-2 h-4 w-4 rotate-45 border-t border-l"
 						class:list={[align === "center" ? "left-1/2 -translate-x-1/2" : "left-6"]}
 						aria-hidden="true"
 					/>
 
 					{items.map((item) => (
 						<a
-							class="blog-share__item text-foreground/85 hover:bg-base-800 hover:text-primary-500 focus-visible:ring-primary-600 flex items-center gap-3 px-3 py-2 text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
+							class="blog-share__item theme-hover-surface text-foreground/85 hover:text-primary-500 focus-visible:ring-primary-600 flex items-center gap-3 px-3 py-2 text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
 							href={item.href}
 							target="_blank"
 							rel="noreferrer"
@@ -164,7 +164,7 @@ function getShareIcon(icon: string) {
 
 					<button
 						type="button"
-						class="blog-share__item text-foreground/85 hover:bg-base-800 hover:text-primary-500 focus-visible:ring-primary-600 flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
+						class="blog-share__item theme-hover-surface text-foreground/85 hover:text-primary-500 focus-visible:ring-primary-600 flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
 						role="menuitem"
 						data-share-copy
 					>
@@ -324,19 +324,9 @@ function getShareIcon(icon: string) {
 		height: 100%;
 	}
 
-	:global(.light) .blog-share__trigger {
-		border-color: color-mix(in srgb, #cbd5cf 62%, var(--color-primary-500) 38%);
-		background: rgb(240 245 241 / 0.92);
-		color: #171717;
-	}
-
-	:global(.light) .blog-share__menu,
-	:global(.light) .blog-share__menu > div[aria-hidden="true"] {
-		border-color: color-mix(in srgb, #cbd5cf 60%, var(--color-primary-500) 40%);
-		background: rgb(243 247 243 / 0.97);
-		box-shadow:
-			0 18px 40px rgb(24 24 27 / 0.12),
-			0 0 0 1px rgb(34 197 94 / 0.08);
+	.blog-share__menu-caret {
+		background: var(--theme-overlay);
+		border-color: var(--theme-overlay-border);
 	}
 
 	:global(.light) .blog-share__item:hover {
