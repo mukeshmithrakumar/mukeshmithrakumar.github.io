@@ -21,7 +21,7 @@ const { previousProject, nextProject } = Astro.props as Props;
 				previousProject ? (
 					<a
 						href={getProjectUrl(previousProject)}
-						class="group border border-base-700 bg-base-900/60 p-4 transition-colors hover:border-primary-600"
+						class="theme-panel group border border-base-700 bg-base-900/60 p-4 transition-colors hover:border-primary-600"
 					>
 						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Previous project</p>
 						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">
@@ -37,7 +37,7 @@ const { previousProject, nextProject } = Astro.props as Props;
 				nextProject ? (
 					<a
 						href={getProjectUrl(nextProject)}
-						class="group border border-base-700 bg-base-900/60 p-4 text-left transition-colors hover:border-primary-600 md:text-right"
+						class="theme-panel group border border-base-700 bg-base-900/60 p-4 text-left transition-colors hover:border-primary-600 md:text-right"
 					>
 						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Next project</p>
 						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">

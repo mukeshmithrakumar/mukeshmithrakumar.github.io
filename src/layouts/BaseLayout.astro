@@ -6,6 +6,7 @@ import BaseHead from "@layouts/BaseHead.astro";
 import Nav from "@components/Nav/Nav.astro";
 import Footer from "@components/Footer/Footer.astro";
 import CookieConsent from "@components/CookieConsent/CookieConsent.astro";
+import ThemeToggle from "@components/ThemeToggle/ThemeToggle.astro";
 
 // style import
 import "@/styles/global.css";
@@ -41,6 +42,18 @@ const {
 <!doctype html>
 <html lang="en" transition:animate="fade" class="dark">
 	<head>
+		<script is:inline>
+			(() => {
+				const storageKey = "theme-preference";
+				const root = document.documentElement;
+				const storedTheme = window.localStorage.getItem(storageKey);
+				const theme = storedTheme === "light" ? "light" : "dark";
+				const isDark = theme === "dark";
+
+				root.classList.toggle("dark", isDark);
+				root.classList.toggle("light", !isDark);
+			})();
+		</script>
 		<BaseHead
 			type={type}
 			title={title}
@@ -54,7 +67,7 @@ const {
 	</head>
 	<body
 		class:list={[
-			"dark overflow-y-scroll",
+			"overflow-y-scroll",
 			{
 				"use-animations": siteData.useAnimations === true ? true : false,
 			},
@@ -71,11 +84,42 @@ const {
 			</div>
 			<Footer />
 		</div>
+		<ThemeToggle class="fixed right-5 bottom-5 z-40 hidden md:inline-flex" />
 
 		<!-- Scroll animations -->
 		<script>
 			import siteData from "@config/siteData.json";
 			import MOS from "motion-on-scroll";
+
+			const getStoredTheme = () => {
+				const storedTheme = window.localStorage.getItem("theme-preference");
+				return storedTheme === "light" ? "light" : "dark";
+			};
+
+			const applyThemeToDocument = (doc: Document, theme: "light" | "dark") => {
+				const root = doc.documentElement;
+				const body = doc.body;
+				const isDark = theme === "dark";
+
+				root.classList.toggle("dark", isDark);
+				root.classList.toggle("light", !isDark);
+
+				if (body) {
+					body.classList.toggle("dark", isDark);
+					body.classList.toggle("light", !isDark);
+				}
+			};
+
+			const applyStoredTheme = () => {
+				applyThemeToDocument(document, getStoredTheme());
+			};
+
+			applyStoredTheme();
+			document.addEventListener("astro:before-swap", (event) => {
+				const theme = getStoredTheme();
+				applyThemeToDocument(event.newDocument, theme);
+			});
+			document.addEventListener("astro:after-swap", applyStoredTheme);
 
 			if (siteData.useAnimations === true) {
 				// runs on initial page load

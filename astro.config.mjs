@@ -73,6 +73,8 @@ export default defineConfig({
 				"download",
 				"work-history",
 				"share",
+				"mode-light",
+				"mode-dark",
 			],
 		}),
 		expressiveCode(expressiveCodeOptions),

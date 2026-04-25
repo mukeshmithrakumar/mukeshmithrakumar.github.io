@@ -53,12 +53,12 @@ A strong next batch would be:
 - [x] added technical dive deeper sections to the projects
 - [x] added updated date for the blogs
 - [ ] Dark and Light Mode
+- [ ] otherPages, what should I implement, do I need 404s etc?
 - [ ] Search across blog posts, tags, and maybe projects.
 - [ ] Series support for multi-part topics like computer vision or deep learning.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 - [ ] Reading progress bar for long technical posts.
-- [ ] "Last updated" emphasis for older technical content.
 - [ ] Commenting.
 
 ## Next Step: Image Optimization

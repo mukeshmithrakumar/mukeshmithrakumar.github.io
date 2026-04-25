@@ -20,7 +20,7 @@ const { previousPost, nextPost } = Astro.props as Props;
 				previousPost ? (
 					<a
 						href={getPostUrl(previousPost)}
-						class="group border border-base-700 bg-base-900/60 p-4 transition-colors hover:border-primary-600"
+						class="theme-panel group border border-base-700 bg-base-900/60 p-4 transition-colors hover:border-primary-600"
 					>
 						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Previous post</p>
 						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">
@@ -36,7 +36,7 @@ const { previousPost, nextPost } = Astro.props as Props;
 				nextPost ? (
 					<a
 						href={getPostUrl(nextPost)}
-						class="group border border-base-700 bg-base-900/60 p-4 text-left transition-colors hover:border-primary-600 md:text-right"
+						class="theme-panel group border border-base-700 bg-base-900/60 p-4 text-left transition-colors hover:border-primary-600 md:text-right"
 					>
 						<p class="text-sm uppercase tracking-[0.2em] text-base-400">Next post</p>
 						<h2 class="mt-3 text-lg font-medium transition-colors group-hover:text-primary-600">

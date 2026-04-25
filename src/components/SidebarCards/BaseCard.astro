@@ -18,7 +18,7 @@ const showIcon = false;
 const { title, icon, class: className, ...rest } = Astro.props as Props;
 ---
 
-<div class=`flex flex-col gap-4 border border-base-600 p-4 ${className}` {...rest}>
+<div class=`theme-panel flex flex-col gap-4 border border-base-600 p-4 ${className}` {...rest}>
 	<div class="flex flex-wrap items-center gap-4">
 		{showIcon && <Icon name={icon} aria-hidden="true" class="size-6" />}
 		<h3 class="h3">{title}</h3>

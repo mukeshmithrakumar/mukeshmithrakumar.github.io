@@ -386,6 +386,23 @@
 	-webkit-mask-repeat: no-repeat;
 	mask-repeat: no-repeat;
 }
+
+.light .markdown-content code:not(:where(.not-content *)) {
+	background: rgb(235 240 236 / 0.96);
+	border-color: rgb(203 213 207 / 0.9);
+	color: #166534;
+}
+
+.light .markdown-content .math-block {
+	border-color: color-mix(in srgb, #cbd5cf 66%, var(--color-primary-500) 34%);
+	background:
+		linear-gradient(180deg, rgb(243 247 243 / 0.9), rgb(233 239 234 / 0.86));
+	box-shadow: 0 18px 40px rgb(24 24 27 / 0.05);
+}
+
+.light .markdown-content .math-block .copy button div {
+	background: rgb(243 247 243 / 0.96);
+}
 @media (prefers-reduced-motion: no-preference) {
 	.markdown-content summary:not(:where(.not-content *))::before {
 		transition: transform 0.2s ease-in-out;

@@ -1,0 +1,143 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<button
+	type="button"
+	class:list={["theme-toggle primary-focus", className]}
+	aria-label="Toggle color theme"
+	title="Toggle color theme"
+	data-theme-toggle
+>
+	<span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+		<Icon name="tdesign:mode-light" class="h-4 w-4" />
+	</span>
+	<span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+		<Icon name="tdesign:mode-dark" class="h-4 w-4" />
+	</span>
+</button>
+
+<script>
+	const STORAGE_KEY = "theme-preference";
+
+	function getStoredTheme() {
+		const storedTheme = window.localStorage.getItem(STORAGE_KEY);
+		return storedTheme === "light" || storedTheme === "dark" ? storedTheme : null;
+	}
+
+	function getResolvedTheme() {
+		return getStoredTheme() ?? "dark";
+	}
+
+	function applyTheme(theme) {
+		const root = document.documentElement;
+		const body = document.body;
+		const isDark = theme === "dark";
+
+		root.classList.toggle("dark", isDark);
+		root.classList.toggle("light", !isDark);
+
+		if (body) {
+			body.classList.toggle("dark", isDark);
+			body.classList.toggle("light", !isDark);
+		}
+	}
+
+	function syncThemeToggles() {
+		const resolvedTheme = getResolvedTheme();
+
+		document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+			if (!(toggle instanceof HTMLButtonElement)) return;
+
+			toggle.dataset.theme = resolvedTheme;
+			toggle.setAttribute("aria-pressed", String(resolvedTheme === "dark"));
+		});
+	}
+
+	function initThemeToggle() {
+		syncThemeToggles();
+
+		document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+			if (!(toggle instanceof HTMLButtonElement) || toggle.dataset.bound === "true") return;
+
+			toggle.dataset.bound = "true";
+			toggle.addEventListener("click", () => {
+				const nextTheme = getResolvedTheme() === "dark" ? "light" : "dark";
+				window.localStorage.setItem(STORAGE_KEY, nextTheme);
+				applyTheme(nextTheme);
+				syncThemeToggles();
+			});
+		});
+	}
+
+	initThemeToggle();
+	document.addEventListener("astro:page-load", initThemeToggle);
+</script>
+
+<style>
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--color-base-600);
+		background: rgb(from var(--color-base-900) r g b / 0.92);
+		width: 2.75rem;
+		height: 2.75rem;
+		color: var(--color-base-100);
+		box-shadow: 0 18px 40px rgb(0 0 0 / 0.28);
+		backdrop-filter: blur(16px);
+		transition:
+			border-color 180ms ease,
+			background-color 180ms ease,
+			color 180ms ease,
+			transform 180ms ease;
+	}
+
+	.theme-toggle:hover {
+		border-color: var(--primary);
+		background: var(--primary);
+		color: var(--color-base-950);
+		transform: translateY(-1px);
+	}
+
+	:global(.light) .theme-toggle {
+		border-color: color-mix(in srgb, var(--color-base-300) 66%, var(--color-primary-400) 34%);
+		background: rgb(255 255 255 / 0.92);
+		color: var(--color-base-900);
+		box-shadow: 0 18px 40px rgb(39 58 32 / 0.12);
+	}
+
+	:global(.light) .theme-toggle:hover {
+		background: var(--primary);
+		color: white;
+	}
+
+	.theme-toggle__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		line-height: 0;
+	}
+
+	.theme-toggle__icon--sun {
+		display: none;
+	}
+
+	.theme-toggle[data-theme="light"] .theme-toggle__icon--sun {
+		display: inline-flex;
+	}
+
+	.theme-toggle[data-theme="light"] .theme-toggle__icon--moon {
+		display: none;
+	}
+
+	.theme-toggle__label {
+		display: none;
+	}
+</style>
