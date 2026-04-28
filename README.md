@@ -272,13 +272,13 @@ If you want, I can sketch the exact architecture for Astro next:
 - what shape the JSON should have
 - how the search page/component should query and rank results
 
-## Hero Image:
+## Prompt Templates
 
 Yes, I see what you want now: just **two clean paste-ready templates with placeholders**, not instructions about output formatting.
 
 Use these as-is.
 
-**1. Extract Content Template**
+### Extract Content Template
 
 ```text
 From this blog post, extract a compact image brief for a hero image.
@@ -304,7 +304,7 @@ Blog content:
 {{BLOG_CONTENT}}
 ```
 
-**2. Generate Image Template**
+### Generate Image Template
 
 ```text
 Create a custom hero image for a technical blog post using this content:
@@ -386,4 +386,32 @@ Avoid:
 - blurry or soft images
 - stock-photo style
 - cluttered compositions
+```
+
+
+### Blog Post Templates
+
+```
+A clean, modern SaaS-style infographic for a technical blog post about [TOPIC].
+
+Design style:
+- minimal, professional UI design
+- white or light gradient background
+- soft shadows, rounded cards, subtle depth
+- color palette: blue, purple, green accents
+- flat + semi-3D icons
+
+Layout:
+- left: input/source (visualized clearly)
+- center: core system/module (highlighted)
+- right: outputs/results
+- arrows showing flow between components
+
+Include:
+- bold title at top
+- short subtitle/tagline
+- labeled sections with icons
+- small UI-style cards with structured information
+
+Make it look like a high-quality product/engineering blog graphic from a top tech company.
 ```

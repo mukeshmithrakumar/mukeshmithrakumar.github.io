@@ -50,8 +50,7 @@ const projectsCollection = defineCollection({
 			heroImage: image(),
 			client: z.string().optional(),
 			role: z.string(),
-			year: z.number().int().positive(),
-			duration: z.string().optional(),
+			year: z.union([z.number().int().positive(), z.string()]),
 			projectUrl: z.union([z.string().url(), z.literal(""), z.null()]).optional(),
 			repoUrl: z.union([z.string().url(), z.literal(""), z.null()]).optional(),
 			// project pages will be excluded from build if draft is "true"

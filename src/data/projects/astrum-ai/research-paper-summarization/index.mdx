@@ -1,113 +1,123 @@
 ---
-title: Text Summarization System using BERT
-description: A production-ready extractive summarization system leveraging BERT to generate concise summaries from large documents.
+title: Research Paper Summarization and QA System using BERT
+description: An end-to-end NLP system combining extractive summarization and question-answering to help users quickly navigate and understand research papers.
 draft: false
-pubDate: 2025-01-20
-updatedDate: 2026-03-27
+pubDate: 2026-05-01
+updatedDate: 2026-05-01
 heroImage: ./research-paper-summarization.png
-client: Internal / Enterprise Use Case
-role: Machine Learning Engineer
-year: 2024
-duration: ~3–4 months
+client: NDA
+role: CTO
+year: 2018-2020
 projectUrl:
 repoUrl:
 ---
 
 ## Overview
 
-Developed a text summarization system to automatically generate concise summaries from large documents. The system uses a BERT-based extractive approach to identify and rank the most important sentences in a document.
+Designed and built an end-to-end research paper understanding system that combined **extractive summarization** and **question-answering** capabilities to help users quickly navigate long-form technical documents.
 
-The goal was to reduce the time required to process long-form content while preserving key information and improving accessibility of insights.
+The system allowed users to:
+- Generate concise summaries of research papers
+- Ask targeted questions and retrieve contextually relevant answers
+- Interact with complex documents through a simple web interface
+
+This was developed as a prototype system (pre-LLM era) using BERT-based architectures and deployed fully on AWS.
 
 ## Problem
 
-- Users had to manually read and extract insights from long documents.
-- Important information was often buried within large volumes of text.
-- Existing keyword-based approaches failed to capture contextual importance.
-- Need for consistent, high-quality summaries across documents.
+- Research papers are long, dense, and time-consuming to navigate
+- Users needed both **high-level summaries** and **precise answers** to specific questions
+- Traditional keyword search failed to capture semantic meaning
+- No unified system existed to both summarize and interact with documents
 
 ## Constraints
 
-- Documents varied significantly in length and structure.
-- Required preserving factual accuracy (no hallucination risk).
-- Latency constraints for generating summaries on demand.
-- Limited labeled data for supervised summarization tasks.
+- Documents often exceeded transformer token limits
+- Required high factual accuracy (no generative hallucination)
+- Limited labeled data for supervised summarization and QA
+- Latency constraints for interactive usage in a web application
+- Built prior to widespread availability of large generative models
 
 ## Approach
 
-Framed the problem as **extractive summarization**, selecting the most important sentences rather than generating new text.
+Framed the system as a combination of:
 
-Used a BERT-based architecture to:
-- Encode contextual relationships between tokens
-- Generate sentence-level representations
-- Rank sentences based on importance
+- **Extractive summarization** for generating high-level document overviews
+- **BERT-based question answering** for retrieving precise answers from text
 
-Focused on:
-- Leveraging pre-trained language models for contextual understanding
-- Building a lightweight summarization layer on top of BERT
-- Optimizing inference for production deployment
+Key components:
+- Fine-tuned **BERT-base** for sentence ranking (summarization)
+- Fine-tuned **BERT QA model (SQuAD-style)** for span-based question answering
+- Document chunking strategy to handle long inputs beyond token limits
+
+Rather than generating new text, the system focused on **selecting and retrieving relevant information**, ensuring factual consistency and reliability.
 
 ## System Design
 
-The system follows a simple inference pipeline:
+The system was designed as a lightweight, modular pipeline deployed on AWS:
 
-1. Input document is tokenized and segmented into sentences  
-2. Sentences are encoded using a BERT encoder  
-3. Sentence representations are passed through a classification layer  
-4. Top-ranked sentences are selected to form the summary  
+1. Documents are ingested and segmented into overlapping text chunks  
+2. Sentence-level embeddings are generated using a BERT encoder  
+3. A ranking layer selects top sentences to form summaries  
+4. For QA:
+   - User queries are matched against document chunks  
+   - A BERT QA model extracts answer spans from the most relevant sections  
 
-The system is deployed as an API:
+Deployment architecture:
 
-- **API Gateway:** Routes incoming requests  
-- **Lambda:** Handles preprocessing and request orchestration  
-- **Model Service:** Runs BERT inference and returns summaries  
-- **Load Balancing:** Managed through Elastic Beanstalk  
+- **Frontend:** Lightweight web application for document upload and interaction  
+- **API Layer (AWS Lambda):** Handles request orchestration and preprocessing  
+- **Model Service:** Hosts BERT models for summarization and QA inference  
+- **Compute:** GPU-backed instances for model inference (Elastic Beanstalk)  
+
+To handle long documents, chunk-level processing with aggregation was used to maintain both performance and coverage.
 
 ## Key Decisions
 
-### Use extractive summarization instead of abstractive
+### Use extractive + retrieval-based QA instead of generative models
 
-Extractive summarization avoids hallucination and ensures factual consistency, which is critical for enterprise use cases.
+At the time, generative models were not reliable for factual domains.  
+An extractive + span-based QA approach ensured **high precision and zero hallucination risk**, which was critical for research content.
 
-Abstractive methods were considered but rejected due to reliability concerns and higher complexity.
+### Build on BERT rather than lighter NLP methods
 
-### Build on top of pre-trained BERT
+While classical methods (e.g., TextRank) were considered, BERT provided significantly better contextual understanding, especially for technical language.
 
-Using BERT allowed leveraging strong contextual embeddings without requiring large-scale training from scratch.
+### Design for long-document handling early
 
-This significantly reduced development time while maintaining high-quality outputs.
+Transformer token limits required explicit chunking and aggregation strategies.  
+This became a core part of the system design rather than an afterthought.
 
-### Optimize for inference performance
+### End-to-end ownership including web application
 
-BERT models are computationally expensive, so optimizations such as batching and model tuning were necessary.
-
-This enabled acceptable latency for real-time or near real-time usage.
+The system was built as a complete user-facing product, not just a model, ensuring usability and adoption.
 
 ## Results & Impact
 
-- **Efficiency:** Reduced time required to process long documents
-- **Consistency:** Standardized summary quality across inputs
-- **Usability:** Enabled faster access to key insights
+- **Latency:** ~1-3 seconds for summary generation; sub-second response for QA on indexed documents  
+- **Efficiency:** Reduced time to extract insights from research papers from ~30-60 minutes to under a minute  
+- **Adoption:** Enabled non-expert users to navigate technical content more effectively  
+- **Consistency:** Provided standardized summaries across documents without manual effort  
 
-The system made it easier for users to consume large volumes of information without manual effort.
+This system demonstrated the viability of interactive document understanding systems prior to modern LLM-based approaches.
 
 ## Tradeoffs
 
-- Extractive summaries can feel less natural compared to abstractive ones.
-- Model performance depends on sentence segmentation quality.
-- BERT inference introduced latency and compute overhead.
-- Limited ability to compress highly complex or nuanced documents.
+- Extractive summaries lacked fluency compared to generative methods  
+- QA was limited to retrieving spans rather than synthesizing answers  
+- Chunking introduced boundary limitations for cross-section reasoning  
+- BERT-based inference required careful optimization to meet latency targets  
 
 ## Learnings
 
-- Pre-trained models provide strong baselines for NLP tasks with limited data.
-- Extractive approaches are more reliable in high-precision domains.
-- Inference optimization is critical when deploying transformer models.
-- Simplicity in architecture can lead to faster iteration and deployment.
+- Combining multiple NLP capabilities (summarization + QA) significantly improves usability over standalone models  
+- Pre-trained transformer models can be effectively adapted for production use with limited data  
+- Handling long documents is a primary system design concern, not just a modeling issue  
+- End-to-end system design (UX + API + model) is critical for real-world impact  
 
 ## Future Work
 
-- Explore abstractive summarization with stronger guardrails
-- Improve sentence ranking using more advanced architectures
-- Introduce domain-specific fine-tuning for better relevance
-- Optimize model performance using quantization or distillation
+- Introduce hybrid extractive + abstractive summarization pipelines  
+- Add semantic search / retrieval layers for better document navigation  
+- Incorporate user feedback loops to improve ranking and relevance  
+- Migrate to generative LLM-based approaches with guardrails for factual accuracy  

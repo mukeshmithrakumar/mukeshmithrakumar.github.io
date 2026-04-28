@@ -37,10 +37,9 @@ const {
 	client,
 	role,
 	year,
-	duration,
 } = project.data;
 const readTimeText = getReadingTimeText(project.body);
-const metaItems = [client, role, String(year), duration, readTimeText].filter(Boolean);
+const metaItems = [client, role, String(year), readTimeText].filter(Boolean);
 const shareUrl = new URL(getProjectUrl(project), Astro.site).toString();
 const hasDeepDivePosts = deepDivePosts.length > 0;
 ---
