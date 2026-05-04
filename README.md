@@ -90,6 +90,9 @@ A strong next batch would be:
 - [x] Dark and Light Mode
 - [x] Removing left over content from the template
 - [x] Series support for multi-part topics like computer vision or deep learning.
+- [x] Setup Google Analytics
+- [ ] Added Adhiraiyan blog redirects
+- [ ] verify old-domain redirects after deployment.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 - [ ] Wire up the newsletter form to a real backend or email workflow.
@@ -152,6 +155,76 @@ A couple of product choices we should settle before building:
 - Should results search full article body text, or just title/description/tags for now?
 
 My recommendation is `/search` page first, with a navbar trigger and a second input on `/blog/`, because it’s simpler, more shareable, and easier to maintain than a modal.
+
+## Blog Migration Checklist
+
+This section is the working checklist for migrating the old `adhiraiyan.org` blog into `mukeshmithrakumar.com` without changing the current personal-site design or URL structure.
+
+### Step 1: Mailchimp migration checklist
+
+Goal:
+- Keep using Mailchimp, but wire it into the newsletter form on the personal site.
+
+What I found locally:
+- The old site used a Mailchimp embedded form.
+- The current personal site has a newsletter UI, but it is not connected to Mailchimp yet.
+
+Steps:
+- [ ] Log in to Mailchimp
+- [ ] Confirm which audience/list should continue to be used
+- [ ] Open `Forms` -> `Other forms` -> create or edit an embedded form
+- [ ] Keep only the fields you want on the personal site, probably just `email`
+- [ ] Optionally add a Mailchimp tag like `personal-site` or `mukesh-site`
+- [ ] Copy the generated Mailchimp form action/code
+- [ ] Update the Astro newsletter form so submit goes to the Mailchimp endpoint
+- [ ] Test with a real email address
+- [ ] Confirm the subscriber appears in the correct Mailchimp audience
+- [ ] Confirm any double-opt-in or welcome-email behavior is still what you want
+
+Decision note:
+- This is partly a Mailchimp admin task and partly a code task.
+- The UI can stay the same; only the form wiring needs to change.
+
+### Step 2: Deploy and verify the old redirect-only site
+
+The old GitHub Pages repo now acts as a static redirect-only site. The remaining work is deployment and verification.
+
+- [ ] Keep `adhiraiyan.org` registered and under your control
+- [ ] In the old repo settings, confirm the old custom domain is still attached
+- [ ] Commit and push the redirect-only old repo
+- [ ] If needed, update DNS so the old domain still points to GitHub Pages
+- [ ] Wait for GitHub Pages to rebuild
+- [ ] Manually verify key redirects:
+  - old homepage -> new homepage
+  - a migrated blog post -> matching `/blog/.../` page
+  - `subscribe.html` -> newsletter target
+  - `feed.xml` -> new feed handoff
+- [ ] Keep the old domain active for at least several months, ideally 12 months
+
+Important:
+- GitHub Pages custom domains are configured in repo `Settings` -> `Pages`
+- The old repo should stay redirect-only; the new repo keeps the actual content
+
+### Step 3: Google Search Console migration guide
+
+Do this after the redirects are live and tested.
+
+- [ ] Verify ownership of the old domain property
+- [ ] Verify ownership of the new domain property
+- [ ] Submit the new sitemap: `https://www.mukeshmithrakumar.com/sitemap-index.xml`
+- [ ] Use the Change of Address tool for the old domain to point to the new domain
+- [ ] Monitor indexing, crawl errors, and traffic for the next few weeks
+- [ ] Keep redirects active long-term
+
+Important:
+- Do not use Change of Address before redirects are in place.
+- Redirects are the foundation; Search Console is the follow-up signal to Google.
+
+### Step 4: Remaining content decisions
+
+- [ ] Decide whether to migrate the remaining old posts into the personal site
+- [ ] If not migrating them now, keep their redirects pointed at `/blog/`
+- [ ] If migrating them later, update the redirect map so each old URL lands on the exact new post
 
 ### Implementing Search
 
@@ -415,3 +488,5 @@ Include:
 
 Make it look like a high-quality product/engineering blog graphic from a top tech company.
 ```
+
+
