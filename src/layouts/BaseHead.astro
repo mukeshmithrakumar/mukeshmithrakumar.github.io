@@ -59,6 +59,17 @@ import JetBrainsMono from "@fontsource-variable/jetbrains-mono/files/jetbrains-m
 <meta name="generator" content={Astro.generator} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SHNXB8F9KX"></script>
+<script is:inline>
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	gtag("js", new Date());
+	gtag("config", "G-SHNXB8F9KX");
+</script>
+
 <Seo
 	type={type}
 	title={title}
