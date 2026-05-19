@@ -1,0 +1,66 @@
+/* buttons, 4 types "filled", "outline", "ghost", "arrow" */
+.button {
+	@apply flex items-center justify-center px-4 py-1.5 font-medium transition-colors duration-200;
+	--tw-ring-offset-color: var(--theme-focus-ring-offset);
+	@apply focus:outline-none;
+	@apply disabled:pointer-events-none;
+}
+
+.button--primary {
+	@apply relative border;
+	background: var(--theme-button-primary-background);
+	border-color: var(--theme-button-primary-border);
+	color: var(--theme-button-primary-text);
+	box-shadow: var(--theme-button-primary-shadow);
+	@apply hover:bg-primary-600;
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+
+	&::after {
+		content: "";
+		background: var(--theme-button-primary-after-background);
+		@apply absolute inset-0 -z-50 h-full w-full translate-x-1 translate-y-1 transition duration-200 ease-out;
+	}
+
+	&:hover::after {
+		@apply -translate-x-0 -translate-y-0;
+	}
+}
+
+.button--primary:hover {
+	background: var(--theme-button-primary-hover-background);
+	color: var(--theme-button-primary-hover-text);
+}
+
+.button--secondary {
+	@apply border;
+	background: var(--theme-button-secondary-background);
+	border-color: var(--theme-button-secondary-border);
+	color: var(--theme-button-secondary-text);
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--outline {
+	@apply border;
+	background: var(--theme-button-secondary-background);
+	border-color: var(--theme-button-secondary-border);
+	color: var(--theme-button-secondary-text);
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--secondary:hover,
+.button--outline:hover {
+	border-color: var(--theme-button-secondary-hover-border);
+	color: var(--theme-button-secondary-hover-text);
+	box-shadow: var(--theme-button-secondary-hover-shadow);
+}
+
+.button--ghost {
+	background: var(--theme-button-ghost-background);
+	color: var(--theme-button-ghost-text);
+	@apply focus-visible:ring-primary-600 focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.button--ghost:hover {
+	background: var(--theme-button-ghost-hover-background);
+	color: var(--theme-button-ghost-hover-text);
+}

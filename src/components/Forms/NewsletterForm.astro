@@ -1,0 +1,28 @@
+---
+// components
+import Button from "@components/Button/Button.astro";
+
+interface Props {
+	name: string; // name for your form, like "hero-newsletter". It is used for the various id's
+	class?: string; // classes for the form
+	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { name, class: className, ...rest } = Astro.props as Props;
+---
+
+<form id={`${name}-form`} name={`${name}-form`} class:list={["flex gap-2", className]} {...rest}>
+	<label for={`${name}-email`} class="description sr-only mb-1 text-base-100">*Email</label>
+	<input
+		type="email"
+		class="form__input w-full"
+		name="email"
+		id={`${name}-email`}
+		inputmode="email"
+		placeholder="Email"
+		required
+	/>
+	<div class="z-10">
+		<Button variant="primary" type="submit">Subscribe</Button>
+	</div>
+</form>

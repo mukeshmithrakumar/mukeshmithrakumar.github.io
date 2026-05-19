@@ -1,0 +1,97 @@
+---
+// components
+import NavLink from "@components/Nav/NavLink.astro";
+import NavDropdown from "@components/Nav/NavDropdown.astro";
+import MobileNav from "@components/Nav/MobileNav/MobileNav.astro";
+import SiteLogo from "@components/SiteLogo/SiteLogo.astro";
+import Button from "@components/Button/Button.astro";
+
+// data
+import navData from "@config/navData.json";
+// console.log(JSON.stringify(navData, null, 2));
+---
+
+<div
+	id="nav__container"
+	class="fixed top-0 left-0 z-30 flex w-full flex-col py-1 duration-500"
+	transition:name={`nav`}
+>
+	<div class="mx-auto flex w-full">
+		<div class="theme-nav-inner site-container flex h-16 w-full items-center">
+			<header class="theme-nav-header flex w-full items-center gap-2">
+				<!-- home button / image -->
+				<div class="flex flex-auto justify-start">
+					<SiteLogo />
+				</div>
+
+				<!-- desktop nav menu -->
+				<div class="flex flex-auto justify-end">
+					<nav class="hidden md:block">
+						<ul class="flex h-fit items-center px-4">
+							{
+								// if dropdown exists, setup the dropdown, otherwise it is just a link
+								navData.map((navItem) =>
+									"dropdown" in navItem ? (
+										// non-mobile dropdown menu
+										<NavDropdown navItem={navItem} />
+									) : (
+										// normal nav link
+										<NavLink {navItem} />
+									),
+								)
+							}
+						</ul>
+					</nav>
+					<Button variant="primary" class="my-auto hidden md:block" href="/contact/">
+						Contact
+					</Button>
+
+					<!-- mobile nav menu, only load on small screens where it is visible -->
+					<div class="md:hidden">
+						<MobileNav />
+					</div>
+				</div>
+			</header>
+		</div>
+	</div>
+</div>
+
+<script>
+	/* When the user scrolls down, hide the navbar. When the user scrolls up a bit, show the navbar */
+	const initNavbar = () => {
+		const navbar = document.getElementById("nav__container") as HTMLInputElement;
+
+		if (navbar !== null) {
+			let prevScrollpos = window.scrollY;
+			let scrollUpDistance = 0;
+			let scrollDownDistance = 0;
+			const scrollHandler = () => {
+				const currentScrollPos = window.scrollY;
+
+				if (prevScrollpos > currentScrollPos) {
+					scrollDownDistance = 0;
+					scrollUpDistance = scrollUpDistance + prevScrollpos - currentScrollPos;
+					// only show the navbar if we've scrolled up a little bit. debouncing
+					if (scrollUpDistance > 50) {
+						navbar.style.top = "0px";
+					}
+				} else {
+					scrollUpDistance = 0;
+					scrollDownDistance = scrollDownDistance + currentScrollPos - prevScrollpos;
+					// only hide the navbar if we've scrolled down a little bit. debouncing
+					if (scrollDownDistance > 50) {
+						navbar.style.top = "-70px";
+					}
+				}
+				prevScrollpos = currentScrollPos;
+			};
+
+			// Add passive event listener for better performance
+			window.addEventListener("scroll", scrollHandler, { passive: true });
+		}
+	};
+
+	initNavbar();
+
+	document.addEventListener("astro:after-swap", initNavbar);
+</script>

@@ -1,0 +1,285 @@
+---
+interface Props {
+	title: string;
+	url: string;
+	eyebrow?: string;
+	description?: string;
+	reactionsLabel?: string;
+	storageNamespace?: string;
+}
+
+const {
+	title,
+	url,
+	eyebrow = "Enjoyed this post?",
+	description = "Leave a quick reaction or share it with someone who might find it useful.",
+	reactionsLabel = "Post reactions",
+	storageNamespace = "blog-reactions",
+} = Astro.props as Props;
+
+const reactions = [
+	{ key: "like", emoji: "👍", label: "Helpful" },
+	{ key: "love", emoji: "❤️", label: "Loved it" },
+	{ key: "fire", emoji: "🔥", label: "Sharp take" },
+	{ key: "mind", emoji: "🤯", label: "Mind blown" },
+];
+---
+
+<section
+	class="theme-divider mt-16 flex flex-col items-center gap-5 border-t pt-10 text-center"
+	data-engagement-root
+	data-engagement-url={url}
+	data-engagement-title={title}
+	data-engagement-storage-namespace={storageNamespace}
+>
+	<div class="space-y-2">
+		<p class="text-base-400 text-sm tracking-[0.2em] uppercase">{eyebrow}</p>
+		<p class="text-foreground/65 max-w-md text-sm">{description}</p>
+	</div>
+
+	<div class="flex flex-wrap justify-center gap-3" role="group" aria-label={reactionsLabel}>
+		{
+			reactions.map((reaction) => (
+				<button
+					type="button"
+					class="engagement-reaction theme-interactive group text-foreground/85 hover:text-foreground focus-visible:ring-primary-600 relative inline-flex items-center gap-2 overflow-hidden rounded-full border px-4 py-2 text-sm transition-all duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+					data-reaction-button
+					data-reaction-key={reaction.key}
+					aria-pressed="false"
+				>
+					<span class="text-base leading-none transition-transform duration-200 group-hover:scale-110">
+						{reaction.emoji}
+					</span>
+					<span>{reaction.label}</span>
+					<span class="engagement-reaction__burst" aria-hidden="true" />
+				</button>
+			))
+		}
+	</div>
+
+	<div class="flex flex-wrap justify-center gap-3">
+		<button type="button" class="button button--outline text-sm" data-engagement-share>
+			Share
+		</button>
+		<button type="button" class="button button--ghost text-sm" data-engagement-copy>
+			Copy link
+		</button>
+	</div>
+
+	<p class="text-base-400 min-h-[1.25rem] text-sm" aria-live="polite" data-engagement-status></p>
+</section>
+
+<script>
+	function initBlogEngagement() {
+		document.querySelectorAll("[data-engagement-root]").forEach((root) => {
+			if (!(root instanceof HTMLElement) || root.dataset.engagementBound === "true") return;
+
+			root.dataset.engagementBound = "true";
+
+			const url = root.dataset.engagementUrl ?? window.location.href;
+			const title = root.dataset.engagementTitle ?? document.title;
+			const shareButton = root.querySelector("[data-engagement-share]");
+			const copyButton = root.querySelector("[data-engagement-copy]");
+			const status = root.querySelector("[data-engagement-status]");
+			const reactionButtons = root.querySelectorAll("[data-reaction-button]");
+			const storageNamespace = root.dataset.engagementStorageNamespace ?? "blog-reactions";
+			const storageKey = `${storageNamespace}:${url}`;
+
+			if (!(status instanceof HTMLElement)) return;
+
+			let statusTimer;
+
+			const setStatus = (message) => {
+				window.clearTimeout(statusTimer);
+				status.textContent = message;
+				statusTimer = window.setTimeout(() => {
+					status.textContent = "";
+				}, 1800);
+			};
+
+			const readReactionState = () => {
+				try {
+					const raw = window.localStorage.getItem(storageKey);
+					if (!raw) return [];
+
+					const parsed = JSON.parse(raw);
+					return Array.isArray(parsed) ? parsed : [];
+				} catch {
+					return [];
+				}
+			};
+
+			const writeReactionState = (activeReactions) => {
+				try {
+					window.localStorage.setItem(storageKey, JSON.stringify(activeReactions));
+				} catch {
+					// Ignore storage failures and keep the UI working in-memory.
+				}
+			};
+
+			const syncButtons = (activeReactions) => {
+				reactionButtons.forEach((button) => {
+					if (!(button instanceof HTMLButtonElement)) return;
+
+					const key = button.dataset.reactionKey;
+					const isActive = typeof key === "string" && activeReactions.includes(key);
+					button.setAttribute("aria-pressed", String(isActive));
+					button.classList.toggle("engagement-reaction--active", isActive);
+				});
+			};
+
+			let activeReactions = readReactionState();
+			syncButtons(activeReactions);
+
+			reactionButtons.forEach((button) => {
+				if (!(button instanceof HTMLButtonElement)) return;
+
+				button.addEventListener("click", () => {
+					const key = button.dataset.reactionKey;
+					if (!key) return;
+
+					const isActive = activeReactions.includes(key);
+					activeReactions = isActive
+						? activeReactions.filter((item) => item !== key)
+						: [...activeReactions, key];
+
+					writeReactionState(activeReactions);
+					syncButtons(activeReactions);
+
+					button.classList.remove("engagement-reaction--pop");
+					void button.offsetWidth;
+					button.classList.add("engagement-reaction--pop");
+
+					window.setTimeout(() => {
+						button.classList.remove("engagement-reaction--pop");
+					}, 360);
+
+					setStatus(isActive ? "Reaction removed." : "Reaction saved.");
+				});
+			});
+
+			if (shareButton instanceof HTMLButtonElement) {
+				if (!("share" in navigator)) {
+					shareButton.disabled = true;
+					shareButton.title = "Native sharing is not available in this browser.";
+				}
+
+				shareButton.addEventListener("click", async () => {
+					if (!("share" in navigator)) return;
+
+					try {
+						await navigator.share({ title, url });
+						setStatus("Ready to share.");
+					} catch (error) {
+						if (error instanceof DOMException && error.name === "AbortError") return;
+						setStatus("Share failed. You can still copy the link.");
+					}
+				});
+			}
+
+			if (copyButton instanceof HTMLButtonElement) {
+				copyButton.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(url);
+						setStatus("Link copied.");
+					} catch {
+						setStatus("Copy failed.");
+					}
+				});
+			}
+		});
+	}
+
+	initBlogEngagement();
+	document.addEventListener("astro:page-load", initBlogEngagement);
+</script>
+
+<style>
+	.engagement-reaction--active {
+		border-color: var(--color-primary-600);
+		background-color: color-mix(in srgb, var(--color-base-900) 70%, var(--color-primary-600) 30%);
+		color: var(--color-foreground);
+		box-shadow:
+			0 0 0 1px rgb(0 0 0 / 0.1),
+			0 10px 24px rgb(0 0 0 / 0.2);
+	}
+
+	.engagement-reaction__burst {
+		position: absolute;
+		inset: 50% auto auto 50%;
+		width: 0.5rem;
+		height: 0.5rem;
+		border-radius: 9999px;
+		background: color-mix(in srgb, var(--color-primary-500) 65%, white 35%);
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.2);
+		pointer-events: none;
+		box-shadow:
+			0 -18px 0 -3px color-mix(in srgb, var(--color-primary-500) 70%, white 30%),
+			13px -13px 0 -3px color-mix(in srgb, var(--color-primary-500) 65%, white 35%),
+			18px 0 0 -3px color-mix(in srgb, var(--color-primary-500) 70%, white 30%),
+			13px 13px 0 -3px color-mix(in srgb, var(--color-primary-500) 65%, white 35%),
+			0 18px 0 -3px color-mix(in srgb, var(--color-primary-500) 70%, white 30%),
+			-13px 13px 0 -3px color-mix(in srgb, var(--color-primary-500) 65%, white 35%),
+			-18px 0 0 -3px color-mix(in srgb, var(--color-primary-500) 70%, white 30%),
+			-13px -13px 0 -3px color-mix(in srgb, var(--color-primary-500) 65%, white 35%);
+	}
+
+	.engagement-reaction--pop {
+		animation: engagementReactionPop 0.36s ease-out;
+	}
+
+	.engagement-reaction--pop .engagement-reaction__burst {
+		animation: engagementReactionBurst 0.36s ease-out;
+	}
+
+	@keyframes engagementReactionPop {
+		0% {
+			transform: scale(1);
+		}
+
+		40% {
+			transform: scale(1.14);
+		}
+
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	@keyframes engagementReactionBurst {
+		0% {
+			opacity: 0;
+			transform: translate(-50%, -50%) scale(0.2);
+		}
+
+		30% {
+			opacity: 1;
+		}
+
+		100% {
+			opacity: 0;
+			transform: translate(-50%, -50%) scale(1.2);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.engagement-reaction--pop,
+		.engagement-reaction--pop .engagement-reaction__burst {
+			animation: none;
+		}
+	}
+
+	:global(.light) .engagement-reaction:hover {
+		border-color: var(--color-primary-600);
+		background: rgb(220 252 231 / 0.68);
+	}
+
+	:global(.light) .engagement-reaction--active {
+		background-color: color-mix(in srgb, rgb(220 252 231) 72%, var(--color-primary-300) 28%);
+		color: #14532d;
+		box-shadow:
+			0 0 0 1px rgb(0 0 0 / 0.06),
+			0 10px 24px rgb(34 197 94 / 0.1);
+	}
+</style>

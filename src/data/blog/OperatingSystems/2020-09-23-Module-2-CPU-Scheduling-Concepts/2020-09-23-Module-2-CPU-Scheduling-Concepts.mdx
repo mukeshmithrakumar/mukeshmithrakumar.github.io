@@ -1,0 +1,287 @@
+---
+title: "Module 2: CPU Scheduling Concepts"
+slug: cpu-scheduling-concepts
+description: ""
+draft: true
+authors:
+  - mithraics
+pubDate: 2020-09-23
+updatedDate: 2026-04-20
+heroImage: ./heroImage.png
+tags:
+  - OS
+---
+
+### Introduction
+
+CPU scheduling is a process which allows one process to use the CPU while the eecution of another process is on hold
+(in waiting state) due to unavailability of any resource like I/O etc, thereby making full use of CPU. The aim of CPU
+scheduling is to make the system efficient.
+
+Whenever the CPU becomes idle, the operating system must select one of the processes in the ready queue to be executed.
+The selection process is carried out by the CPU scheduler. The scheduler selects from among the process in memory
+that are ready to execute, and allocates the CPU to one of them.
+
+By the end of this module, you will be able to:
+- Define process in an OS
+- Define concurrent and sequential process execution
+- Describe the mechanism of context switching between processes
+- Define CPU bound and I/O bound process
+- Describe the different states of a process
+- Write the differences between pre-emptive and non-pre-emptive scheduling
+- Describe the factors involved in selecting the time quanta in pre-emptive scheduling
+- Describe different scheduling algorithms
+- Draw Gantt charts to represent the CPU schedule for a given set of processes and a given scheduling algorithm
+- Define the metrics used to compare different CPU scheduling techniques
+- Describe time sharing of CPU and I/O devices between processes
+
+### What are processes in OS?
+
+Processes and Programs are orthogonal concepts where processes are active whereas programs are passive (static).
+Process is the act of executing a program whereas programs are just stored in files.
+
+A program can be run by many processes. A process can run many programs. A program can generate processes.
+Process takes programs written in high level language and converts it to machine language. This sounds like a compiler,
+but compiler isn't the only thing you need to convert high level code into machine language. Compilers can't convert
+function calls to binary, this is because the program is not in memory.
+
+Whenever a compiler comes to a line where there is a function, the compiler needs to convert that call
+to some memory address but the compiler doesn't know that so it keeps a relative reference for that function.
+A relative reference is just a tag and it says here is a relative reference tag and somebody needs to figure out where
+the function is put the address of the function there.
+
+The second type of tags the compiler keeps are library functions, these tags are called symbolic reference. The symbolic
+reference is for code that is not written in your file, it is written in some library.
+
+The output of the compiler is a mixture of binary and tags, this is an object file (.o).
+
+The somebody that comes to resolves the tags are called the _linker_. The linker uses a relocation table.
+The symbolic references and relative references are combined into the relocation table. The relocation table says which
+line of code needs modification and the linker uses the object file and the relocation table to convert those lines to
+binary.
+
+How does a Linker work?
+
+Before converting the tags into binary, the linker gives memory addresses to lines of code. The linker is responsible for
+two things, symbolic references and relative references. When it reaches a relative reference, it knows the code is
+converted to binary so it goes to the line where the function is already converted into binary and takes the relative address
+and puts it into the relative reference tag. For symbolic references, it has to use the relocation table to figure out
+which functions are called and find the functions that needs to be converted, and convert it into binary and replaces
+the symbolic tag reference with the relative address. In addition the linker creates a symbol table, a table which tells
+which lines of codes needs modifications. The output of a linker can't be run because it doesn't have physical
+addresses. Since this output has relative addresses, you need a way to convert the relative address to physical address
+using symbol tables. The symbol table keeps track of which lines were changed to relative addresses, which was tags before.
+
+The somebody who converts the relative address to physical address using symbol tables is the _loader_. The output of a
+linker is an .exe file and the loader takes the .exe file and it invokes the memory management unit. Gets some physical
+memory, stores the program into physical memory, updates all the relative address. Then it uses the symbol table and
+finds the functions that needs modifications and for each function call it converts the relative address into physical
+address. This is now ready to execute but you can't execute it yet. In order to execute, you need to start a process.
+
+A process has a lot of registers, like program counter, status register, stack and heap and someone needs to allocate
+values to these registers and the entity that allocates these values is called the process.
+
+- C program -> compiler -> object code (partial machine language)
+- System libraries + object code -> linker -> executable file
+- A process starts a program
+    - OS creates a process
+        - Mem space, stack, heap allocation
+    - loads the executable
+    - Loads PC with start address of main()
+
+This is the process of converting a static program into dynamic program.
+
+A process has different states:
+- initial: all the registers (stack, heap, etc) are getting decided upon. The OS is notified that we want to create a process.
+- ready: The process is waiting to be run. Somebody takes the process ready to be run and run it, this is the CPU scheduler.
+- run: execution of the process.
+- After run, the first thing that can happen is, the process ends and goes to the exit state.
+- Two it can wait until it gets some input an when it does it goes to the ready state.
+- Third thing is a process can be sent to a pre-emptive state because the process got stopped by the CPU scheduler for some reason.
+
+### What is the mechanism of context switching between processes
+
+What and How much does a process need to run?
+
+Program Uses:
+    1. Global Data
+    2. Code
+    3. Stack: is used for function frames that is helpful for invoking functions and storing local variables,
+    stack pointers, instruction pointers etc.
+    4. Heap: Dynamic memory allocation, in C language this is pointers (malloc())
+
+These four things need memory. Global data and Code need static memory because you know the amount of memory needed
+beforehand. Whereas Stack and Heap are dynamic memory because depending on different inputs to the program, these
+change.
+
+In the beginning of a process that runs a program, it allocates fixed memory for global data, code and stack and heap.
+If you need more data for stack and heap, you need to make system calls.
+
+Some of the other information that needs to be stored:
+- Since stack and heap are allocated in the same memory block, you need to know where one begins and where one ends.
+A _stack pointer_ points to the end of the stack. A _heap pointer_ starts right below the code.
+- A program counter is the address of the next instruction the CPU needs to run in order to execute the program.
+This program counter is stored in a special register called _instruction pointer_ (eip)
+- The status register is needed to change mode.
+- Base and Bound is needed to do memory protection so there needs to be a CPU register that takes the base value, this
+register is called the base register (ebp) -> _base pointer_.
+
+We don't run one process at a time and we don't let one process run the entire time so we switch process and while we
+switch we need to make sure we don't lose the above values. And we need to store it in memory which can't be written
+by any program. So the data structure we use to store all these information is called a _Process Control Block_.
+
+What is a Process Control Block?
+
+The PCB stores all the necessary information (memory state) for running a process in ready state.
+PCB is stored in the Kernel data structure.
+Info stored in PCB:
+    - Memory Image (data, stack, code, heap)
+    - CPU Registers (Program Counter, Stack Pointer)
+    - OS info about Process (Process ID, priority, etc)
+
+PCB helps in switching between two process.
+
+How to switch between two processes?
+
+Both the processes should be in the ready state. For example to cause a switch from process A to B. You move process A
+from run to ready and then move process B from ready to run state. Context switching is nothing but an interrupt.
+This is another important function of interrupt. Since interrupt tracks time, we can use that to do context switching.
+When a process is running, we run a timer in parallel and we can write a software interrupt when the interrupt reaches
+a specific time, we can invoke a service routine, that is the context switch service routine and after context switch
+exits, the CPU will be in process B.
+
+![Context Switching Example](./20200923b.PNG)
+
+But how process B?
+This happens because the program counter has the instruction pointer of B. Only then will it execute Process B.
+This happens because the context switch is manipulating the stack pointer.
+
+### What is concurrent and sequential process execution?
+
+Since there are multiple processes, you can't have a single state representing all the processes so what you have is a
+queue. The OS has different types of multiple queues.
+
+Scheduling queues corresponds to CPU states. There are:
+    - New queues
+    - Ready queues
+    - Run queue
+    - Wait queue
+for the respecting New, Ready, Run and Wait CPU states.
+
+For each input output device there is a separate queue. All the states except run can have multiple processes because
+they have multiple queues, hence the run queue is a uni processor system (you can have multi process system
+for the run state but in this course we only talk about uni processor system). In Uni processor system you can still run
+multi processors at the same time, this is called _concurrent execution_ as opposed to parallel execution.
+The essence of concurrent execution is there is only one process in the run queue and you have to time share the run
+queue.
+
+### What is CPU bound and I/O bound process
+
+A process has two types of bursts:
+- CPU: is a collection of CPU cycles
+- I/O: time spent doing input output.
+
+There are certain restrictions on what we call a process.
+- Process consists of CPU and I/O bursts
+- Should always start and end with a CPU burst.
+
+During an I/O burst the CPU is idle so you can run another process. There are two types of processes depending on the
+relative time of CPU and I/O burst.
+- CPU total time >> I/O total time -> CPU Bound
+- CPU total time \<< I/O total time -> I/O Bound
+
+### What are the differences between pre-emptive and non-pre-emptive scheduling
+
+The Run state can transition into an exit state, a wait state or preempt to the ready state.
+
+When the process exits after run:
+- it has to free up unused memory
+- clean the stack.
+
+Based on whether there is preempt or not, there are two types of CPU Schedulers
+1. Non pre-emptive scheduler: Used more commonly in embedded computing systems.
+2. Pre-emptive scheduler: is the general purpose scheduler.
+
+In non pre-emptive scheduler the CPU scheduler can't stop the process while it is running while in pre-emptive
+you can stop the process.
+
+The Non Pre-emptive scheduling has two inefficiencies:
+- System idle time
+- Process wait time.
+
+These are quantifiable metrics. This can be used to compare different scheduling algorithms.
+
+(Does a CPU know the CPU burst and I/O burst time of a process before hand? If not, would knowing these help in
+optimizing the scheduling algorithm?)
+
+In Pre-emptive scheduling during regular processor, the CPU will stop the process, let the other process go and come
+back. So there has to be a particular time interval after which the CPU will stop a process, this is called
+_Time Quanta_.
+
+### What are the factors involved in selecting the time quanta in pre-emptive scheduling
+
+Time quanta is often also called _Timer resolution_. Different computing systems provide different timer resolutions.
+
+The way the context switching works is by let's say you have a time quanta tau and for a process when it reaches
+time tau, the CPU moves the process to ready queue and switches to another process and when this process reaches
+time tau, this is moved to ready queue, so on and so forth.
+
+### Describe time sharing of CPU and I/O devices between processes
+
+But how do we chose this tau value and use this concept for scheduling?
+
+There is no scheduling for I/O burst. So if a CPU burst ends, the process A will be moved to the wait queue until
+the end of the I/O burst. During which time the other process B can be called repeatedly every tau (seconds) until
+process A I/O burst ends.
+
+### What are the metrics used to compare different CPU scheduling techniques
+
+Some scheduling metrics definitions are as below:
+- _CPU Utilization_: Total CPU busy time/total time = (total time - idle time)/total time.
+- _Turnaround time_: Average time for a program to finish (includes call delays)
+- _Waiting time_: The sum of the time spent in the ready queue during the life of the process.
+Time blocked, waiting for I/O, is not part of the waiting time.
+- _Response time_: The time from first submission of the process until the first running.
+- _Throughput:_ The number of processes that are completed per time unit.
+- _Service time_: The amount of CPU time that a process will need before it either finishes or voluntarily
+exits the CPU, such as to wait for input / output.
+
+![scheduling metrics calculation example](./20200923c.PNG)
+
+The chart that shows the processes in a time line is called the _Gantt Chart_.
+
+### Give some examples of different scheduling algorithms.
+
+What is a scheduling algorithm?
+- Deterministic set of steps that decide which process to take from ready queue and transfer to run queue. For example:
+First in First Out and Shortest Job First.
+
+A simplified definition of process is that it only has CPU bursts.
+
+We can use Turn around time to evaluate different scheduling algorithms.
+
+Shortest Job First: algorithm arranges the processes in increasing order of CPU bursts and takes the first shortest
+process and schedules it. There aren't a better algorithm than the shortest job first (SJF).
+
+Shortest Job First isn't practically implemented because you don't have prior knowledge on future processes to arrange
+them. Second, you don't know how much time a particular process takes. __(This can be an AI research topic, basically an AI optimizer trained on CPU burst times on different CPUs with different cores, try to predict the process time to do shortest job first)__ Hence you implement a
+variant of SJF. you use an estimated CPU burst time and arrange it in increasing order and when you get new jobs,
+you re-sort and schedule.
+
+There are problems with this strategy, for example if you have a lot of short jobs and
+one large job and short jobs keep coming and you resort it everytime it does, the long job will always be at the end
+and this can continue for a infinitely long time. This is called _starvation_.
+
+One of the ways to alleviate starvation is to use the aging technique which has a priority for every job and you
+can have different levels of priority. When a job comes in you assign zero priority and then assign a wait time and
+if the wait time crosses a threshold, you increase the priority. So you schedule the high priority task regardless of
+the CPU burst time.
+
+_Optimality_ metric is a metric you can use to quantify how good a particular algorithm with respect to the best (SJF).
+It is defined as: optimality = turn around time for Algorithm X / turn around time for SJF .
+You can also use any metric besides turn around.
+
+### Draw Gantt charts to represent the CPU schedule for a given set of processes and a given scheduling algorithm
+
+(Do an example or exercise and calculate all the scheduling metrics)
+

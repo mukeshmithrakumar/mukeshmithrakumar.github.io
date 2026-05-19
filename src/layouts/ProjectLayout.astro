@@ -1,0 +1,145 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+import BaseLayout from "./BaseLayout.astro";
+import BlogEngagement from "@components/BlogEngagement/BlogEngagement.astro";
+import Button from "@components/Button/Button.astro";
+import ProjectDeepDives from "@components/ProjectDeepDives/ProjectDeepDives.astro";
+import ProjectPagination from "@components/ProjectPagination/ProjectPagination.astro";
+import TableOfContents from "@components/TableOfContents/TableOfContents.astro";
+import { formatDate, getReadingTimeText } from "@js/textUtils";
+import { getProjectUrl } from "@js/projectUtils";
+
+interface Props {
+	project: CollectionEntry<"projects">;
+	headings: import("astro").MarkdownHeading[];
+	deepDivePosts?: CollectionEntry<"blog">[];
+	previousProject?: CollectionEntry<"projects">;
+	nextProject?: CollectionEntry<"projects">;
+}
+
+const {
+	project,
+	headings,
+	deepDivePosts = [],
+	previousProject,
+	nextProject,
+} = Astro.props as Props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	projectUrl,
+	repoUrl,
+	client,
+	role,
+	year,
+} = project.data;
+const readTimeText = getReadingTimeText(project.body);
+const metaItems = [client, role, String(year), readTimeText].filter(Boolean);
+const shareUrl = new URL(getProjectUrl(project), Astro.site).toString();
+const hasDeepDivePosts = deepDivePosts.length > 0;
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+	<article class="site-container pt-36 md:pt-44">
+		<div class="flex w-full flex-col items-center">
+			<div class="mx-auto flex w-full max-w-[800px]">
+				<div class="mx-auto text-center">
+					<p class="description">{formatDate(pubDate)}</p>
+					<h1 class="h1 mt-8">{title}</h1>
+					<div class="mt-6 flex flex-wrap justify-center gap-3 text-sm uppercase tracking-[0.14em] text-base-700">
+						{
+							metaItems.map((item, index) => (
+								<>
+									{index > 0 && <span aria-hidden="true">&middot;</span>}
+									<span>{item}</span>
+								</>
+							))
+						}
+					</div>
+					<p class="mt-6 text-base font-medium text-primary-700">{description}</p>
+					{(projectUrl || repoUrl) && (
+						<div class="mt-8 flex flex-wrap justify-center gap-4">
+							{projectUrl && (
+								<Button href={projectUrl} target="_blank" rel="noopener noreferrer" arrow="right">
+									View Project
+								</Button>
+							)}
+							{repoUrl && (
+								<Button
+									variant="outline"
+									href={repoUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+									arrow="right"
+								>
+									View Repository
+								</Button>
+							)}
+						</div>
+					)}
+				</div>
+			</div>
+
+			<div class="mt-6 overflow-hidden">
+				<Image
+					src={heroImage}
+					alt={`Cover for ${title}`}
+					width={2000}
+					quality="high"
+					class="max-h-[70vh] object-cover"
+					loading="eager"
+					format="webp"
+				/>
+			</div>
+		</div>
+
+		<div class="mt-10 w-full">
+			<div class="mx-auto flex max-w-2xl flex-col gap-10 lg:grid lg:max-w-none lg:grid-cols-3">
+				<div class="text-base-content text-base lg:col-span-2 lg:col-start-1">
+					{
+						updatedDate && (
+							<div class="mb-6 italic">
+								<time datetime={updatedDate.toISOString()}>Updated: {formatDate(updatedDate)}</time>
+							</div>
+						)
+					}
+					<section id="project-content" class="markdown-content mx-auto lg:ml-0">
+						<slot />
+					</section>
+
+					<ProjectDeepDives posts={deepDivePosts} />
+					{
+						hasDeepDivePosts && (
+							<BlogEngagement
+								title={title}
+								url={shareUrl}
+								eyebrow="Enjoyed this project?"
+								description="Leave a quick reaction or share this project with someone who might find the work useful."
+								reactionsLabel="Project reactions"
+								storageNamespace="project-reactions"
+							/>
+						)
+					}
+					<ProjectPagination previousProject={previousProject} nextProject={nextProject} />
+
+					<div class="mt-16 flex">
+						<Button variant="outline" href="/projects/" arrow="left"> Back to all projects </Button>
+					</div>
+				</div>
+
+				<aside class="hidden lg:block">
+					<div class="sticky top-20">
+						<div class="h-[calc(100vh-6rem)] overflow-y-auto">
+							<TableOfContents headings={headings} levels={3} />
+						</div>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</article>
+</BaseLayout>

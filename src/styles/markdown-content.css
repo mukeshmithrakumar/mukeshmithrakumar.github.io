@@ -1,0 +1,411 @@
+/**
+ * * general styling for any markdown rendered content
+ * 
+ * Apply styling with the "markdown-content " class
+ * Cancel out the styling with the "not-content" class
+ */
+
+.markdown-content :not(:where(.not-content *)) {
+	line-height: 1.65;
+}
+
+/* text coloring for most items */
+.markdown-content
+	:not(pre *, .admonition *, details *, blockquote *, span, a, h1, h2, h3, h4, h5, h6):not(
+		:where(.not-content *)
+	) {
+	@apply text-foreground/80;
+}
+
+/* paragraph spacing except for paragraphs inside list items */
+.markdown-content p:not(li p):not(:where(.not-content *)) {
+	@apply mt-4;
+}
+
+/* Headings after non-headings have more spacing. */
+.markdown-content
+	:not(h1, h2, h3, h4, h5, h6)
+	+ :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+	@apply mt-10 mb-4;
+}
+
+.markdown-content :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
+	@apply text-foreground/95 mt-2 mb-4 text-base leading-normal;
+}
+
+.markdown-content h1:not(:where(.not-content *)) {
+	@apply text-3xl font-semibold md:text-4xl;
+}
+.markdown-content h2:not(:where(.not-content *)) {
+	@apply text-2xl font-semibold md:text-3xl;
+}
+.markdown-content h3:not(:where(.not-content *)) {
+	@apply text-xl font-semibold md:text-2xl;
+}
+.markdown-content h4:not(:where(.not-content *)) {
+	@apply text-lg font-semibold md:text-xl;
+}
+.markdown-content h5:not(:where(.not-content *)) {
+	@apply text-foreground/80 font-semibold md:text-lg;
+}
+.markdown-content h6:not(:where(.not-content *)) {
+	@apply text-foreground/80 font-semibold md:text-lg;
+}
+
+/* anchor tags */
+.markdown-content a:not(:where(.not-content *)) {
+	@apply text-foreground/95 decoration-primary-500 dark:decoration-primary-600 hover:text-primary-500 dark:hover:text-primary-600 font-medium underline underline-offset-3 transition-colors;
+}
+
+/* code */
+.markdown-content code:not(:where(.not-content *)) {
+	@apply rounded-none border-2 border-solid px-0.5 py-0 font-mono;
+	background: var(--theme-inline-code-background);
+	border-color: var(--theme-inline-code-border);
+	color: var(--theme-inline-code-text);
+}
+.markdown-content :is(h1, h2, h3, h4, h5, h6) code {
+	@apply text-inherit;
+}
+
+/* code block styling */
+.markdown-content .expressive-code:not(:where(.not-content *)) {
+	@apply relative mt-4;
+	--ec-frm-inlBtnFg: var(--color-primary-400);
+	--ec-frm-inlBtnBg: var(--color-base-900);
+	--ec-frm-inlBtnBrd: var(--color-primary-600);
+	--ec-frm-inlBtnBgHoverOrFocusOpa: 0.9;
+	--ec-frm-inlBtnBgActOpa: 0.95;
+}
+
+.markdown-content pre:not(:where(.not-content *)) {
+	@apply my-4 rounded-lg px-4 py-3;
+	tab-size: 2;
+	&::-webkit-scrollbar {
+		@apply h-1.5;
+	}
+	&::-webkit-scrollbar-track {
+		@apply mx-1.5 bg-transparent;
+	}
+	&::-webkit-scrollbar-thumb {
+		@apply bg-base-600 rounded-full;
+	}
+	&::-webkit-scrollbar-thumb:hover {
+		@apply bg-base-500;
+	}
+}
+
+.markdown-content .math-block .copy {
+	@apply absolute z-10;
+	inset-block-start: calc(var(--ec-brdWd) + 0.4rem);
+	inset-inline-end: calc(var(--ec-brdWd) + var(--ec-uiPadInl) / 2);
+	display: flex;
+	gap: 0.25rem;
+	flex-direction: row;
+	direction: ltr;
+	unicode-bidi: isolate;
+}
+
+.markdown-content .math-block .copy button {
+	@apply relative opacity-75;
+	align-self: flex-end;
+	margin: 0;
+	padding: 0;
+	border: none;
+	border-radius: 0.2rem;
+	z-index: 1;
+	cursor: pointer;
+	transition-property: opacity, background, border-color;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	width: 2rem;
+	height: 2rem;
+	background: transparent;
+}
+
+.markdown-content .math-block:hover .copy button,
+.markdown-content .math-block:focus-within .copy button {
+	@apply opacity-100;
+}
+
+.markdown-content .math-block .copy button div {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: var(--theme-copy-button-background);
+	opacity: 0;
+	transition-property: inherit;
+	transition-duration: inherit;
+	transition-timing-function: inherit;
+}
+
+.markdown-content .math-block .copy button::before {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	inset: 0;
+	border-radius: inherit;
+	border: var(--ec-brdWd) solid var(--color-primary-600);
+	opacity: 0.4;
+}
+
+.markdown-content .math-block .copy button::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	inset: 0;
+	background-color: var(--color-primary-400);
+	-webkit-mask-image: var(--ec-frm-copyIcon);
+	-webkit-mask-repeat: no-repeat;
+	mask-image: var(--ec-frm-copyIcon);
+	mask-repeat: no-repeat;
+	margin: 0.475rem;
+	line-height: 0;
+}
+
+.markdown-content .math-block .copy button:hover,
+.markdown-content .math-block .copy button:focus-visible {
+	@apply outline-none;
+	box-shadow: 0 0 0 2px var(--color-primary-600);
+}
+
+.markdown-content .math-block .copy button:hover div,
+.markdown-content .math-block .copy button:focus-visible div {
+	opacity: 0.9;
+}
+
+.markdown-content .math-block .copy .feedback {
+	--tooltip-arrow-size: 0.35rem;
+	--tooltip-bg: #098656;
+	color: white;
+	pointer-events: none;
+	user-select: none;
+	-webkit-user-select: none;
+	position: relative;
+	align-self: center;
+	background-color: var(--tooltip-bg);
+	z-index: 99;
+	padding: 0.125rem 0.75rem;
+	border-radius: 0.2rem;
+	margin-inline-end: var(--tooltip-arrow-size);
+	opacity: 0;
+	visibility: hidden;
+	transition-property: opacity, transform;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transform: translate3d(0, 0.25rem, 0);
+	white-space: nowrap;
+}
+
+.markdown-content .math-block .copy .feedback::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	top: calc(50% - var(--tooltip-arrow-size));
+	inset-inline-end: calc(-2 * (var(--tooltip-arrow-size) - 0.5px));
+	border: var(--tooltip-arrow-size) solid transparent;
+	border-inline-start-color: var(--tooltip-bg);
+}
+
+.markdown-content .math-block .copy .feedback.show {
+	opacity: 1;
+	visibility: visible;
+	transform: translate3d(0, 0, 0);
+}
+
+.markdown-content .math-block .copy .feedback[data-state="error"] {
+	--tooltip-bg: #7f1d1d;
+}
+
+@media (hover: hover) {
+	.markdown-content .math-block .copy button {
+		opacity: 0;
+	}
+
+	.markdown-content .math-block:hover .copy button:not(:hover),
+	.markdown-content .math-block:focus-within .copy button:not(:hover),
+	.markdown-content .math-block .copy .feedback.show ~ button:not(:hover) {
+		opacity: 0.75;
+	}
+}
+
+.markdown-content .expressive-code .copy button {
+	@apply rounded-md transition-shadow;
+}
+
+.markdown-content .expressive-code .copy button:hover,
+.markdown-content .expressive-code .copy button:focus-visible {
+	@apply outline-none;
+	box-shadow: 0 0 0 2px var(--color-primary-600);
+}
+
+.markdown-content .math-block {
+	@apply relative my-4 overflow-visible rounded-lg border px-4 py-6;
+	border-color: var(--theme-math-border);
+	background: var(--theme-math-background);
+	box-shadow: var(--theme-math-shadow);
+	--ec-brdWd: 1.5px;
+	--ec-uiPadInl: 1rem;
+	--ec-frm-copyIcon: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'1.75'%3E%3Cpath%20d%3D'M3%2019a2%202%200%200%201-1-2V2a2%202%200%200%201%201-1h13a2%202%200%200%201%202%201'%2F%3E%3Crect%20x%3D'6'%20y%3D'5'%20width%3D'16'%20height%3D'18'%20rx%3D'1.5'%20ry%3D'1.5'%2F%3E%3C%2Fsvg%3E");
+}
+
+.markdown-content .math-block .katex-display {
+	@apply m-0 block overflow-x-auto overflow-y-hidden pr-10;
+}
+
+/* reset styling for code blocks */
+.markdown-content pre code:not(:where(.not-content *)) {
+	all: unset;
+	@apply font-mono;
+}
+
+/* blockquotes */
+.markdown-content blockquote:not(:where(.not-content *)) {
+	@apply border-primary-500 border-l-4 pl-4 font-medium italic;
+}
+
+/* images, videos, etc */
+.markdown-content :is(img, picture, video, canvas, svg, iframe):not(:where(.not-content *)) {
+	@apply my-4 block h-auto w-full rounded-lg;
+}
+
+/* italics */
+.markdown-content em:not(:where(.not-content *)) {
+	@apply text-foreground italic;
+}
+
+/* bold */
+.markdown-content strong:not(:where(.not-content *)) {
+	@apply text-foreground font-bold;
+}
+
+/* lists */
+.markdown-content li + li:not(:where(.not-content *)),
+.markdown-content dt + dt:not(:where(.not-content *)),
+.markdown-content dt + dd:not(:where(.not-content *)),
+.markdown-content dd + dd:not(:where(.not-content *)) {
+	@apply mt-0.5;
+}
+
+.markdown-content li:not(:where(.not-content *)) {
+	@apply pl-2;
+	overflow-wrap: anywhere;
+}
+
+.markdown-content :is(ul, ol):not(:where(.not-content *)) {
+	@apply my-4 mb-8 ml-6 list-outside space-y-2;
+}
+
+.markdown-content :is(ul):not(:where(.not-content *)) {
+	@apply list-disc;
+}
+
+.markdown-content :is(ol):not(:where(.not-content *)) {
+	@apply list-decimal;
+	::marker {
+		@apply text-foreground/60;
+	}
+}
+
+.markdown-content dt:not(:where(.not-content *)) {
+	@apply font-bold;
+}
+.markdown-content dd:not(:where(.not-content *)) {
+	@apply ps-4;
+}
+
+/* Table styling */
+.markdown-content table:not(:where(.not-content *)) {
+	@apply mb-4 overflow-auto;
+}
+.markdown-content :where(table):not(:where(.not-content *)) {
+	@apply w-full table-auto border-spacing-0 text-sm;
+}
+.markdown-content :is(th, td):not(:where(.not-content *)) {
+	@apply border-border table-cell border-b px-4 py-2;
+	/* Align text to the top of the row in multiline tables. */
+	vertical-align: baseline;
+}
+.markdown-content :is(th:first-child, td:first-child):not(:where(.not-content *)) {
+	padding-inline-start: 0;
+}
+.markdown-content :is(th:last-child, td:last-child):not(:where(.not-content *)) {
+	padding-inline-end: 0;
+}
+.markdown-content th:not(:where(.not-content *)) {
+	@apply text-foreground font-semibold;
+}
+/* Align headings to the start of the line unless set by the `align` attribute. */
+.markdown-content th:not([align]):not(:where(.not-content *)) {
+	text-align: start;
+}
+
+/* <table>s, and <hr>s inside admonitions */
+.markdown-content .admonition :is(th, td, hr):not(:where(.not-content *)) {
+	@apply border-border;
+}
+
+.markdown-content hr:not(:where(.not-content *)) {
+	@apply border-b-border my-8 border-0 border-b-1;
+}
+
+/* <details> and <summary> styles */
+.markdown-content details:not(:where(.not-content *)) {
+	--details-border-color: var(--border);
+	--details-border-color--hover: var(--primary);
+
+	border-inline-start: 2px solid var(--details-border-color);
+	padding-inline-start: 1rem;
+}
+.markdown-content details:not([open]):hover:not(:where(.not-content *)),
+.markdown-content details:has(> summary:hover):not(:where(.not-content *)) {
+	/* border-color: var(--details-border-color--hover); */
+	@apply opacity-90;
+}
+.markdown-content summary:not(:where(.not-content *)) {
+	@apply text-foreground block cursor-pointer font-bold;
+	/* Expand the outline so that the marker cannot distort it. */
+	margin-inline-start: -0.5rem;
+	padding-inline-start: 0.5rem;
+}
+.markdown-content details[open] > summary:not(:where(.not-content *)) {
+	margin-bottom: 1rem;
+}
+
+/* <summary> marker styles */
+.markdown-content summary:not(:where(.not-content *))::marker,
+.markdown-content summary:not(:where(.not-content *))::-webkit-details-marker {
+	display: none;
+}
+.markdown-content summary:not(:where(.not-content *))::before {
+	--details-marker-size: 1.25rem;
+
+	background-color: currentColor;
+	content: "";
+	display: inline-block;
+	height: var(--details-marker-size);
+	width: var(--details-marker-size);
+	margin-inline: calc((var(--details-marker-size) / 4) * -1) 0.25rem;
+	vertical-align: middle;
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.markdown-content summary:not(:where(.not-content *))::before {
+		transition: transform 0.2s ease-in-out;
+	}
+}
+.markdown-content details[open] > summary:not(:where(.not-content *))::before {
+	transform: rotateZ(90deg);
+}
+[dir="rtl"] .markdown-content summary:not(:where(.not-content *))::before,
+.markdown-content [dir="rtl"] summary:not(:where(.not-content *))::before {
+	transform: rotateZ(180deg);
+}
+/* <summary> with only a paragraph automatically added when using MDX */
+.markdown-content summary:not(:where(.not-content *)) p:only-child {
+	display: inline;
+}

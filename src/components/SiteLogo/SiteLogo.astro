@@ -1,0 +1,12 @@
+---
+import { Image } from "astro:assets";
+
+// data
+import siteData from "@config/siteData.json";
+---
+
+<a class="primary-focus group/navlink text-xl" href="/" class="">
+	<span class="navlink__underline-ltr inline">
+		{siteData.author.name}
+	</span>
+</a>

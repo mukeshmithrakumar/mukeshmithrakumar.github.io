@@ -1,0 +1,13 @@
+---
+// data
+import siteData from "@config/siteData.json";
+
+const today = new Date();
+---
+
+<footer class="site-container mt-16 mb-8 text-center">
+	<div class="mt-6 text-sm opacity-80">
+		&copy; {today.getFullYear()}
+		{" "}{siteData.name}. All rights reserved.
+	</div>
+</footer>

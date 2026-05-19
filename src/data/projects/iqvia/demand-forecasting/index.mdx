@@ -1,0 +1,112 @@
+---
+title: Demand Forecasting System for Pharma Sales
+description: A large-scale demand forecasting system leveraging hybrid modeling and production-grade data pipelines to improve inventory planning and sales outcomes.
+draft: false
+pubDate: 2026-05-01
+updatedDate: 2026-05-01
+heroImage: ./demand-forecasting.jpg
+client: IQVIA
+role: Senior ML Engineer
+year: 2020-2024
+projectUrl: https://www.iqvia.com/solutions/commercialization/commercial-analytics/orchestrated-analytics
+repoUrl:
+---
+
+## Overview
+
+Led the development and productization of a demand forecasting system used by pharmaceutical sales and supply chain teams across Europe. The system generates short-term forecasts across 100,000+ products, enabling more precise inventory planning and data-driven sales execution.
+
+Beyond model development, the work focused on building a reliable, production-grade system that could operate across heterogeneous markets, integrate into existing business workflows, and deliver consistent value at scale.
+
+## Problem
+
+- Demand planning relied heavily on manual processes and heuristic-driven estimates, resulting in frequent overstocking and stockouts.
+- Forecast accuracy at the product level was insufficient for short-term (≈30-day) operational planning.
+- Sales and supply chain teams lacked a unified system to translate historical data into actionable, timely forecasts.
+- Variability across regions and product categories made it difficult to standardize planning processes.
+
+## Constraints
+
+- Forecasting at scale across 100,000+ SKUs with highly variable and sparse demand patterns.
+- Noisy, incomplete, and regionally inconsistent time series data.
+- Strong requirement for short-term forecast reliability (≈30-day horizon) aligned with operational decision cycles.
+- System needed to be usable by non-technical stakeholders and integrate into existing planning workflows.
+- Cross-region differences in seasonality, demand drivers, and data quality.
+
+## Approach
+
+Framed the problem as a large-scale, multi-horizon time series forecasting task with an emphasis on robustness and operational usability.
+
+Built a hybrid modeling framework combining:
+- Deep learning models (Temporal Convolutional Networks, Temporal Fusion Transformer) to capture temporal dynamics and cross-series patterns
+- Gradient boosting models to handle structured signals and provide stability across sparse or irregular data segments
+
+Key areas of focus included:
+- Building a consistent feature layer capturing temporal signals, seasonality, and product/regional context
+- Leveraging model ensembling to improve generalization across heterogeneous demand patterns
+- Designing pipelines that prioritized reliability, reproducibility, and ease of iteration over experimental complexity
+
+## System Design
+
+The system was designed as a production-grade batch forecasting platform with a strong emphasis on reliability, scalability, and integration with business workflows.
+
+Data ingestion pipelines aggregate historical sales, product metadata, and regional signals into a unified feature layer. These pipelines are designed to handle inconsistent data availability across regions while enforcing data quality checks to ensure downstream model stability.
+
+Model training is executed on a scheduled cadence using global models that learn across product categories, allowing the system to generalize better in sparse data regimes. Forecasts are generated for a fixed horizon (typically 30 days) and recomputed regularly to reflect the latest available data.
+
+Batch inference outputs are materialized and stored in a centralized layer, where they are consumed by downstream tools used by sales and inventory planning teams. This separation between model computation and consumption ensures consistent performance and predictable system behavior under scale.
+
+Operationally, the system was built to:
+- Scale to large product catalogs without requiring per-SKU model management
+- Maintain consistent output quality despite variability in input data
+- Provide stable, repeatable forecasts aligned with business planning cycles
+
+## Key Decisions
+
+### Use a hybrid modeling approach instead of a single model
+
+Different product categories exhibited fundamentally different demand characteristics. Deep learning models captured broader temporal and cross-series patterns, while gradient boosting models provided robustness in scenarios with limited or irregular data.
+
+Combining both approaches improved consistency and reduced performance variance across the product catalog.
+
+### Optimize for short-term forecasting accuracy
+
+Focused on a 30-day forecast horizon aligned with operational decision-making cycles in inventory and sales planning.
+
+This allowed the system to deliver more reliable outputs and ensured that forecasts were directly actionable for business users.
+
+### Prioritize feature engineering and data quality
+
+In practice, improvements in feature quality and data consistency had a larger impact than incremental model complexity.
+
+Investments in feature pipelines and data validation significantly improved model stability and reduced variance across regions and product segments.
+
+## Results & Impact
+
+- **Forecast Accuracy:** Achieved ~95% accuracy on 30-day forecasts (measured on key operational metrics used by planning teams)
+- **Inventory Efficiency:** ~25% improvement in inventory management efficiency across participating regions
+- **Revenue Impact:** $1M+ annual revenue contribution through improved stock availability and reduced waste
+- **Operational Impact:** Reduced stockouts and overstock, leading to better alignment between supply and demand
+
+The system enabled a shift from reactive planning to proactive, data-driven decision-making, improving both operational efficiency and commercial outcomes.
+
+## Tradeoffs
+
+- Deep learning components increased training complexity and infrastructure requirements.
+- Batch forecasting limited responsiveness to sudden demand shocks or real-time events.
+- Long-tail products with sparse historical data remained challenging, with higher variance in forecast quality.
+- Limited explainability for certain model components required additional effort to build trust with business stakeholders.
+
+## Learnings
+
+- Hybrid modeling approaches are essential when operating across highly heterogeneous demand distributions.
+- Short-term forecasts are often more actionable and valuable than long-horizon predictions in operational settings.
+- Data quality and feature consistency have a disproportionate impact on real-world system performance.
+- Production reliability and integration into business workflows are as critical as model accuracy.
+
+## Future Work
+
+- Introduce near-real-time updates to better capture sudden demand shifts and market dynamics.
+- Improve long-tail forecasting through hierarchical or transfer learning approaches.
+- Expand explainability capabilities to increase transparency and user trust.
+- Explore probabilistic forecasting to better quantify uncertainty and support risk-aware planning decisions.

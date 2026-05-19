@@ -1,0 +1,16 @@
+---
+interface Props {
+	summary?: string;
+	open?: boolean;
+}
+
+const {
+	summary = "Toggle to see results",
+	open = false,
+} = Astro.props;
+---
+
+<details open={open}>
+	<summary>{summary}</summary>
+	<slot />
+</details>

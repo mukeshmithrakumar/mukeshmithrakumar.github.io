@@ -1,0 +1,133 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+// main layout
+import BaseLayout from "./BaseLayout.astro";
+
+// components
+import BlogEngagement from "@components/BlogEngagement/BlogEngagement.astro";
+import BlogShare from "@components/BlogShare/BlogShare.astro";
+import Button from "@components/Button/Button.astro";
+import CopyEnhancements from "@components/CopyEnhancements/CopyEnhancements.astro";
+import PostPagination from "@components/PostPagination/PostPagination.astro";
+import RelatedPosts from "@components/RelatedPosts/RelatedPosts.astro";
+import Tag from "@components/Tag/Tag.astro";
+
+// utils
+import { formatDate, getReadingTimeText } from "@js/textUtils";
+import { getAllAuthorsData, getPostUrl } from "@js/blogUtils";
+import { getPostSocialPreviewUrl } from "@js/socialPreview";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	relatedPosts?: CollectionEntry<"blog">[];
+	previousPost?: CollectionEntry<"blog">;
+	nextPost?: CollectionEntry<"blog">;
+}
+
+const { post, relatedPosts = [], previousPost, nextPost } = Astro.props as Props;
+const { title, description, authors, tags, pubDate, updatedDate, heroImage } = post.data;
+
+const authorsData = await getAllAuthorsData(authors);
+const readTimeText = getReadingTimeText(post.body);
+const shareUrl = new URL(getPostUrl(post), Astro.site).toString();
+const socialImage = getPostSocialPreviewUrl(post);
+---
+
+<BaseLayout
+	type="blog"
+	title={title}
+	description={description}
+	image={heroImage}
+	socialImage={socialImage}
+	authorsData={authorsData}
+	postFrontmatter={post.data}
+>
+	<article class="site-container pt-36 md:pt-44">
+		<!-- Blog post info -->
+		<div class="flex w-full flex-col items-center">
+			<div class="mx-auto flex w-full max-w-[800px]">
+				<div class="mr-auto">
+					<!-- tags -->
+					<div class="flex gap-4">
+						{tags.map((tag) => <Tag {tag} />)}
+					</div>
+
+					<!-- title -->
+					<h1 class="h1 mt-8">{title}</h1>
+
+					<div class="mt-6 flex w-full flex-wrap justify-between gap-4">
+						<!-- author info -->
+						{
+							authorsData.map((authorData) => (
+								<div class="mb-auto flex gap-1">
+									<figure class="size-7 overflow-hidden rounded-full">
+										<Image
+											src={authorData.data.avatar}
+											alt={`${authorData.data.name} avatar`}
+											width={100}
+											quality="high"
+											class="object-cover"
+										/>
+									</figure>
+									<div class="my-auto ml-2 opacity-80">{authorData.data.name}</div>
+								</div>
+							))
+						}
+
+						<div class="my-auto flex h-full items-center gap-3 opacity-80">
+							<time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+							<span aria-hidden="true">&bull;</span>
+							<span>{readTimeText}</span>
+						</div>
+					</div>
+
+					<BlogShare title={title} url={shareUrl} />
+				</div>
+			</div>
+
+			<!-- blog post main image -->
+			<div class="mt-6 max-w-[800px] overflow-hidden">
+				<Image
+					src={heroImage}
+					alt={`Cover for ${title}`}
+					width={2000}
+					quality="high"
+					class="max-h-[70vh] object-cover"
+					loading="eager"
+					format="webp"
+				/>
+			</div>
+		</div>
+
+		<!-- article content -->
+		<div class="mt-10 w-full">
+			<div class="mx-auto max-w-2xl">
+				<div class="text-base-content text-base">
+					{
+						updatedDate && (
+							<div class="mb-6 italic">
+								<time datetime={updatedDate.toISOString()}>Updated: {formatDate(updatedDate)}</time>
+							</div>
+						)
+					}
+					<section id="blog-post-content" class="markdown-content mx-auto">
+						<slot />
+					</section>
+					<CopyEnhancements />
+					<BlogEngagement title={title} url={shareUrl} />
+					<RelatedPosts posts={relatedPosts} />
+					<PostPagination previousPost={previousPost} nextPost={nextPost} />
+
+					<!-- button to go back to all posts -->
+					<div class="mt-16 flex justify-center">
+						<Button variant="outline" href="/blog/" arrow="left" class="py-2">
+							Back to all posts
+						</Button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</BaseLayout>

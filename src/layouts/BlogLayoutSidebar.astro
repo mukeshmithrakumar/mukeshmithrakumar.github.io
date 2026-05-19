@@ -1,0 +1,158 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+// import { Icon } from "astro-icon";
+
+// main layout
+import BaseLayout from "./BaseLayout.astro";
+
+// components
+import BlogEngagement from "@components/BlogEngagement/BlogEngagement.astro";
+import BlogShare from "@components/BlogShare/BlogShare.astro";
+import CopyEnhancements from "@components/CopyEnhancements/CopyEnhancements.astro";
+import PostPagination from "@components/PostPagination/PostPagination.astro";
+import RelatedPosts from "@components/RelatedPosts/RelatedPosts.astro";
+import SeriesNavigation from "@components/SeriesNavigation/SeriesNavigation.astro";
+import Tag from "@components/Tag/Tag.astro";
+import Button from "@components/Button/Button.astro";
+import TableOfContents from "@components/TableOfContents/TableOfContents.astro";
+
+// utils
+import { formatDate, getReadingTimeText } from "@js/textUtils";
+import { getAllAuthorsData, getPostUrl } from "@js/blogUtils";
+import { getPostSocialPreviewUrl } from "@js/socialPreview";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	headings: import("astro").MarkdownHeading[];
+	relatedPosts?: CollectionEntry<"blog">[];
+	previousPost?: CollectionEntry<"blog">;
+	nextPost?: CollectionEntry<"blog">;
+	seriesPosts?: CollectionEntry<"blog">[];
+}
+
+const {
+	post,
+	headings,
+	relatedPosts = [],
+	previousPost,
+	nextPost,
+	seriesPosts = [],
+} = Astro.props as Props;
+const { title, description, authors, pubDate, updatedDate, heroImage, tags } = post.data;
+
+const authorsData = await getAllAuthorsData(authors);
+const readTimeText = getReadingTimeText(post.body);
+const shareUrl = new URL(getPostUrl(post), Astro.site).toString();
+const socialImage = getPostSocialPreviewUrl(post);
+---
+
+<BaseLayout
+	type="blog"
+	title={title}
+	description={description}
+	image={heroImage}
+	socialImage={socialImage}
+	authorsData={authorsData}
+	postFrontmatter={post.data}
+>
+	<article class="site-container pt-36 md:pt-44">
+		<!-- Blog post info -->
+		<div class="flex w-full flex-col items-center">
+			<div class="mx-auto flex w-full max-w-[800px]">
+				<div class="mx-auto text-center">
+					<!-- tags -->
+					<div class="flex justify-center gap-4">
+						{tags.map((tag) => <Tag {tag} />)}
+					</div>
+
+					<!-- title -->
+					<h1 class="h1 mt-8">{title}</h1>
+
+					<div class="mt-6 flex w-full flex-wrap justify-center gap-4">
+						<!-- author info -->
+						{
+							authorsData.map((authorData) => (
+								<div class="mb-auto flex gap-1">
+									<figure class="size-7 overflow-hidden rounded-full">
+										<Image
+											src={authorData.data.avatar}
+											alt={`${authorData.data.name} avatar`}
+											width={100}
+											quality="high"
+											class="object-cover"
+										/>
+									</figure>
+									<div class="my-auto ml-2 opacity-80">{authorData.data.name}</div>
+								</div>
+							))
+						}
+
+						<span>&bull;</span>
+
+						<!-- Date -->
+						<time class="my-auto h-full opacity-80" datetime={pubDate.toISOString()}
+							>{formatDate(pubDate)}
+						</time>
+
+						<span>&bull;</span>
+						<span class="my-auto h-full opacity-80">{readTimeText}</span>
+					</div>
+
+					<BlogShare title={title} url={shareUrl} align="center" />
+				</div>
+			</div>
+
+			<!-- blog post main image -->
+			<div class="mt-6 overflow-hidden">
+				<Image
+					src={heroImage}
+					alt={`Cover for ${title}`}
+					width={2000}
+					quality="high"
+					class="max-h-[70vh] object-cover"
+					loading="eager"
+					format="webp"
+				/>
+			</div>
+		</div>
+
+		<!-- article content -->
+		<div class="mt-10 w-full">
+			<div class="mx-auto flex max-w-2xl flex-col gap-10 lg:grid lg:max-w-none lg:grid-cols-3">
+				<!-- Content -->
+				<div class="text-base-content text-base lg:col-span-2 lg:col-start-1">
+					{
+						updatedDate && (
+							<div class="mb-6 italic">
+								<time datetime={updatedDate.toISOString()}>Updated: {formatDate(updatedDate)}</time>
+							</div>
+						)
+					}
+					<section id="blog-post-content" class="markdown-content mx-auto lg:ml-0">
+						<slot />
+					</section>
+					<CopyEnhancements />
+					<BlogEngagement title={title} url={shareUrl} />
+					<SeriesNavigation currentPost={post} seriesPosts={seriesPosts} />
+					<RelatedPosts posts={relatedPosts} />
+					<PostPagination previousPost={previousPost} nextPost={nextPost} />
+
+					<!-- button to go back to all posts -->
+					<div class="mt-16 flex">
+						<Button variant="outline" href="/blog/" arrow="left"> Back to all posts </Button>
+					</div>
+				</div>
+
+				<!-- Table of Contents sidebar -->
+				<aside class="hidden lg:block">
+					<div class="sticky top-20">
+						<div class="h-[calc(100vh-6rem)] overflow-y-auto">
+							<TableOfContents headings={headings} levels={3} />
+						</div>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</article>
+</BaseLayout>

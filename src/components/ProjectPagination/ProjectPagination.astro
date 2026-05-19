@@ -1,0 +1,49 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+import { getProjectUrl } from "@js/projectUtils";
+
+interface Props {
+	previousProject?: CollectionEntry<"projects">;
+	nextProject?: CollectionEntry<"projects">;
+}
+
+const { previousProject, nextProject } = Astro.props as Props;
+---
+
+{
+	(previousProject || nextProject) && (
+		<nav
+			class="theme-divider mt-16 grid grid-cols-1 gap-4 border-t pt-10 md:grid-cols-2"
+			aria-label="Project navigation"
+		>
+			{previousProject ? (
+				<a
+					href={getProjectUrl(previousProject)}
+					class="theme-panel group hover:border-primary-600 p-4 transition-colors"
+				>
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Previous project</p>
+					<h2 class="group-hover:text-primary-600 mt-3 text-lg font-medium transition-colors">
+						{previousProject.data.title}
+					</h2>
+				</a>
+			) : (
+				<div class="hidden md:block" aria-hidden="true" />
+			)}
+
+			{nextProject ? (
+				<a
+					href={getProjectUrl(nextProject)}
+					class="theme-panel group hover:border-primary-600 p-4 text-left transition-colors md:text-right"
+				>
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Next project</p>
+					<h2 class="group-hover:text-primary-600 mt-3 text-lg font-medium transition-colors">
+						{nextProject.data.title}
+					</h2>
+				</a>
+			) : (
+				<div class="hidden md:block" aria-hidden="true" />
+			)}
+		</nav>
+	)
+}

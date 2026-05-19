@@ -1,0 +1,33 @@
+---
+import { type CollectionEntry } from "astro:content";
+import PostCardBasic from "@components/PostCard/PostCardBasic.astro";
+
+interface Props {
+	posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props as Props;
+---
+
+{
+	posts.length > 0 && (
+		<section class="theme-divider mt-16 border-t pt-10" aria-labelledby="related-posts-title">
+			<div class="flex items-end justify-between gap-4">
+				<div>
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Keep reading</p>
+					<h2 id="related-posts-title" class="h3 mt-2">
+						Related posts
+					</h2>
+				</div>
+			</div>
+
+			<ul class="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+				{posts.map((post) => (
+					<li>
+						<PostCardBasic post={post} showDescription={true} />
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

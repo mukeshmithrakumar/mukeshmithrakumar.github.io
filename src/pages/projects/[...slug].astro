@@ -1,0 +1,51 @@
+---
+import { render } from "astro:content";
+import { type InferGetStaticPropsType } from "astro";
+import { Image } from "astro:assets";
+
+import ProjectLayout from "@layouts/ProjectLayout.astro";
+import { getAdjacentProjects, getAllProjects, getDeepDivePostsForProject } from "@js/projectUtils";
+import Admonition from "@components/Admonition/Admonition.astro";
+import Newsletter from "@components/Cta/Newsletter.astro";
+import ExternalLink from "@components/MarkdownComponents/ExternalLink.astro";
+import MathBlock from "@components/MarkdownComponents/MathBlock.astro";
+import MathInline from "@components/MarkdownComponents/MathInline.astro";
+import ResultToggle from "@components/MarkdownComponents/ResultToggle.astro";
+
+export async function getStaticPaths() {
+	const projects = await getAllProjects();
+
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: project,
+	}));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const project = Astro.props as Props;
+const { Content, headings } = await render(project);
+const allProjects = await getAllProjects();
+const { previousProject, nextProject } = getAdjacentProjects(project, allProjects);
+const deepDivePosts = await getDeepDivePostsForProject(project, 3);
+---
+
+<ProjectLayout
+	project={project}
+	headings={headings}
+	previousProject={previousProject}
+	nextProject={nextProject}
+	deepDivePosts={deepDivePosts}
+>
+	<Content
+		components={{
+			a: ExternalLink,
+			Admonition,
+			Image,
+			MathBlock,
+			MathInline,
+			Newsletter,
+			ResultToggle,
+		}}
+	/>
+</ProjectLayout>

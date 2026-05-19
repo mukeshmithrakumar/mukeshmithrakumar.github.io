@@ -1,0 +1,63 @@
+---
+/**
+ * * Hero with socials and small profile image above
+ */
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+// components
+import Button from "@components/Button/Button.astro";
+import SocialCloud from "@components/SocialCloud/SocialCloud.astro";
+
+// data
+import siteData from "@config/siteData.json";
+
+import heroImage from "@assets/images/mithraics.png";
+---
+
+<section id="hero" class="relative flex w-full pb-6">
+	<!-- hero items -->
+	<div class="site-container grid items-center gap-10 pt-36 md:grid-cols-3 md:gap-20">
+		<!-- Hero text -->
+		<div class="mx-auto max-w-lg md:col-span-2 md:ml-0 md:max-w-full">
+			<div class="size-24 overflow-hidden">
+				<Image
+					src={heroImage}
+					class="object-cover"
+					alt="mukesh mithrakumar profile"
+					loading="eager"
+					width={100}
+					densities={[1.5, 2]}
+					data-mos="fade-in"
+				/>
+			</div>
+			<h1 class="h1 mt-8" data-mos="fade-in" data-mos-delay=".4">
+				Hi, I'm {siteData.author.name}
+			</h1>
+			<p class="description mt-4 text-pretty" data-mos="fade-in" data-mos-delay=".6">
+				I design and build real-time machine learning systems that operate at scale. 
+				My work focuses on recommendation systems, search, and low-latency inference 
+				pipelines powering millions of users. I write about the systems I build, 
+				covering design decisions, tradeoffs, and production realities, 
+				as well as technical topics I'm exploring.
+			</p>
+			<div class="mt-8 flex gap-4" data-mos="fade-in" data-mos-delay="1.2">
+				<SocialCloud />
+			</div>
+		</div>
+
+		<!-- hero image -->
+		<!-- <div class="mx-auto max-w-sm md:col-span-1 md:max-w-full">
+      <Image
+        src={heroImage}
+        class="aspect-square w-full"
+        alt="mukesh mithrakumar profile"
+        loading="eager"
+        width={600}
+        densities={[1.5, 2]}
+        data-mos="fade-in"
+        data-mos-delay=".6"
+      />
+    </div> -->
+	</div>
+</section>

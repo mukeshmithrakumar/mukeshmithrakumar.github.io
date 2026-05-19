@@ -1,0 +1,336 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	title: string;
+	url: string;
+	align?: "start" | "center";
+	variant?: "dropdown" | "footer";
+}
+
+const { title, url, align = "start", variant = "dropdown" } = Astro.props as Props;
+const encodedTitle = encodeURIComponent(title);
+const encodedUrl = encodeURIComponent(url);
+const isFooter = variant === "footer";
+
+const emailSubject = encodeURIComponent(`Thought you might like: ${title}`);
+const emailBody = encodeURIComponent(`${title}\n\n${url}`);
+const items = [
+	{
+		label: "X",
+		href: `https://x.com/intent/post?url=${encodedUrl}&text=${encodedTitle}`,
+		icon: "x",
+	},
+	{
+		label: "LinkedIn",
+		href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+		icon: "linkedin",
+	},
+	{
+		label: "Facebook",
+		href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+		icon: "facebook",
+	},
+	{
+		label: "Email",
+		href: `mailto:?subject=${emailSubject}&body=${emailBody}`,
+		icon: "email",
+	},
+	{
+		label: "WhatsApp",
+		href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+		icon: "whatsapp",
+	},
+	{
+		label: "Telegram",
+		href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+		icon: "telegram",
+	},
+];
+
+const alignmentClass = align === "center" ? "justify-center" : "justify-start";
+
+function getShareIcon(icon: string) {
+	const common =
+		"fill='none' stroke='currentColor' stroke-width='1.85' stroke-linecap='round' stroke-linejoin='round'";
+
+	switch (icon) {
+		case "x":
+			return `<svg viewBox="0 0 24 24" ${common}><path d="M4 4l16 16"/><path d="M20 4L4 20"/></svg>`;
+		case "linkedin":
+			return `<svg viewBox="0 0 24 24" ${common}><rect x="4" y="4" width="16" height="16"/><path d="M8 10v6"/><path d="M8 8h.01"/><path d="M12 16v-3.2a1.8 1.8 0 0 1 3.6 0V16"/><path d="M12 10v6"/></svg>`;
+		case "facebook":
+			return `<svg viewBox="0 0 24 24" ${common}><circle cx="12" cy="12" r="8"/><path d="M13.5 8.5H12a2 2 0 0 0-2 2V12h3l-.4 2H10v4"/></svg>`;
+		case "email":
+			return `<svg viewBox="0 0 24 24" ${common}><rect x="3.5" y="6" width="17" height="12" rx="1.5"/><path d="M4 7l8 6 8-6"/></svg>`;
+		case "whatsapp":
+			return `<svg viewBox="0 0 24 24" ${common}><path d="M12 4a8 8 0 0 1 6.9 12l1.1 4-4-1A8 8 0 1 1 12 4Z"/><path d="M9.4 9.2c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.4 1.1c.1.2 0 .4-.1.6l-.4.6c.7 1.3 1.7 2.3 3 3l.6-.4c.2-.1.4-.2.6-.1l1.1.4c.4.1.4.3.4.5v.5c0 .2 0 .4-.4.6-.4.2-.9.3-1.4.2-2.8-.7-5.1-3-5.8-5.8-.1-.5 0-1 .2-1.4Z"/></svg>`;
+		case "telegram":
+			return `<svg viewBox="0 0 24 24" ${common}><path d="M21 5 3.8 11.6c-.8.3-.8 1.4 0 1.7l4.4 1.5 1.6 4.8c.2.7 1.2.8 1.6.2L21 5Z"/><path d="m8.2 14.8 9.6-7.4"/></svg>`;
+		case "link":
+		default:
+			return `<svg viewBox="0 0 24 24" ${common}><path d="M10 13.5 8.5 15a3 3 0 0 1-4.2-4.2L7 8.1A3 3 0 0 1 11.2 8"/><path d="M14 10.5 15.5 9a3 3 0 0 1 4.2 4.2L17 15.9A3 3 0 0 1 12.8 16"/><path d="M8.5 15.5 15.5 8.5"/></svg>`;
+	}
+}
+---
+
+<div
+	class:list={[
+		"blog-share",
+		isFooter ? "mt-16 flex flex-col items-center gap-4 text-center" : "relative mt-6 flex",
+		!isFooter && alignmentClass,
+	]}
+	data-share-root
+	data-share-title={title}
+	data-share-url={url}
+	data-share-variant={variant}
+>
+	{
+		isFooter ? (
+			<>
+				<div class="space-y-2">
+					<p class="text-base-400 text-sm tracking-[0.2em] uppercase">Share this post</p>
+					<p class="text-foreground/65 max-w-md text-sm">
+						If this was useful, send it to someone who might enjoy it too.
+					</p>
+				</div>
+
+				<div class="flex flex-wrap justify-center gap-3">
+					<button type="button" class="button button--outline text-sm" data-share-native>
+						Share
+					</button>
+					<button type="button" class="button button--ghost text-sm" data-share-copy>
+						Copy link
+					</button>
+					{items.slice(0, 3).map((item) => (
+						<a
+							class="button button--ghost text-sm"
+							href={item.href}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{item.label}
+						</a>
+					))}
+				</div>
+			</>
+		) : (
+			<>
+				<button
+					type="button"
+					class="blog-share__trigger theme-interactive group hover:text-primary-500 focus-visible:ring-primary-600 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+					aria-haspopup="menu"
+					aria-expanded="false"
+					data-share-trigger
+				>
+					<Icon
+						name="tdesign:share"
+						class="size-4 transition-transform duration-200 group-hover:-translate-x-0.5"
+						aria-hidden="true"
+					/>
+					<span class="tracking-[0.18em] uppercase">Share</span>
+				</button>
+
+				<div
+					class="blog-share__menu theme-overlay absolute top-full z-30 mt-3 hidden min-w-[220px] border p-2"
+					class:list={[align === "center" ? "left-1/2 -translate-x-1/2" : "left-0"]}
+					role="menu"
+					aria-label="Share this post"
+					data-share-menu
+				>
+					<div
+						class="blog-share__menu-caret absolute -top-2 h-4 w-4 rotate-45 border-t border-l"
+						class:list={[align === "center" ? "left-1/2 -translate-x-1/2" : "left-6"]}
+						aria-hidden="true"
+					/>
+
+					{items.map((item) => (
+						<a
+							class="blog-share__item theme-hover-surface text-foreground/85 hover:text-primary-500 focus-visible:ring-primary-600 flex items-center gap-3 px-3 py-2 text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
+							href={item.href}
+							target="_blank"
+							rel="noreferrer"
+							role="menuitem"
+							data-share-link
+						>
+							<span
+								class="blog-share__icon"
+								aria-hidden="true"
+								set:html={getShareIcon(item.icon)}
+							/>
+							<span>{item.label}</span>
+						</a>
+					))}
+
+					<button
+						type="button"
+						class="blog-share__item theme-hover-surface text-foreground/85 hover:text-primary-500 focus-visible:ring-primary-600 flex w-full items-center gap-3 px-3 py-2 text-left text-sm transition-colors duration-200 focus-visible:ring-2 focus-visible:outline-none"
+						role="menuitem"
+						data-share-copy
+					>
+						<span class="blog-share__icon" aria-hidden="true" set:html={getShareIcon("link")} />
+						<span>Copy link</span>
+					</button>
+				</div>
+			</>
+		)
+	}
+
+	<p
+		class:list={[
+			"text-base-400 text-sm transition-all duration-200",
+			isFooter
+				? "min-h-[1.25rem]"
+				: "pointer-events-none absolute top-full left-0 mt-[calc(100%+0.5rem)] translate-y-2 whitespace-nowrap opacity-0",
+		]}
+		aria-live="polite"
+		data-share-status
+	>
+	</p>
+</div>
+
+<script>
+	function initBlogShare() {
+		document.querySelectorAll("[data-share-root]").forEach((shareRoot) => {
+			if (!(shareRoot instanceof HTMLElement) || shareRoot.dataset.shareBound === "true") return;
+
+			shareRoot.dataset.shareBound = "true";
+
+			const title = shareRoot.dataset.shareTitle ?? document.title;
+			const url = shareRoot.dataset.shareUrl ?? window.location.href;
+			const isFooter = shareRoot.dataset.shareVariant === "footer";
+			const trigger = shareRoot.querySelector("[data-share-trigger]");
+			const menu = shareRoot.querySelector("[data-share-menu]");
+			const nativeButton = shareRoot.querySelector("[data-share-native]");
+			const copyButton = shareRoot.querySelector("[data-share-copy]");
+			const status = shareRoot.querySelector("[data-share-status]");
+			const menuLinks = shareRoot.querySelectorAll("[data-share-link]");
+
+			if (!(status instanceof HTMLElement)) return;
+
+			let closeTimer;
+
+			const setStatus = (message) => {
+				window.clearTimeout(closeTimer);
+				status.textContent = message;
+
+				if (!isFooter) {
+					status.classList.add("translate-y-0", "opacity-100");
+					status.classList.remove("translate-y-2", "opacity-0");
+				}
+
+				closeTimer = window.setTimeout(() => {
+					if (isFooter) {
+						status.textContent = "";
+						return;
+					}
+
+					status.classList.add("translate-y-2", "opacity-0");
+					status.classList.remove("translate-y-0", "opacity-100");
+				}, 1800);
+			};
+
+			const closeMenu = () => {
+				if (!(trigger instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+				menu.classList.add("hidden");
+				trigger.setAttribute("aria-expanded", "false");
+			};
+
+			const openMenu = () => {
+				if (!(trigger instanceof HTMLButtonElement) || !(menu instanceof HTMLElement)) return;
+				menu.classList.remove("hidden");
+				trigger.setAttribute("aria-expanded", "true");
+			};
+
+			if (trigger instanceof HTMLButtonElement && menu instanceof HTMLElement) {
+				trigger.addEventListener("click", () => {
+					const isOpen = trigger.getAttribute("aria-expanded") === "true";
+					if (isOpen) {
+						closeMenu();
+						return;
+					}
+
+					openMenu();
+				});
+
+				document.addEventListener("click", (event) => {
+					if (!(event.target instanceof Node) || shareRoot.contains(event.target)) return;
+					closeMenu();
+				});
+
+				document.addEventListener("keydown", (event) => {
+					if (event.key === "Escape") {
+						closeMenu();
+					}
+				});
+
+				menuLinks.forEach((link) => {
+					link.addEventListener("click", () => {
+						closeMenu();
+					});
+				});
+			}
+
+			if (nativeButton instanceof HTMLButtonElement) {
+				if (!("share" in navigator)) {
+					nativeButton.disabled = true;
+					nativeButton.title = "Native sharing is not available in this browser.";
+				}
+
+				nativeButton.addEventListener("click", async () => {
+					if (!("share" in navigator)) return;
+
+					try {
+						await navigator.share({ title, url });
+						setStatus("Ready to share.");
+					} catch (error) {
+						if (error instanceof DOMException && error.name === "AbortError") return;
+						setStatus("Share failed. You can still copy the link.");
+					}
+				});
+			}
+
+			if (copyButton instanceof HTMLButtonElement) {
+				copyButton.addEventListener("click", async () => {
+					try {
+						await navigator.clipboard.writeText(url);
+						setStatus("Link copied.");
+						closeMenu();
+					} catch {
+						setStatus("Copy failed.");
+					}
+				});
+			}
+		});
+	}
+
+	initBlogShare();
+	document.addEventListener("astro:page-load", initBlogShare);
+</script>
+
+<style>
+	.blog-share__icon {
+		display: inline-flex;
+		width: 1rem;
+		height: 1rem;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 auto;
+	}
+
+	.blog-share__icon :global(svg) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.blog-share__menu-caret {
+		background: var(--theme-overlay);
+		border-color: var(--theme-overlay-border);
+	}
+
+	:global(.light) .blog-share__item:hover {
+		background: rgb(220 252 231 / 0.62);
+		color: var(--color-primary-700);
+	}
+</style>

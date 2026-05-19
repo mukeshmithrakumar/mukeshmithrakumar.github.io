@@ -1,0 +1,18 @@
+---
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import TagCloud from "@components/TagCloud/TagCloud.astro";
+---
+
+<BaseLayout title="Blog post tags" description="Tags you can filter on for blog posts">
+	<section class="site-container pt-36 md:pt-44">
+		<div class="mx-auto max-w-3xl">
+			<h1 class="h1">Tags</h1>
+			<div class="mt-10 flex">
+				<TagCloud showCount={true} />
+			</div>
+		</div>
+	</section>
+</BaseLayout>

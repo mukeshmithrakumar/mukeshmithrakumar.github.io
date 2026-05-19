@@ -1,0 +1,18 @@
+---
+import katex from "katex";
+
+interface Props {
+	formula: string;
+}
+
+const { formula } = Astro.props;
+
+const html = katex.renderToString(formula, {
+	displayMode: true,
+	throwOnError: false,
+});
+---
+
+<div class="math-block not-content" data-math-block data-formula={formula}>
+	<Fragment set:html={html} />
+</div>

@@ -1,0 +1,76 @@
+---
+import { type InferGetStaticPropsType, type InferGetStaticParamsType } from "astro";
+
+// main layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import PostCardBasic from "@components/PostCard/PostCardBasic.astro";
+import TagsCard from "@components/SidebarCards/TagsCard.astro";
+
+// utils
+import { getAllPosts, countItems, sortByValue } from "@js/blogUtils";
+import { slugify, humanize } from "@js/textUtils";
+
+// generate pagination for tag pages if there are a bunch of posts for a single tag
+export async function getStaticPaths() {
+	const posts = await getAllPosts();
+	const alltags = posts.map((post) => post.data.tags).flat();
+	const countedtags = countItems(alltags);
+	const processedtags = sortByValue(countedtags);
+
+	return processedtags.map(([tag, count]) => ({
+		params: { tag: tag },
+	}));
+}
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
+
+// const filteredPosts = Astro.props as Props;
+const { tag } = Astro.params as Params;
+
+const posts = await getAllPosts();
+const filteredPosts = posts.filter((post) => {
+	// make sure to slugify them for comparison
+	const slugifiedtag = post.data.tags.map((tag) => slugify(tag));
+
+	return slugifiedtag.includes(tag);
+});
+---
+
+<BaseLayout
+	title={`Our Blog Posts on ${humanize(tag)}`}
+	description="Learn from our blog posts about web development, design, and more."
+>
+	<section class="site-container pt-36 md:pt-44">
+		<div class="mx-auto max-w-lg md:max-w-full">
+			<div class="grid w-full items-start gap-10 md:grid-cols-5">
+				<div class="md:col-span-3">
+					<h1 class="h2">
+						Posts about <span class="text-primary-600">{humanize(tag)}</span>
+					</h1>
+					<p class="description mt-6">
+						A collection of useful articles I have written about {tag} over the years. You can select
+						a specific post tag to filter posts for other topics.
+					</p>
+				</div>
+				<div class="md:col-span-2">
+					<TagsCard />
+				</div>
+			</div>
+
+			<div class="mr-auto max-w-xl">
+				<ul class="mt-20 grid grid-cols-1 justify-center gap-8">
+				{
+					filteredPosts.map((post) => (
+						<li>
+							<PostCardBasic post={post} showDescription={true} />
+						</li>
+					))
+				}
+				</ul>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

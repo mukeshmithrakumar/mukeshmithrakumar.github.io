@@ -1,0 +1,52 @@
+---
+import { Icon } from "astro-icon/components";
+
+// components
+import NavLink from "@components/Nav/NavLink.astro";
+import { type navDropdownItem } from "@config/navData.json";
+
+interface Props {
+	navItem: navDropdownItem;
+}
+
+const { navItem } = Astro.props as Props;
+---
+
+<!-- non-mobile dropdown menu -->
+<li class="dropdown group relative">
+	<button
+		class="primary-focus flex items-center gap-1 px-3 py-2 font-medium"
+		type="button"
+		aria-label={`${navItem.text} dropdown menu`}
+	>
+		{navItem.text}
+		<Icon name="tdesign:chevron-down" aria-hidden="true" class="h-5 w-5" />
+	</button>
+	<div class="dropdown-content invisible absolute z-10 opacity-0 transition-all">
+		<ul class="theme-overlay mt-4 w-[10rem] max-w-[20rem] min-w-[9rem] border border-solid p-1.5">
+			{navItem.dropdown.map((dropdownItem) => <NavLink navItem={dropdownItem} />)}
+		</ul>
+	</div>
+</li>
+
+<style>
+	@import "tailwindcss/theme" theme(reference);
+	@import "@/styles/tailwind-theme.css" theme(reference);
+
+	.dropdown {
+		&:hover > .dropdown-content,
+		&:focus-within > .dropdown-content {
+			animation: navDropdownSlideInAnimation ease-out 0.2s forwards;
+			@apply visible opacity-100;
+		}
+	}
+
+	@keyframes navDropdownSlideInAnimation {
+		0% {
+			top: 80%;
+		}
+		100% {
+			top: 100%;
+		}
+	}
+</style>

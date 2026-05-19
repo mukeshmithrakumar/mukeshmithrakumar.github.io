@@ -1,0 +1,19 @@
+---
+// components
+import NewsletterForm from "@components/Forms/NewsletterForm.astro";
+---
+
+<section id="newsletter" class="my-12">
+	<div class="theme-panel theme-panel-muted border-primary-500 border px-4 py-16 md:px-6">
+		<div class="mx-auto max-w-lg">
+			<h3 class="h2 text-center">Stay in the loop</h3>
+			<p class="mt-2 text-center opacity-90">
+				Notes from the trenches on building, scaling, and shipping production ML systems.
+			</p>
+			<NewsletterForm name="cta-newsletter" class="mx-auto mt-4 max-w-[400px]" />
+			<p class="mt-3 text-center text-xs opacity-90">
+				Occasional emails. Only when there's something worth sharing.
+			</p>
+		</div>
+	</div>
+</section>

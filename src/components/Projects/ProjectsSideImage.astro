@@ -1,0 +1,35 @@
+---
+/**
+ * * These are alternating side cards with titles, text, and images
+ * Recommend using 2 or 3 cards in a row
+ */
+
+// components
+import ProjectCard from "@components/ProjectCard/ProjectCardSideImage.astro";
+
+// utils
+import { getAllProjects } from "@js/projectUtils";
+
+interface Props {
+	showDescription?: boolean;
+}
+
+const { showDescription = true } = Astro.props as Props;
+const projects = await getAllProjects();
+---
+
+<section id="projects" class="site-container">
+	<div class="mx-auto max-w-lg md:max-w-full">
+		<div class="mt-20 grid gap-4 gap-y-12 md:mt-28">
+			{
+				projects.map((project, idx) => (
+					<ProjectCard
+						project={project}
+						imageSide={idx % 2 === 0 ? "left" : "right"}
+						showDescription={showDescription}
+					/>
+				))
+			}
+		</div>
+	</div>
+</section>

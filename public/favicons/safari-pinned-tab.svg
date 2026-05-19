@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Outer circle -->
+  <circle cx="256" cy="256" r="220" fill="black"/>
+
+  <!-- Arrow shape -->
+  <path fill="white" d="
+    M256 60
+    L370 420
+    Q260 360 150 420
+    Z
+  "/>
+
+  <!-- Star -->
+  <path fill="black" d="
+    M256 200
+    L270 240
+    L310 240
+    L275 265
+    L290 305
+    L256 280
+    L222 305
+    L237 265
+    L202 240
+    L242 240
+    Z
+  "/>
+</svg>

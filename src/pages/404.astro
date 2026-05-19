@@ -1,0 +1,23 @@
+---
+// main layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import Button from "@components/Button/Button.astro";
+---
+
+<BaseLayout title="404" description="Error 404 page not found." noindex={true}>
+	<section class="site-container pt-24 md:pt-36">
+		<div class="w-full py-20 text-center md:py-32">
+			<div class="mx-auto max-w-xl px-4 text-center">
+				<h1 class="h1">404.</h1>
+				<p class="description mt-4">
+					Apologies, one of our links must have broken. Please try again or go back to the homepage.
+				</p>
+				<div class="mt-8 flex justify-center">
+					<Button variant="primary" href="/">Go to homepage</Button>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

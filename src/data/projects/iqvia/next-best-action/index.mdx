@@ -1,0 +1,137 @@
+---
+title: Next Best Action Recommendation System
+description: Built a global, AI-driven decisioning system to prioritize sales and marketing actions through personalized, data-driven recommendations at scale.
+draft: false
+pubDate: 2026-05-01
+updatedDate: 2026-05-01
+heroImage: ./next-best-action.jpg
+client: IQVIA
+role: Senior ML Engineer
+year: 2020-2024
+projectUrl: https://www.iqvia.com/solutions/commercialization/commercial-analytics/orchestrated-analytics/next-best
+repoUrl:
+---
+
+## Overview
+
+The Next Best Action (NBA) system is an AI-driven decisioning engine that recommends the most effective action a commercial user should take for a given account or healthcare provider (HCP). Rather than focusing on isolated message recommendations, the system prioritizes what to do next—such as outreach, channel selection, and follow-up strategy.
+
+The system was deployed globally and used across multiple regions, supporting sales and marketing teams with consistent, data-driven guidance. It enabled organizations to move from manual, intuition-driven workflows to scalable, prioritized engagement strategies grounded in behavioral data.
+
+## Problem
+
+- Sales and marketing decisions were manual, inconsistent, and dependent on individual experience  
+- No unified prioritization existed across accounts, channels, or actions  
+- Large volumes of interaction data were underutilized due to noise and fragmentation  
+- Feedback signals were sparse and indirect, making optimization difficult  
+- Naive recommendation approaches led to repetitive actions and reduced effectiveness over time  
+
+## Constraints
+
+- Large-scale datasets with high-cardinality entities (accounts, users, actions)  
+- High-volume interaction logs requiring distributed batch processing  
+- Noisy behavioral data requiring filtering, aggregation, and feature extraction  
+- Sparse feedback signals where engagement is only a proxy for success  
+- Need to balance relevance with diversity to avoid over-targeting and fatigue  
+- Computational constraints when generating recommendations at scale  
+
+## Approach
+
+Framed the problem as a ranking task: for each account, generate and rank a set of candidate actions based on expected impact.
+
+Built a batch-driven recommendation pipeline consisting of:
+
+- Distributed data processing using Dask on Kubeflow to scale pandas-based transformations  
+- Interaction preprocessing to filter low-signal events, aggregate behavior, and extract features such as recency, frequency, and engagement strength  
+- A Neural Factorization Machine (NFM) model to capture higher-order feature interactions across users, accounts, and actions  
+- Post-processing steps to ensure diversity and avoid repetitive recommendations  
+
+In addition, introduced configurable business-rule controls (“knobs”) that allowed sales and marketing users to tune recommendation outputs based on strategy, campaign goals, or regional needs.
+
+Prioritized:
+- Data quality and feature engineering  
+- Scalable batch processing over real-time systems  
+- Flexibility to adapt recommendations to business constraints  
+
+## System Design
+
+The system is a distributed batch pipeline built on Kubeflow and Dask.
+
+**Data Processing Layer**
+- Interaction data is processed using Dask clusters deployed via Kubernetes  
+- Jobs are orchestrated through Kubeflow Pipelines  
+- Data is partitioned by region and segment to support global deployments  
+- Preprocessing includes filtering irrelevant interactions, aggregating events, and constructing behavioral features  
+
+**Modeling Layer**
+- Neural Factorization Machine (NFM) is trained offline on aggregated interaction data  
+- Feature space includes behavioral signals, contextual attributes, and temporal patterns  
+- Model captures non-linear interactions between users, accounts, and actions  
+
+**Recommendation Layer**
+- Candidate actions are generated per account in batch  
+- Actions are scored and ranked using the trained model  
+- Business-rule tuning and post-processing adjust outputs based on strategic priorities and diversity considerations  
+
+Recommendations are materialized and consumed downstream in sales and marketing workflows.
+
+## Key Decisions
+
+### Frame the problem as action-level ranking
+
+Shifting from message-level recommendations to action-level decisioning aligned the system with real-world workflows and enabled better prioritization across channels and strategies.
+
+### Use Neural Factorization Machines for modeling
+
+NFM allowed the system to capture higher-order feature interactions while remaining practical for large-scale batch training and inference.
+
+### Introduce business-controlled tuning mechanisms
+
+Exposing configurable knobs enabled:
+- Alignment with evolving business strategies  
+- Flexibility across regions and user roles  
+- Faster iteration without retraining models  
+
+However, this also introduced variability depending on how effectively users tuned the system.
+
+### Build a batch-first distributed system
+
+A batch architecture provided:
+- Scalable processing of large interaction datasets  
+- Operational simplicity and reliability  
+- Flexibility to adapt pipelines across regions  
+
+## Results & Impact
+
+- **Adoption:** Recommendation utilization exceeded 90% in several deployments, indicating strong user trust and alignment with workflows :contentReference[oaicite:0]{index=0}  
+- **Field Productivity:** 93% increase in top-tier accounts achieving call plan targets :contentReference[oaicite:1]{index=1}  
+- **Engagement:**  
+  - 4x increase in rep-triggered email send rates  
+  - 14x increase in marketing consent opt-ins :contentReference[oaicite:2]{index=2}  
+- **Scale:** Deployed across global teams, supporting thousands of users and adapting to regional engagement patterns :contentReference[oaicite:3]{index=3}  
+
+The system enabled a shift from manual prioritization to consistent, data-driven decision-making across commercial operations.
+
+## Tradeoffs
+
+- Batch processing limited responsiveness to recent behavioral changes  
+- Neural models increased dependency on feature quality and training data consistency  
+- Business-rule tuning improved flexibility but introduced user-dependent performance variability  
+- Lack of a closed feedback loop meant the system did not automatically learn from user adjustments or outcomes  
+- Compute cost increased with large-scale batch scoring  
+
+## Learnings
+
+- Combining ML ranking with user-controlled business logic is often necessary in enterprise systems  
+- Model sophistication alone is insufficient—how outputs are controlled and consumed is equally important  
+- User-level tuning improves adoption but creates uneven outcomes across users  
+- Absence of a feedback loop limits long-term system optimization  
+- Neural models are effective but remain heavily dependent on upstream data quality  
+
+## Future Work
+
+- Introduce a closed feedback loop to learn from user actions and outcomes  
+- Replace manual tuning with adaptive, data-driven optimization  
+- Implement contextual bandits to balance exploration and exploitation  
+- Improve consistency across users through guided tuning strategies  
+- Incorporate sequence-aware models for multi-step action planning  

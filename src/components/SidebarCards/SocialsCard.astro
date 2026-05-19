@@ -1,0 +1,37 @@
+---
+// components
+import BaseCard from "@components/SidebarCards/BaseCard.astro";
+import SocialIcon from "@components/SocialIcon/SocialIcon.astro";
+
+// utils
+import { humanize } from "@js/textUtils";
+
+// data
+import siteData from "@config/siteData.json";
+---
+
+<BaseCard title="Social Links" icon="tdesign:share">
+	<div class="mt-2 flex flex-col gap-4">
+		{
+			siteData.socialLinks.map((social) =>
+				social.platform === "email" ? null : (
+					<SocialIcon
+						href={social.link}
+						social={social.platform}
+						text={`Follow on ${humanize(social.platform)}`}
+						class="description !p-0 text-sm md:text-base"
+					/>
+				),
+			)
+		}
+	</div>
+
+	<!-- <hr class="my-2 border-base-600" />
+
+	<SocialIcon
+		href={`mailto:${siteData.author.email}`}
+		social="email"
+		text={siteData.author.email}
+		class="description !p-0 text-sm md:text-base"
+	/> -->
+</BaseCard>

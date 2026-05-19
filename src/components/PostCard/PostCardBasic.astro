@@ -1,0 +1,49 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+
+// components
+import Tag from "@components/Tag/Tag.astro";
+
+// utils
+import { formatDate, humanize } from "@js/textUtils";
+import { getAllAuthorsData, getPostUrl } from "@js/blogUtils";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+	showDescription?: boolean;
+	class?: string;
+	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { post, showDescription = false, class: className, ...rest } = Astro.props as Props;
+const { title, description, tags, authors, pubDate, heroImage } = post.data;
+
+const authorsData = await getAllAuthorsData(authors);
+const postUrl = getPostUrl(post);
+---
+
+<article class=`flex flex-col ${className}` {...rest}>
+	<div class="w-full">
+		<div class="flex flex-wrap items-center gap-4">
+			<!-- tags -->
+			<div class="flex flex-wrap gap-4">
+				{tags.map((tag) => <Tag {tag} />)}
+			</div>
+			<!-- published date -->
+			<p class="description whitespace-nowrap">
+				{formatDate(pubDate)}
+			</p>
+		</div>
+
+		<!-- title -->
+		<div class="group mt-2">
+			<a class="underline-ltr text-base font-medium md:text-lg/tight" href={postUrl}>
+				{title}
+			</a>
+		</div>
+
+		<!-- description -->
+		{showDescription && description && <p class="description mt-1 text-sm lg:text-base">{description}</p>}
+	</div>
+</article>

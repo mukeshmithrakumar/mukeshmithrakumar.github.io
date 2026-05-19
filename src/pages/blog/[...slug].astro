@@ -1,0 +1,63 @@
+---
+import { render } from "astro:content";
+import { type InferGetStaticPropsType } from "astro";
+import { Image } from "astro:assets";
+
+// layout
+import BlogLayout from "@layouts/BlogLayoutSidebar.astro";
+
+// components
+import Admonition from "@components/Admonition/Admonition.astro";
+import Newsletter from "@components/Cta/Newsletter.astro";
+import ExternalLink from "@components/MarkdownComponents/ExternalLink.astro";
+import MathBlock from "@components/MarkdownComponents/MathBlock.astro";
+import MathInline from "@components/MarkdownComponents/MathInline.astro";
+import ResultToggle from "@components/MarkdownComponents/ResultToggle.astro";
+
+// utils
+import {
+	getAdjacentPosts,
+	getAllPosts,
+	getPostSlug,
+	getRelatedPosts,
+	getSeriesPosts,
+} from "@js/blogUtils";
+
+export async function getStaticPaths() {
+	const posts = await getAllPosts();
+
+	return posts.map((post) => ({
+		params: { slug: getPostSlug(post) },
+		props: post,
+	}));
+}
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const post = Astro.props as Props;
+const { Content, headings } = await render(post);
+const allPosts = await getAllPosts();
+const relatedPosts = getRelatedPosts(post, allPosts, 3);
+const { previousPost, nextPost } = getAdjacentPosts(post, allPosts);
+const seriesPosts = getSeriesPosts(post, allPosts);
+---
+
+<BlogLayout
+	post={post}
+	headings={headings}
+	relatedPosts={relatedPosts}
+	previousPost={previousPost}
+	nextPost={nextPost}
+	seriesPosts={seriesPosts}
+>
+	<Content
+		components={{
+			a: ExternalLink,
+			Admonition,
+			Image,
+			MathBlock,
+			MathInline,
+			Newsletter,
+			ResultToggle,
+		}}
+	/>
+</BlogLayout>

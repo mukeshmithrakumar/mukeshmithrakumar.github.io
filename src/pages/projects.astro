@@ -1,0 +1,28 @@
+---
+// layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import ProjectsSideImage from "@components/Projects/ProjectsSideImage.astro";
+import ProjectsVerticalCards from "@components/Projects/ProjectsVerticalCards.astro";
+---
+
+<BaseLayout
+	title={`Projects I've worked on`}
+	description="Discover some of the previous projects I've worked on. From web development to design, I've had the pleasure of working on a variety of projects."
+>
+	<section id="projects-hero" class="site-container pt-36 md:pt-44">
+		<div class="mx-auto grid w-full max-w-lg items-start gap-10 md:max-w-full md:grid-cols-5">
+			<div class="md:col-span-3">
+				<h1 class="h2">
+					My <span class="text-primary-600">projects</span>
+				</h1>
+				<p class="description mt-6">
+					Discover some of the previous projects I've worked on. From web development to design,
+					I've had the pleasure of creating exciting experiences.
+				</p>
+			</div>
+		</div>
+	</section>
+	<ProjectsVerticalCards />
+</BaseLayout>

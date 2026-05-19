@@ -1,0 +1,329 @@
+---
+title: "Machine Learning: Classification"
+slug: machine-learning-classification
+description: ""
+draft: true
+authors:
+  - mithraics
+pubDate: 2019-08-11
+updatedDate: 2026-04-20
+heroImage: ./heroImage.png
+tags:
+  - ML
+---
+
+### What is classification?
+
+Classification is the task of predicting the value of a categorical variable (target or class) by building a model based on one or more numerical and/or categorical variables (predictors or attributes).
+
+Main classification algorithms:
+- Logistic Regression
+- Linear Discriminant Analysis
+- ZeroR
+- OneR
+- Naive Bayesian
+- Decision Tree Classifier
+- Random Forest Classifier
+- K Nearest Neighbor Classifier
+- Support Vector Machine
+
+### What is Logistic Regression?
+
+Logistic regression predicts the probability of an outcome that can only have two values (i.e. a dichotomy). The prediction is based on the use of one or several predictors (numerical and categorical). A linear regression is not appropriate for predicting the value of a binary variable for two reasons:
+- A linear regression will predict values outside the acceptable range (e.g. predicting probabilities
+outside the range 0 to 1)
+- Since the dichotomous experiments can only have one of two possible values for each experiment, the residuals will not be normally distributed about the predicted line.
+
+On the other hand, a logistic regression produces a logistic curve, which is limited to values between 0 and 1. Logistic regression is similar to a linear regression, but the curve is constructed using the natural logarithm of the odds of the target variable, rather than the probability. Moreover, the predictors do not have to be normally distributed or have equal variance in each group.
+
+In the logistic regression the constant $(b_0)$ moves the curve left and right and the slope $(b_1)$ defines the steepness of the curve. By simple transformation, the logistic regression equation can be written in terms of an odds ratio.
+
+<MathBlock formula={String.raw`\frac{p}{1-p} = exp(b_0 + b_1 x) \tag{}`} />
+
+Finally, taking the natural log of both sides, we can write the equation in terms of log-odds (logit) which is a linear function of the predictors. The coefficient $(b_1)$ is the amount the logit (log-odds) changes with a one unit change in $x$.
+
+<MathBlock formula={String.raw`ln \left(\frac{p}{1-p}\right) = b_0 + b_1 x \tag{}`} />
+
+As mentioned before, logistic regression can handle any number of numerical and/or categorical variables.
+
+<MathBlock formula={String.raw`p = \frac{1}{1 + e^{-(b_0 + b_1 x_1 + b_2 x_2 + \dots + b_p x_p)}} \tag{}`} />
+
+Where $p$ is the Sigmoid function.
+
+There are several analogies between linear regression and logistic regression. Just as ordinary least square regression is the method used to estimate coefficients for the best fit line in linear regression, logistic regression uses maximum likelihood estimation (MLE) to obtain the model coefficients that relate predictors to the target (Learn more about [Maximum Likelihood Estimation\]()).
+
+After this initial function is estimated, the process is repeated until LL (Log Likelihood) does not change significantly.
+
+<MathBlock formula={String.raw`\beta^1 = \beta^0 + [X^TWX]^{-1} X^T(y - \mu) \tag{}`} />
+
+where:
+
+$\beta$ is a vector of the logistic regression coefficients.
+
+$W$ is a square matrix of order $N$ with elements $n_i \pi_i(1 - \pi_i)$ on the diagonal and zeros everywhere else.
+
+$\mu$ is a vector of length $N$ with elements $\mu_i = n_i \pi_i$.
+
+A $pseudo \ R^2$ value is also available to indicate the adequacy of the regression model. **Likelihood ratio test** is a test of the significance of the difference between the likelihood ratio for the baseline model minus the likelihood ratio for a reduced model. This difference is called *model chi-square*. **Wald test** is used to test the statistical significance of each coefficient $(b)$ in the model (i.e., predictors contribution).
+
+### What is the pseudo R^2 Test?
+
+There are several measures intended to mimic the $R^2$ analysis to evaluate the goodness-of-fit of logistic models, but they cannot be interpreted as one would interpret an $R^2$ and different pseudo $R^2$ can arrive at very different values. Here we discuss three pseudo $R^2$ measures.
+
+<table>
+  <thead>
+    <tr>
+      <th>Pseudo R2</th>
+      <th>Equation</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Efron's</td>
+      <td><MathBlock formula={String.raw`R^2 = 1 - \frac{\sum_{i=1}^n(y_i - p_i)^2}{\sum_{i=1}^n(y_i - \bar{y})^2}`} /></td>
+      <td><code>p</code> is the logistic model predicted probability. The model residuals are squared, summed, and divided by the total variability in the dependent variable.</td>
+    </tr>
+    <tr>
+      <td>McFadden's</td>
+      <td><MathBlock formula={String.raw`R^2 = 1 - \frac{LL_{\text{full model}}}{LL_{intercept}}`} /></td>
+      <td>The ratio of the log-likelihoods suggests the level of improvement over the intercept model offered by the full model.</td>
+    </tr>
+    <tr>
+      <td>Count</td>
+      <td><MathBlock formula={String.raw`R^2 = \frac{\text{No. Corrects}}{\text{Total Count}}`} /></td>
+      <td>The number of records correctly predicted, given a cutoff point of .5 divided by the total count of cases. This is equal to the accuracy of a classification model.</td>
+    </tr>
+  </tbody>
+</table>
+
+### What is the Likelihood Ratio Test?
+
+The likelihood ratio test provides the means for comparing the likelihood of the data under one model (e.g., full model) against the likelihood of the data under another, more restricted model (e.g., intercept model).
+
+where $'p'$ is the logistic model predicted probability. The next step is to calculate the difference between these two log-likelihoods.
+
+<MathBlock formula={String.raw`2(LL_1 - LL_2) \tag{}`} />
+
+The difference between two likelihoods is multiplied by a factor of 2 in order to be assessed for statistical significance using standard significance levels $(Chi^2 \ test)$. The degrees of freedom for the test will equal the difference in the number of parameters being estimated under the models (e.g.,full and intercept).
+
+### What is Wald Test?
+
+A Wald test is used to evaluate the statistical significance of each coefficient $(b)$ in the model.
+
+<MathBlock formula={String.raw`W_j = \frac{b_j}{SE_{b_j}} \tag{}`} />
+
+where $W$ is the Wald's statistic with a normal distribution (like Z-test), $b$ is the coefficient and $SE$ is its standard error. The $W$ value is then squared, yielding a Wald statistic with a chi-square distribution.
+
+<MathBlock formula={String.raw`SE_j = sqrt(diag(H^{-1})_j) \\[0.7em]
+H = [X^TWX]`} />
+
+### What is the cost function for logistic regression?
+
+Unfortunately we can't (or at least shouldn't) use the same cost function MSE (L2) as we did for linear regression simply because our prediction function is non-linear (due to sigmoid transform). Squaring this prediction as we do in MSE results in a non-convex function with many local minimums. If our cost function has many local minimums, gradient descent may not find the optimal global minimum.
+
+Instead of Mean Squared Error, we use a cost function called Cross-Entropy, also known as Log Loss. Cross-entropy loss can be divided into two separate cost functions: one for $y = 1$ and one for $y = 0$.
+
+<MathBlock formula={String.raw`J(\theta) = \frac{1}{m} \sum_{i=1}^m Cost(h_{\theta}(x^{(i)}), y^{(i)}) \\[0.7em]
+Cost(h_{\theta}(x), y) = -log(h_{\theta}(x)) \hspace{2em} if \ y = 1 \\[0.7em]
+Cost(h_{\theta}(x), y) = -log(1 - h_{\theta}(x)) \hspace{2em} if \ y = 0`} /> ()
+
+The benefits of taking the logarithm reveal themselves when you look at the cost function graphs for y=1 and y=0. These smooth monotonic functions (always increasing or always decreasing) make it easy to calculate the gradient and minimize cost.
+
+The key thing to note is the cost function penalizes confident and wrong predictions more than it rewards confident and right predictions! The corollary is increasing prediction accuracy (closer to 0 or 1) has diminishing returns on reducing cost due to the logistic nature of our cost function.
+
+The above function compressed into one:
+
+<MathBlock formula={String.raw`J(\theta) = -\frac{1}{m} \sum_{i=1}^m [y^{(i)} log(h_{\theta}(x^{(i)})) \ + \ (1-y^{(i)})  log(1 - h_{\theta}(x^{(i)}))] \tag{}`} />
+
+### What is Linear Discriminant Analysis?
+
+Linear Discriminant Analysis (LDA) is a classification method originally developed in 1936 by R. A. Fisher. It is simple, mathematically robust and often produces models whose accuracy is as good as more complex methods.
+
+LDA is based upon the concept of searching for a linear combination of variables (predictors) that best separates two classes (targets). To capture the notion of separability, Fisher defined the following score function.
+
+<MathBlock formula={String.raw`{Z = \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_d x_d \\[0.7em]
+\text{Score Function} \rightarrow S(\beta) = \frac{\beta^T \mu_1 - \beta^T \mu_2}{\beta^T C \beta} \\[1em]
+S(\beta) = \frac{\bar{Z}_1 - \bar{Z}_2}{\text{Variance of Z within groups}}
+\tag{}}`} />
+
+Given the score function, the problem is to estimate the linear coefficients that maximize the score which can be solved by the following equations.
+
+<MathBlock formula={String.raw`{\beta = C^{-1}(\mu_1 - \mu_2) \\[0.8em]
+C = \frac{1}{n_1 + n_2}(n_1 C_1 + n_2 C_2) \\[0.8em]
+\text{where} \\
+\beta: \text{Linear model coefficients} \\
+C_1 , C_2 : \text{Covariance matrices} \\
+\mu_1 , \mu_2 : \text{Mean vectors}
+\tag{}}`} />
+
+One way of assessing the effectiveness of the discrimination is to calculate the **Mahalanobis distance** $(\Delta)$ between two groups. A distance greater than 3 means that in two averages differ by more than 3 standard deviations. It means that the overlap (probability of misclassification) is quite small.
+
+<MathBlock formula={String.raw`\Delta^2 = \beta^T (\mu_1 - \mu_2) \tag{}`} />
+
+Finally, a new point is classified by projecting it onto the maximally separating direction and classifying it as C1 if:
+
+<MathBlock formula={String.raw`\beta^T \left(x - \frac{(\mu_1 + \mu_2)}{2}\right) > -log \frac{p(c_1)}{p(c_2)} \tag{}`} />
+
+### What is ZeroR?
+
+ZeroR is the simplest classification method which relies on the target and ignores all predictors. ZeroR classifier simply predicts the majority category (class). Although there is no predictability power in ZeroR, it is useful for determining a baseline performance as a benchmark for other classification methods.
+
+### What is OneR?
+
+OneR, short for "One Rule", is a simple, yet accurate, classification algorithm that generates one rule for each predictor in the data, then selects the rule with the smallest total error as its "one rule". To create a rule for a predictor, we construct a frequency table for each predictor against the target. It has been shown that OneR produces rules only slightly less accurate than state-of-the-art classification algorithms while producing rules that are simple for humans to interpret.
+
+### What is Naive Bayes Classifier?
+
+The Naive Bayes classifier is based on Bayes' theorem with the independence assumptions between predictors. A Naive Bayesian model is easy to build, with no complicated iterative parameter estimation which makes it particularly useful for very large datasets. Despite its simplicity, the Naive Bayesian classifier often does surprisingly well and is widely used because it often outperforms more sophisticated classification methods.
+
+Bayes theorem provides a way of calculating the posterior probability, $P(c|x)$, from $P(c)$, $P(x)$, and $P(x|c)$. Naive Bayes classifier assume that the effect of the value of a predictor $(x)$ on a given class $(c)$ is independent of the values of other predictors. This assumption is called class conditional independence.
+
+<MathBlock formula={String.raw`P(c|x) = \frac{P(x|c) \ P(c)}{P(x)} \tag{}`} />
+
+- P(c|x) : is the posterior probability of the class (target) given predictor (attribute)
+- P(c) : is the prior probability of the class
+- P(x|c) : is the likelihood which is the probability of predictor given class
+- P(x) : is the prior probability of the predictor
+
+In ZeroR model there is no predictor, in OneR model we try to find the single best predictor, naive Bayesian includes all predictors using Bayes' rule and the independence assumptions between predictors.
+
+The posterior probability can be calculated by first, constructing a frequency table for each attribute against the target. Then, transforming the frequency tables to likelihood tables and finally use the Naive Bayesian equation to calculate the posterior probability for each class. The class with the highest posterior probability is the outcome of prediction.
+
+Numerical variables need to be transformed to their categorical counterparts (binning) before constructing their frequency tables. The other option we have is using the distribution of the numerical variable to have a good guess of the frequency. For example, one common practice is to assume normal distributions for numerical variables.
+
+The probability density function for the normal distribution is defined by two parameters (mean and standard deviation).
+
+Kononenko's information gain as a sum of information contributed by each attribute can offer an explanation on how values of the predictors influence the class probability.
+
+<MathBlock formula={String.raw`log_2 P(c|x) - log_2 P(c) \tag{}`} />
+
+The contribution of predictors can also be visualized by plotting nomograms. Nomogram plots log odds ratios for each value of each predictor. Lengths of the lines correspond to spans of odds ratios, suggesting importance of the related predictor. It also shows impacts of individual values of the predictor.
+
+### What is Decision Tree Classifier?
+
+Learn more about Decision Tree basics at [Decision Tree Regression]().
+
+Attribute selection measure is a heuristic for selecting the splitting criterion that partition data into the best possible manner. It is also known as splitting rules because it helps us to determine breakpoints for tuples on a given node. ASM provides a rank to each feature(or attribute) by explaining the given dataset. Best score attribute will be selected as a splitting attribute.
+
+In the case of a continuous-valued attribute, split points for branches also need to define. Most popular selection measures are Information Gain, Gain Ratio, and Gini Index.
+
+### What is Information Gain?
+
+Shannon invented the concept of entropy, which measures the impurity of the input set. In physics and mathematics, entropy referred as the randomness or the impurity in the system. In information theory, it refers to the impurity in a group of examples. Information gain is the decrease in entropy. Information gain computes the difference between entropy before split and average entropy after split of the dataset based on given attribute values. ID3 (Iterative Dichotomiser) decision tree algorithm uses information gain.
+
+<MathBlock formula={String.raw`Info(D) = - \sum_{i=1}^m p(i) log_2 p(i) \tag{}`} />
+
+where, $p(i)$ is the probability that an arbitrary tuple in $D$ belongs to class $c(i)$.
+
+<MathBlock formula={String.raw`{Info_A(D) = \sum_{j=1}^v \frac{|D_j|}{|D|} \times Info(D) \\[1em]
+Gain(A) = Info(D) - Info_A(D)
+\tag{}}`} />
+
+where:
+- $Info(D)$ is the average amount of information needed to identify the class label of a tuple in $D$.
+- `|D_j| / |D|` acts as the weight of the jth partition.
+- $Info_A(D)$ is the expected information required to classify a tuple from $D$ based on the partitioning by $A$.
+
+The attribute $A$ with the highest information gain, $Gain(A)$, is chosen as the splitting attribute at node $N$.
+
+### What is Gain Ratio?
+
+Information gain is biased for the attribute with many outcomes. It means it prefers the attribute with a large number of distinct values. C4.5, an improvement of ID3, uses an extension to information gain known as the gain ratio. Gain ratio handles the issue of bias by normalizing the information gain using Split Info.
+
+<MathBlock formula={String.raw`SplitInfo_A(D) = - \sum_{j=1}^v \frac{|D_j|}{|D|} \times log_2 \left(\frac{|D_j|}{|D|}\right) \tag{}`} />
+
+where:
+- `|D_j| / |D|` acts as the weight of the jth partition.
+- $v$ is the number of discrete values in attribute $A$.
+
+The gain ratio can be defined as:
+
+<MathBlock formula={String.raw`\text{Gain Ratio(A)} = \frac{Gain(A)}{SplitInfo_A(D)} \tag{}`} />
+
+The attribute with the highest gain ratio is chosen as the splitting attribute.
+
+### What is Gini Index?
+
+Another decision tree algorithm CART (Classification and Regression Tree) uses the Gini method to create split points.
+
+<MathBlock formula={String.raw`Gini(D) = 1 - \sum_{i=1}^m p(i)^2 \tag{}`} />
+
+where, $p(i)$ is the probability that an arbitrary tuple in $D$ belongs to class $c(i)$.
+
+The Gini Index considers a binary split for each attribute. You can compute a weighted sum of the impurity of each partition. If a binary split on attribute $A$ partitions data $D$ into $D1$ and $D2$, the Gini index of $D$ is:
+
+<MathBlock formula={String.raw`Gini_A(D) = \frac{|D_1|}{|D|} Gini(D_1) + \frac{|D_2|}{|D|} Gini(D_2) \tag{}`} />
+
+In case of a discrete-valued attribute, the subset that gives the minimum gini index for that chosen is selected as a splitting attribute. In the case of continuous-valued attributes, the strategy is to select each pair of adjacent values as a possible split-point and point with smaller gini index chosen as the splitting point.
+
+<MathBlock formula={String.raw`\Delta Gini(A) = Gini(D) - Gini_A(D) \tag{}`} />
+
+The attribute with minimum Gini index is chosen as the splitting attribute.
+
+### What is Random Forest Classifier?
+
+Random Forest adds additional randomness to the model, while growing the trees. Instead of searching for the most important feature while splitting a node, it searches for the best feature among a random subset of features. This results in a wide diversity that generally results in a better model.
+
+Therefore, in Random Forest, only a random subset of the features is taken into consideration by the algorithm for splitting a node. You can even make trees more random, by additionally using random thresholds for each feature rather than searching for the best possible thresholds (like a normal decision tree does).
+
+Advantages:
+- Random forests is considered as a highly accurate and robust method because of the number of decision trees participating in the process.
+- It does not suffer from the over-fitting problem. The main reason is that it takes the average of all the predictions, which cancels out the biases.
+- Random forests can also handle missing values. There are two ways to handle these: using median values to replace continuous variables, and computing the proximity-weighted average of missing values.
+- You can get the relative feature importance, which helps in selecting the most contributing features for the classifier.
+
+Disadvantages:
+- Random forests is slow in generating predictions because it has multiple decision trees. Whenever it makes a prediction, all the trees in the forest have to make a prediction for the same given input and then perform voting on it. This whole process is time-consuming.
+- The model is difficult to interpret compared to a decision tree, where you can easily make a decision by following the path in the tree.
+
+### What is K Nearest Neighbor Classifier?
+
+K-Nearest Neighbors (or "KNN") is the logical extension of Nearest Neighbor. Instead of looking at just the single nearest data point to predict an outcome, we look at several of the nearest neighbors,with *k* representing the number of neighbors we choose to look at. Each of the *k* neighbors gets to vote on what the predicted outcome should be.
+
+This does a couple of valuable things. Firstly, it smooths out the predictions. If only one neighbor gets to influence the outcome, the model explicitly overfits to the training data. Any single outlier can create pockets of one category prediction surrounded by a sea of the other category.
+
+This also means instead of just predicting classes, we get implicit probabilities. If each of the *k* neighbors gets a vote on the outcome, then the probability of the test example being from any given class *i* is:
+
+<MathBlock formula={String.raw`\frac{votes_i}{k} \tag{}`} />
+
+### What is Support Vector Machine?
+
+A Support Vector Machine (SVM) performs classification by finding the hyperplane that maximizes the margin between the two classes. The vectors (cases) that define the hyperplane are the support vectors.
+
+Algorithm:
+1. Define an optimal hyperplane: maximize margin
+2. Extend the above definition for non-linearly separable problems: have a penalty term for misclassifications.
+3. Map data to high dimensional space where it is easier to classify with linear decision surfaces: reformulate problem so that data is mapped implicitly to this space.
+
+To define an optimal hyperplane we need to maximize the width of the margin $(w)$.
+
+"http://www.saedsayad.com/support_vector_machine.htm" Image
+
+We find $w$ and $b$ by solving the following objective function using Quadratic Programming.
+
+<MathBlock formula={String.raw`{min \frac{1}{2} \| w \| ^2 \\[0.7em]
+s.t. \ y_i(w \cdot x_i + b) \geq 1, \forall x_i
+\tag{}}`} />
+
+The beauty of SVM is that if the data is linearly separable, there is a unique global minimum value. An ideal SVM analysis should produce a hyperplane that completely separates the vectors (cases) into two non-overlapping classes. However, perfect separation may not be possible, or it may result in a model with so many cases that the model does not classify correctly. In this situation SVM finds the hyperplane that maximizes the margin and minimizes the misclassifications.
+
+Real-world data is typically messy. You will almost always have a few instances that a linear classifier can't get right. SVMs allow you to specify how many errors you are willing to accept. You can provide a parameter called “C” to your SVM; this allows you to dictate the tradeoff between:
+- Having a wide margin.
+- Correctly classifying training data. A higher value of C implies you want lesser errors on the training data.
+
+It bears repeating that this is a tradeoff. You get better classification of training data at the expense of a wide margin.
+
+An important practical problem is to decide on a good value of C. Since real-world data is almost never cleanly separable, this need comes up often. We typically use a technique like cross-validation to pick a good value for C.
+
+A lot of real world data are non-linearly separable data and finding a hyperplane wouldn't work in such situations. So what we do is, we project the data into a space where it is linearly separable and find a hyperplane in this space.
+
+Cover's Theorem is a statement in computational learning theory and is one of the primary theoretical motivations for the use of non-linear kernel methods in machine learning applications. The theorem states that given a set of training data that is not linearly separable, one can with high probability transform it into a training set that is linearly separable by projecting it into a higher-dimensional space via some non-linear transformation. This is how we know projecting into a higher dimension would likely yield a linearly separable data.
+
+You don't have to manually project the data first and do the SVM later. SVMs do these projections for you by using something called *kernels*.
+
+If we have n points in our dataset, the SVM needs only the dot product of each pair of points to find a classifier. Just that. This is also true when we want to project data to higher dimensions. We don't need to provide the SVM with exact projections; we need to give it the dot product between all pairs of points in the projected space.
+
+This is relevant because this is exactly what kernels do. A kernel, short for *kernel function*, takes as input two points in the original space, and directly gives us the dot product in the projected space.
+
+Most SVM libraries already come pre-packaged with some popular kernels like Polynomial, Radial Basis Function (RBF), and Sigmoid. When we don't use a projection (as in our first example in this article), we compute the dot products in the original space — this we refer to as using the linear kernel.

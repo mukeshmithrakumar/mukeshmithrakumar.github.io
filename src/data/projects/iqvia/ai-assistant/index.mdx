@@ -1,0 +1,119 @@
+---
+title: IQVIA AI Assistant (LLM-Powered Orchestrated Analytics)
+description: Contributed to the design and development of an LLM-powered AI Assistant within IQVIA Orchestrated Analytics, enabling life sciences teams to move from insights to actions through a unified conversational interface.
+draft: false
+pubDate: 2026-05-01
+updatedDate: 2026-05-01
+heroImage: ./iqvia-ai-assistant.jpg
+client: IQVIA
+role: Senior ML Engineer
+year: 2020-2024
+projectUrl: https://www.iqvia.com/solutions/innovative-models/artificial-intelligence-and-machine-learning/iqvia-ai-assistant
+repoUrl:
+---
+
+## Overview
+
+Led the design and development of an **LLM-powered AI Assistant** for commercial analytics workflows, enabling business users to interact with enterprise data, insights, and decision systems through natural language.
+
+This work contributed to the **IQVIA AI Assistant**, an integrated capability within **IQVIA Orchestrated Analytics**, designed to help life sciences organizations transform business questions into rapid, relevant, and actionable answers. The platform is grounded in **IQVIA Healthcare-grade AI®**, with strong emphasis on privacy, compliance, and enterprise trust, and was recognized with the **2024 PM360 Innovation Award for Artificial Intelligence**.
+
+The system bridges **analytics, knowledge, and execution**, allowing users to move from understanding performance to taking action within a single interaction.
+
+## Problem
+
+- Commercial teams operated across fragmented systems for analytics, reporting, and field insights, making it difficult to form a unified view of performance.
+- Accessing structured data required technical expertise (SQL, dashboards), limiting self-service and slowing down decision-making.
+- Unstructured knowledge (clinical reports, market research, internal documents) was difficult to search and synthesize in context.
+- Existing IQVIA “next best” solutions relied on domain-aware tuning, creating a steep learning curve for new users.
+- Users often relied on manual workflows to connect insights to actions, increasing time-to-decision and reducing operational efficiency.
+
+## Constraints
+
+- Support diverse query patterns ranging from KPI analysis to contextual business questions.
+- Operate at enterprise scale with strict latency and reliability expectations.
+- Ensure compliance with sensitive healthcare and commercial data requirements.
+- Integrate seamlessly with existing IQVIA platforms, APIs, and decisioning systems.
+
+## Approach
+
+Built the system as a **central orchestration layer** that connects natural language understanding with enterprise analytics, knowledge systems, and decisioning tools.
+
+Rather than functioning as a standalone chatbot, the assistant acts as a **workflow interface**, coordinating multiple systems to deliver outcomes aligned with how commercial teams operate.
+
+Key capabilities include:
+- Translating business questions into structured analytics via controlled Text-to-SQL pipelines
+- Retrieving and synthesizing insights from enterprise knowledge sources
+- Invoking existing IQVIA systems (e.g., next best action, customer intelligence) to drive recommendations
+- Personalizing responses using user context and historical signals
+
+This enables a natural progression within a single interaction:
+
+> *“What's happening?” → “Why is it happening?” → “What should I do next?”*
+
+## System Design
+
+The system combines **LLM reasoning with deterministic systems** to balance flexibility with enterprise-grade reliability.
+
+- Queries are interpreted for intent and routed to the appropriate execution path.
+- Structured analytics are generated through controlled pipelines, with schema-aware validation enforcing correctness.
+- Contextual insights are retrieved and synthesized from enterprise knowledge sources.
+- For action-oriented workflows, the system invokes external tools and APIs, with deterministic guardrails ensuring safe execution.
+
+A key design principle was **controlled autonomy**:
+- LLMs provide reasoning and natural interaction  
+- Deterministic systems enforce validation, governance, and execution boundaries  
+
+This allows the system to handle complex business workflows while maintaining trust and correctness.
+
+## Key Decisions
+
+### Hybrid architecture (LLM + deterministic systems)
+
+Pure LLM-based approaches were insufficient for enterprise requirements around accuracy and control. Combining LLM reasoning with deterministic NLP techniques and validation layers ensured reliable, production-grade outputs.
+
+### Tool integration for action-oriented workflows
+
+The assistant was designed to directly invoke existing IQVIA systems, enabling it to move beyond insights into **decision support and execution**.
+
+This allows users to access capabilities such as next best action and customer intelligence through natural language, without needing to navigate multiple systems.
+
+### Leverage existing personalization systems
+
+Instead of building personalization from scratch, the system integrates with existing enterprise data to tailor responses based on user role, context, and historical behavior.
+
+This significantly improves relevance and aligns outputs with real-world workflows.
+
+### Optimize for interactive usage
+
+The system was designed for real-time usage by non-technical users, requiring efficient routing, minimized pipeline overhead, and optimized execution paths.
+
+## Results & Impact
+
+- **Recognition:** Awarded the **2024 PM360 Innovation Award for Artificial Intelligence**
+- **Adoption:** Increased engagement with analytics and decision-support workflows through a unified interface
+- **Productivity:** Reduced friction between insight generation and execution
+- **User Experience:** Enabled users to interact with complex enterprise systems through natural language rather than specialized tools
+
+The IQVIA AI Assistant shifts the user experience from navigating systems to **asking questions and taking action in a single flow**.
+
+## Tradeoffs
+
+- Combining LLMs with deterministic systems increased architectural complexity and coordination overhead.
+- Dependence on external enterprise systems introduced variability in latency and reliability.
+- Balancing flexibility with strict validation required additional system layers and design effort.
+- Expanding from insights into execution significantly increased correctness requirements.
+
+## Learnings
+
+- The highest value in enterprise AI systems comes from **connecting insights to actions**, not just improving data access.
+- Hybrid architectures are necessary to balance flexibility with control in production environments.
+- Tool integration is a key differentiator, transforming AI systems into workflow enablers.
+- Personalization drives adoption when aligned with existing enterprise context.
+
+## Future Work
+
+- Improve multi-step reasoning and orchestration for complex workflows
+- Expand personalization using richer behavioral and organizational signals
+- Reduce latency for hybrid and tool-driven queries through optimized execution strategies
+- Strengthen evaluation frameworks across both insight quality and action effectiveness

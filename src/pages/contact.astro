@@ -1,0 +1,17 @@
+---
+// main layout
+import BaseLayout from "@layouts/BaseLayout.astro";
+
+// components
+import ContactForm from "@components/Forms/ContactForm.astro";
+---
+
+<BaseLayout title="Contact Me" description="Get in touch! Contact information for Mukesh.">
+	<div class="mx-auto max-w-2xl px-4 pt-36 md:pt-44" data-mos="fade-in">
+		<h1 class="h1">Contact Me</h1>
+		<p class="description mt-2">Have a project? I'm available for freelance work.</p>
+		<div class="mt-6">
+			<ContactForm />
+		</div>
+	</div>
+</BaseLayout>

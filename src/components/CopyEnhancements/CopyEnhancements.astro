@@ -1,0 +1,75 @@
+---
+---
+
+<script>
+	const BUTTON_SELECTOR = "[data-copy-button]";
+	const resetTimers = new WeakMap();
+
+	function updateButtonState(container, liveRegion, label) {
+		if (!(container instanceof HTMLElement) || !(liveRegion instanceof HTMLDivElement)) return;
+		liveRegion.textContent = label;
+		liveRegion.classList.add("show");
+		liveRegion.dataset.state = label === "Copy failed" ? "error" : "success";
+
+		const existingTimer = resetTimers.get(container);
+		if (existingTimer) {
+			window.clearTimeout(existingTimer);
+		}
+
+		const timer = window.setTimeout(() => {
+			liveRegion.classList.remove("show");
+			delete liveRegion.dataset.state;
+			liveRegion.textContent = "";
+		}, 1600);
+
+		resetTimers.set(container, timer);
+	}
+
+	function attachCopyButton(container, getText) {
+		if (!(container instanceof HTMLElement)) return;
+		if (container.querySelector(BUTTON_SELECTOR)) return;
+
+		const copyContainer = document.createElement("div");
+		copyContainer.className = "copy";
+		copyContainer.dataset.copyButton = "math";
+
+		const liveRegion = document.createElement("div");
+		liveRegion.className = "feedback";
+		liveRegion.setAttribute("aria-live", "polite");
+
+		const button = document.createElement("button");
+		button.type = "button";
+		button.className = "copy-button";
+		button.dataset.copied = "Copied!";
+		button.setAttribute("aria-label", "Copy equation");
+		button.setAttribute("title", "Copy to clipboard");
+
+		const icon = document.createElement("div");
+		button.append(icon);
+
+		button.addEventListener("click", async () => {
+			try {
+				await navigator.clipboard.writeText(getText());
+				updateButtonState(copyContainer, liveRegion, "Copied!");
+			} catch {
+				updateButtonState(copyContainer, liveRegion, "Copy failed");
+			}
+		});
+
+		copyContainer.append(liveRegion, button);
+		container.append(copyContainer);
+	}
+
+	function enhanceMathBlocks(root = document) {
+		root.querySelectorAll(".markdown-content [data-math-block]").forEach((block) => {
+			attachCopyButton(block, () => block.dataset.formula ?? "");
+		});
+	}
+
+	function runCopyEnhancements() {
+		enhanceMathBlocks();
+	}
+
+	runCopyEnhancements();
+	document.addEventListener("astro:after-swap", runCopyEnhancements);
+</script>
