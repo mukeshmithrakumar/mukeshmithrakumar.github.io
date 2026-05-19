@@ -9,19 +9,38 @@ interface Props {
 }
 
 const { name, class: className, ...rest } = Astro.props as Props;
+
+const mailchimpAction =
+	"https://mukeshmithrakumar.us20.list-manage.com/subscribe/post?u=7bd3295440212accf7ad5d7f6&id=5bd8cebdba";
 ---
 
-<form id={`${name}-form`} name={`${name}-form`} class:list={["flex gap-2", className]} {...rest}>
+<form
+	id={`${name}-form`}
+	name={`${name}-form`}
+	action={mailchimpAction}
+	method="post"
+	target="_blank"
+	class:list={["flex gap-2", className]}
+	{...rest}
+>
 	<label for={`${name}-email`} class="description sr-only mb-1 text-base-100">*Email</label>
 	<input
 		type="email"
 		class="form__input w-full"
-		name="email"
+		name="EMAIL"
 		id={`${name}-email`}
 		inputmode="email"
 		placeholder="Email"
 		required
 	/>
+	<div aria-hidden="true" style="position:absolute; left:-5000px;">
+		<input
+			type="text"
+			name="b_7bd3295440212accf7ad5d7f6_5bd8cebdba"
+			tabindex="-1"
+			value=""
+		/>
+	</div>
 	<div class="z-10">
 		<Button variant="primary" type="submit">Subscribe</Button>
 	</div>
