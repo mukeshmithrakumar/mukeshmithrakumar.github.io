@@ -27,7 +27,7 @@ The goal of image classification is to assign the input image one or more labels
 
 Research has revealed two fundamental aspects influencing the image recognition process. That is, image resolution and duration of image exposure to the viewer. This is replicated in machine learning approach to image classification.
 
-![Machine Learning Pipeline](./20190526a.PNG)
+![Machine Learning Pipeline](./20190526a.png)
 
 The first step of the pipeline corresponds to extraction and encoding of meaningful features from the image pixels and the second step performs image classification in the space of features extracted from the image.
 
@@ -59,15 +59,15 @@ Below is an example for these challenges:
 
 - LeNet (1998) : 32x32 gray scale input image, 5-layer convolutional feature extractor.
 
-![LeNet architecture](./20190526b.PNG)
+![LeNet architecture](./20190526b.png)
 
 - AlexNet (2012) : 11x11, 5x5, 3x3 convolutions, max pooling, dropout, data augmentation, ReLU activations, SGD with momentum.
 
-![AlexNet architecture](./20190526c.PNG)
+![AlexNet architecture](./20190526c.png)
 
 - VGG (2014) : 138 million parameters, 18 layers. Used 3x3 layers for more non linearity and less parameters to learn.
 
-![VGG architecture](./20190526d.PNG)
+![VGG architecture](./20190526d.png)
 
 - Inception V3 (2015) : 25 million parameters, 22 layers. The idea of having inception blocks is connected to both the reduction of computational complexity and the efficient use of local image structure. The correlation statistics over the last layer is analyzed and clustered into groups of units with high correlations. In the layers close to the input, correlated units would concentrate in local regions. Thus we would end up with a lot of clusters concentrated in a single region, and then can be covered by a layer of one by one convolutions in the next layer.
 
@@ -79,7 +79,7 @@ The idea of having one by one convolution is that such convolutions can capture 
 
 ResNet solves this by using something called a skip connection:
 
-![Skip Connection architecture](./20190526f.PNG)
+![Skip Connection architecture](./20190526f.png)
 
 <Newsletter />
 
@@ -89,6 +89,6 @@ Fine grained image classification/recognition classify visually very similar obj
 
 Part localization can be used for fine grained image recognition.  What part localization does is it explicitly isolate differences associated with object parts and then classify features extracted from aligned parts.
 
-![Fine grained localization](./20190526g.PNG)
+![Fine grained localization](./20190526g.png)
 
 Dividing the fine-grained dataset into multiple visually similar subsets or directly using multiple neural networks to improve the performance of classification is another widely used method in many deep learning based fine-grained image classification systems.

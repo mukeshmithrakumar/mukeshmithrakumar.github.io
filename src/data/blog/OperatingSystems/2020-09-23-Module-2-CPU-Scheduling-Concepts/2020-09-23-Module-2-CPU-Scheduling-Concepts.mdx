@@ -150,7 +150,7 @@ When a process is running, we run a timer in parallel and we can write a softwar
 a specific time, we can invoke a service routine, that is the context switch service routine and after context switch
 exits, the CPU will be in process B.
 
-![Context Switching Example](./20200923b.PNG)
+![Context Switching Example](./20200923b.png)
 
 But how process B?
 This happens because the program counter has the instruction pointer of B. Only then will it execute Process B.
@@ -246,7 +246,7 @@ Time blocked, waiting for I/O, is not part of the waiting time.
 - _Service time_: The amount of CPU time that a process will need before it either finishes or voluntarily
 exits the CPU, such as to wait for input / output.
 
-![scheduling metrics calculation example](./20200923c.PNG)
+![scheduling metrics calculation example](./20200923c.png)
 
 The chart that shows the processes in a time line is called the _Gantt Chart_.
 
@@ -284,4 +284,3 @@ You can also use any metric besides turn around.
 ### Draw Gantt charts to represent the CPU schedule for a given set of processes and a given scheduling algorithm
 
 (Do an example or exercise and calculate all the scheduling metrics)
-

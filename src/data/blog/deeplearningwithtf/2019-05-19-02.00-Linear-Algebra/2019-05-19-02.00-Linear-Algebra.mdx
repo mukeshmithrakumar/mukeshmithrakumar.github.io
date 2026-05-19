@@ -61,7 +61,7 @@ __Matrices:__ A matrix is a 2D-array of numbers, so each element is identified b
 
 __Tensors:__ In the general case, are an array of numbers arranged on a regular grid with a variable number of axes is knows as a tensor. We identify the elements of a tensor <MathInline formula={String.raw`A`} /> at coordinates(*i, j, k*) by writing <MathBlock formula={String.raw`A_{i, j, k}`} />. But to truly understand tensors, we need to expand the way we think of vectors as only arrows with a magnitude and direction. Remember that a vector can be represented by three components, namely the x, y and z components (basis vectors). If you have a pen and a paper, let's do a small experiment, place the pen vertically on the paper and slant it by some angle and now shine a light from top such that the shadow of the pen falls on the paper, this shadow, represents the x component of the vector "pen" and the height from the paper to the tip of the pen is the y component. Now, let's take these components to describe tensors, imagine, you are Indiana Jones or a treasure hunter and you are trapped in a cube and there are three arrows flying towards you from the three faces (to represent x, y, z axis) of the cube 😬, I know this will be the last thing you would think in such a situation but you can think of those three arrows as vectors pointing towards you from the three faces of the cube and you can represent those vectors (arrows) in x, y and z components, now that is a rank 2 tensor (matrix) with 9 components. Remember that this is a very very simple explanation of tensors. Following is a representation of a tensor:
 
-![Tensors](./fig0201b.PNG)
+![Tensors](./fig0201b.png)
 
 We can add matrices to each other as long as they have the same shape, just by adding their corresponding elements:
 
@@ -657,7 +657,7 @@ This process depends on it being possible to find <MathInline formula={String.ra
 
 We can calculate the inverse of a matrix by:
 
-![Matrix Inverse](./fig0203a.PNG)
+![Matrix Inverse](./fig0203a.png)
 
 Lets see how we can solve a simple linear equation: 2x + 3y = 6 and 4x + 9y = 15
 
@@ -1340,7 +1340,7 @@ Whenever <MathInline formula={String.raw`x`} /> is equal to an eigenvector of <M
 
 A matrix whose eigenvalues are all positive is called __positive definite__. A matrix whose eigenvalues are all positive or zero valued is called __positive semidefinite__. Likewise, if all eigenvalues are negative, the matrix is __negative definite__, and if all eigenvalues are negative or zero valued, it is __negative semidefinite__. Positive semidefinite matrices are interesting because they guarantee that <MathBlock formula={String.raw`\forall x, x^{\top} Ax \geq 0`} />. Positive definite matrices additionally guarantee that <MathInline formula={String.raw`x^T Ax = 0 \implies x=0`} />.
 
-![Eigenvalue plots](./fig0207a.PNG)
+![Eigenvalue plots](./fig0207a.png)
 
 ### 02.08 - Singular Value Decomposition
 

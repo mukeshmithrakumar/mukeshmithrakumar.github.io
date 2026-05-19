@@ -24,7 +24,7 @@ We need to process images for human perception, for machine perception, transfor
 
 Sources of errors and image defects in an image are usually introduced in the image pipeline, such a pipeline is shown below:
 
-![From Image to sensor batman](./20190507a.PNG)
+![From Image to sensor batman](./20190507a.png)
 
 Some of the image defects that can be introduced are:
 - low contrast,
@@ -43,7 +43,7 @@ Brightness correction can improve overall contrast in an image. There are two ma
 
 We use Brightness histograms to evaluate the tone transfer in an image. The brightness histogram is the chart of brightness distribution in an image.
 
-![Brightness histogram](./20190507b.PNG)
+![Brightness histogram](./20190507b.png)
 
 On horizontal axis, brightness varies from black to white, on the vertical axis, the number of pixels absolute or normalized is the respective brightness value.
 
@@ -61,7 +61,7 @@ Linear correction is a point operator that comes compensated of limited histogra
 
 Below is an example of linear correction:
 
-![Example of linear correction](./20190507c.PNG)
+![Example of linear correction](./20190507c.png)
 
 Some images are composed of very dark and very light pixels and such images can't be corrected using linear correction. For those kinds of images we use non linear correction.
 
@@ -77,7 +77,7 @@ By controlling the parameter gamma we can control the Gamma transformation.
 
 Below is an example of gamma transformation:
 
-![Example of gamma transformation](./20190507d.PNG)
+![Example of gamma transformation](./20190507d.png)
 
 ### How can we treat noisy images?
 
@@ -91,29 +91,29 @@ These weights are jointly named as **Filter kernel**. And the simplest case is e
 
 The simplest box filter is the identity filter. Applying this filter for an image will result in no change to the image:
 
-![Example of identity filter](./20190507e.PNG)
+![Example of identity filter](./20190507e.png)
 
 But by moving the 1 in the center of the kernel to other places, the resulting image will be shifted by one pixel.
 
 Generally, any filter kernel with positive weights with sum equal to 1 will be image smoothing filter. This smoothing is what introduces blur to an image.
 
-![Example of smoothing with box filter](./20190507f.PNG)
+![Example of smoothing with box filter](./20190507f.png)
 
 As seen in the image on top, using a box filter introduces edge effects to the image and to eliminate these effects, weight contribution of the neighboring pixels should be according to the closeness to the center:
 
-![Example of smoothing with gaussian filter](./20190507g.PNG)
+![Example of smoothing with gaussian filter](./20190507g.png)
 
 We can set these filter weights according to two dimensional Gaussian distribution, centered at the filter center with arbitrary sigma:
 
 <MathBlock formula={String.raw`{G_{\sigma} = \frac{1}{2 \pi \sigma^2} e^{-\frac{x^2 + y^2}{2 \sigma^2}} \tag{4}}`} />
 
-![Gaussian Kernel Image](./20190507h.PNG)
+![Gaussian Kernel Image](./20190507h.png)
 
 These filters are called the **Gaussian Filters**.
 
 Gaussian filters have infinite support, but discrete filters use finite kernels. For the same sigma, we can build filters of different sizes:
 
-![Choosing Kernel Width](./20190507i.PNG)
+![Choosing Kernel Width](./20190507i.png)
 
 Gaussian filter is the only filter that doesn't add any spurious lines to an image when applied.
 
@@ -121,11 +121,11 @@ Applying Gaussian filter can reduce noise in image but it also blurs the image. 
 
 Image convolution can be used to reduce image blur and make the edges more pronounced. This can be done easily as follows:
 
-![Sharpening](./20190507j.PNG)
+![Sharpening](./20190507j.png)
 
 We can combine all of the above operations into a single convolution, approximating it with the Laplacian of Gaussian.
 
-![Unsharp Mask Filter](./20190507k.PNG)
+![Unsharp Mask Filter](./20190507k.png)
 
 ### What is Edge Detection?
 
@@ -133,7 +133,7 @@ The goal of edge detection is to identify sudden changes (discontinuities) in an
 
 The edges are points of rapid changes in image intensity, such points can be identified by considering the first derivative of the image intensity and edges will correspond to local extrema of derivative:
 
-![Characterizing edges](./20190507l.PNG)
+![Characterizing edges](./20190507l.png)
 
 Since image is a two dimensional function, we need to calculate image gradients as vector of potential derivative of image intensity function. So image gradient is a vector given as below:
 
@@ -153,11 +153,11 @@ Since images are discrete we could approximate partial derivatives with finite d
 
 Which can be written as a simple convolution:
 
-![Differentiation & Convolution](./20190507m.PNG)
+![Differentiation & Convolution](./20190507m.png)
 
 Some examples of other approximations of derivative filters:
 
-![Finite Difference Filters](./20190507n.PNG)
+![Finite Difference Filters](./20190507n.png)
 
 The finite difference filters respond strongly when there is noise in the image. This happens because noise results in pixels that look very different from the neighborhoods which leads to a lot of false responses by the finite difference filters leading to edge disappearance.
 
@@ -179,7 +179,7 @@ This is done by identifying the points in either pixel rows along the image grad
 
 This is done by assuming a point as an edge point, then we construct the tangent to the edge curve (which is normal to the gradient in that point) and use this to predict the next points. And we select the point with the largest gradient and link it to the current point. For linking edge points, we use hysteresis. Hysteresis is just two thresholds. We use a high threshold to start edge curves and a low threshold to continue them.
 
-![Double Threshold for Canny Edge Detector](./20190507o.PNG)
+![Double Threshold for Canny Edge Detector](./20190507o.png)
 
 By varying the sigma in gradient computation or the size of Gaussian smoothing or the size of derivative for Gaussian filter. It can detect edges on different scales, large sigma detects large scale edges. Small sigma detects fine features in images.
 
