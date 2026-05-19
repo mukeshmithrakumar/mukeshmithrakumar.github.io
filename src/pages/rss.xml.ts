@@ -32,7 +32,7 @@ export async function GET(context) {
 		// items (each post)
 		items: posts.map((post) => ({
 			title: post.data.title,
-			description: post.data.description,
+			description: getRssDescription(post),
 			pubDate: post.data.pubDate,
 			author: `${getAuthorEmail(post.data.authors[0].id)} (${getAuthorName(
 				post.data.authors[0].id,
@@ -101,3 +101,79 @@ const getImageUrl = (post: CollectionEntry<"blog">) => {
 
 	return imageUrl;
 };
+
+// --------------------------------------------------------
+// prefer explicit frontmatter description, otherwise derive a short summary from the post body
+const getRssDescription = (post: CollectionEntry<"blog">) => {
+	const explicitDescription = post.data.description?.trim();
+
+	if (explicitDescription) {
+		return explicitDescription;
+	}
+
+	const excerpt = extractExcerptFromBody(post.body);
+
+	if (excerpt) {
+		return excerpt;
+	}
+
+	return post.data.title;
+};
+
+// --------------------------------------------------------
+function extractExcerptFromBody(body: string): string {
+	const normalizedBody = body.replace(/\r\n/g, "\n");
+	const blocks = normalizedBody
+		.split(/\n\s*\n/)
+		.map((block) => block.trim())
+		.filter(Boolean);
+
+	for (const block of blocks) {
+		if (isSkippableExcerptBlock(block)) continue;
+
+		const plainText = markdownToPlainText(block);
+
+		if (!plainText) continue;
+
+		return truncateExcerpt(plainText, 220);
+	}
+
+	return "";
+}
+
+function isSkippableExcerptBlock(block: string): boolean {
+	return (
+		block.startsWith("import ") ||
+		block.startsWith("export ") ||
+		block.startsWith("```") ||
+		block.startsWith("---") ||
+		block.startsWith("#") ||
+		block.startsWith("<") ||
+		block.startsWith("![")
+	);
+}
+
+function markdownToPlainText(markdown: string): string {
+	return markdown
+		.replace(/!\[[^\]]*]\([^)]*\)/g, "")
+		.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+		.replace(/`{1,3}([^`]+)`{1,3}/g, "$1")
+		.replace(/\*\*([^*]+)\*\*/g, "$1")
+		.replace(/__([^_]+)__/g, "$1")
+		.replace(/\*([^*]+)\*/g, "$1")
+		.replace(/_([^_]+)_/g, "$1")
+		.replace(/<[^>]+>/g, " ")
+		.replace(/\s+/g, " ")
+		.trim();
+}
+
+function truncateExcerpt(text: string, maxLength: number): string {
+	if (text.length <= maxLength) return text;
+
+	const truncated = text.slice(0, maxLength);
+	const lastSpace = truncated.lastIndexOf(" ");
+
+	if (lastSpace <= 0) return `${truncated}...`;
+
+	return `${truncated.slice(0, lastSpace)}...`;
+}

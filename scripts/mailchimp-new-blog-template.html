@@ -113,24 +113,6 @@
             margin-bottom: 0;
         }
 
-        .button-wrap {
-            margin: 24px 0 28px;
-        }
-
-        .button {
-            background: #20c20e;
-            border-radius: 8px;
-        }
-
-        .button a {
-            display: inline-block;
-            padding: 14px 24px;
-            color: #ffffff !important;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
         .rss-item {
             border-bottom: 1px solid #e5e7eb;
             padding-bottom: 32px;
@@ -188,9 +170,11 @@
                         class="container">
                         <tr>
                             <td class="preheader">
-                                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                                    border="0">
                                     <tr>
-                                        <td align="left">New writing on machine learning, systems, and engineering.
+                                        <td align="left">New writing on machine learning, systems, and
+                                            engineering.
                                         </td>
                                         <td align="right"><a href="*|ARCHIVE|*">View in browser</a></td>
                                     </tr>
@@ -220,14 +204,10 @@
 
                                     <p class="summary">*|RSSITEM:CONTENT|*</p>
 
-                                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"
-                                        class="button-wrap">
-                                        <tr>
-                                            <td class="button">
-                                                <a href="*|RSSITEM:URL|*" target="_blank">Continue in browser</a>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <p style="margin:24px 0 28px 0;">
+                                        <a href="*|RSSITEM:URL|*" target="_blank"
+                                            style="color:#20c20e; font-size:16px; font-weight:700; text-decoration:none;">Continue in browser &rarr;</a>
+                                    </p>
                                 </div>
                                 *|END:RSSITEMS|*
 
@@ -242,13 +222,19 @@
                             <td class="footer">
                                 <div class="footer-text">
                                     <p style="margin:0 0 10px 0;">Thanks for reading, Mukesh</p>
+
                                     <p style="margin:0 0 8px 0;">
                                         <a href="*|UNSUB|*">unsubscribe</a> |
                                         <a href="*|UPDATE_PROFILE|*">update preferences</a> |
                                         <a href="*|ARCHIVE|*">view in browser</a>
                                     </p>
+
                                     <p style="margin:0;">
                                         Copyright &copy; *|CURRENT_YEAR|* *|LIST:COMPANY|*
+                                    </p>
+
+                                    <p style="margin-top:12px;">
+                                        *|REWARDS|*
                                     </p>
                                 </div>
                             </td>
