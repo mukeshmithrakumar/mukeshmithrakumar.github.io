@@ -14,7 +14,7 @@
 		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@astrojs/mdx": "4.3.10",
+		"@astrojs/mdx": "5.0.6",
 		"@astrojs/react": "4.4.2",
 		"@astrojs/rss": "4.0.13",
 		"@astrojs/sitemap": "3.6.0",
@@ -25,9 +25,9 @@
 		"@tailwindcss/vite": "4.1.17",
 		"@types/react": "19.2.5",
 		"@types/react-dom": "19.2.3",
-		"astro": "5.15.8",
-		"astro-auto-import": "0.4.5",
-		"astro-expressive-code": "0.41.3",
+		"astro": "6.3.5",
+		"astro-auto-import": "0.5.1",
+		"astro-expressive-code": "0.41.7",
 		"astro-icon": "1.1.5",
 		"astro-seo": "0.8.4",
 		"katex": "^0.16.44",
