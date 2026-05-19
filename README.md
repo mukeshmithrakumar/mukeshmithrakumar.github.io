@@ -100,61 +100,6 @@ A strong next batch would be:
 - [ ] Commenting.
 - [ ] Search across blog posts, tags, and projects.
 
-## Next Step: Image Optimization
-
-When revisiting performance work, focus on source-image cleanup before considering Git LFS.
-
-- [ ] Audit the largest source images in `src/data/blog/` and `src/assets/images/`, especially oversized `heroImage.png` files.
-- [ ] Resize hero images to the largest real display width needed on the site instead of keeping full-resolution originals in the repo.
-- [ ] Convert photographic or illustration-heavy PNG/JPEG assets to `webp` or `avif` where transparency is not required.
-- [ ] Keep diagrams, screenshots, and line art in formats that preserve clarity; avoid converting technical graphics if it introduces visible artifacts.
-- [ ] Prefer `astro:assets` for images rendered through Astro components so responsive sizes and optimization stay automatic.
-- [ ] Review images referenced directly from Markdown/MDX and migrate high-value ones to optimized Astro image usage where practical.
-- [ ] Check whether duplicate copies exist across `public/`, `src/assets/`, and generated output, and remove unnecessary source duplication.
-- [ ] Exclude generated build output like `dist/` from any image-size audit so only source assets drive decisions.
-- [ ] Rebuild and visually compare updated images on desktop and mobile before committing format or compression changes.
-- [ ] Consider Git LFS only if the repository starts accumulating much larger binaries or frequent binary revisions; it helps Git storage, not served image quality.
-
-## Search
-
-I’d add it in two places, with one being the primary entry point.
-
-The best primary placement is the top nav as a search trigger or compact input. Search is a cross-site action, not just a blog action, so putting it in the global navigation makes it feel available everywhere and matches the fact that you want to search posts, tags, and projects together.
-
-The best secondary placement is the top of the blog index page. That gives people a more obvious search surface when they’re already in “browse content” mode, and it can double as a filterable discovery page.
-
-My recommendation:
-1. Add a small search button or input in the navbar.
-2. Open a dedicated search page or search overlay from there.
-3. Also place the same search input at the top of `/blog/` for discoverability.
-
-I would not make the main article page itself carry a large search bar. On individual posts, that usually competes with the reading experience.
-
-For the behavior, I’d structure it like this:
-- Search input matches blog titles, descriptions, tags, and optionally excerpt/body text.
-- Projects are included in the same results list, labeled clearly as `Post`, `Tag`, or `Project`.
-- Tags should be searchable both as direct tag results and as boosted matches on posts.
-- Results should update instantly on the client for speed.
-- Clicking a tag result should go to `/tags/[tag]/`.
-- Clicking a post or project result should go directly to that page.
-
-For implementation shape, I’d probably do:
-- A generated search index from existing content collections.
-- One shared search component used in both navbar-triggered search and the blog page.
-- A dedicated `/search` page or modal-like overlay.
-- Lightweight client-side filtering first, since your content size looks manageable.
-
-If we want the cleanest UX, I’d choose this:
-- Navbar: magnifying-glass trigger.
-- Opens: full search overlay or `/search`.
-- Blog index: visible search bar near the title.
-- Search scope: posts, tags, projects.
-
-A couple of product choices we should settle before building:
-- Do you want search as an overlay/modal, or as a dedicated `/search` page?
-- Should results search full article body text, or just title/description/tags for now?
-
-My recommendation is `/search` page first, with a navbar trigger and a second input on `/blog/`, because it’s simpler, more shareable, and easier to maintain than a modal.
 
 ## Blog Migration Checklist
 
@@ -490,3 +435,60 @@ Make it look like a high-quality product/engineering blog graphic from a top tec
 ```
 
 
+
+## Search
+
+I’d add it in two places, with one being the primary entry point.
+
+The best primary placement is the top nav as a search trigger or compact input. Search is a cross-site action, not just a blog action, so putting it in the global navigation makes it feel available everywhere and matches the fact that you want to search posts, tags, and projects together.
+
+The best secondary placement is the top of the blog index page. That gives people a more obvious search surface when they’re already in “browse content” mode, and it can double as a filterable discovery page.
+
+My recommendation:
+1. Add a small search button or input in the navbar.
+2. Open a dedicated search page or search overlay from there.
+3. Also place the same search input at the top of `/blog/` for discoverability.
+
+I would not make the main article page itself carry a large search bar. On individual posts, that usually competes with the reading experience.
+
+For the behavior, I’d structure it like this:
+- Search input matches blog titles, descriptions, tags, and optionally excerpt/body text.
+- Projects are included in the same results list, labeled clearly as `Post`, `Tag`, or `Project`.
+- Tags should be searchable both as direct tag results and as boosted matches on posts.
+- Results should update instantly on the client for speed.
+- Clicking a tag result should go to `/tags/[tag]/`.
+- Clicking a post or project result should go directly to that page.
+
+For implementation shape, I’d probably do:
+- A generated search index from existing content collections.
+- One shared search component used in both navbar-triggered search and the blog page.
+- A dedicated `/search` page or modal-like overlay.
+- Lightweight client-side filtering first, since your content size looks manageable.
+
+If we want the cleanest UX, I’d choose this:
+- Navbar: magnifying-glass trigger.
+- Opens: full search overlay or `/search`.
+- Blog index: visible search bar near the title.
+- Search scope: posts, tags, projects.
+
+A couple of product choices we should settle before building:
+- Do you want search as an overlay/modal, or as a dedicated `/search` page?
+- Should results search full article body text, or just title/description/tags for now?
+
+My recommendation is `/search` page first, with a navbar trigger and a second input on `/blog/`, because it’s simpler, more shareable, and easier to maintain than a modal.
+
+
+## Image Optimization
+
+When revisiting performance work, focus on source-image cleanup before considering Git LFS.
+
+- [ ] Audit the largest source images in `src/data/blog/` and `src/assets/images/`, especially oversized `heroImage.png` files.
+- [ ] Resize hero images to the largest real display width needed on the site instead of keeping full-resolution originals in the repo.
+- [ ] Convert photographic or illustration-heavy PNG/JPEG assets to `webp` or `avif` where transparency is not required.
+- [ ] Keep diagrams, screenshots, and line art in formats that preserve clarity; avoid converting technical graphics if it introduces visible artifacts.
+- [ ] Prefer `astro:assets` for images rendered through Astro components so responsive sizes and optimization stay automatic.
+- [ ] Review images referenced directly from Markdown/MDX and migrate high-value ones to optimized Astro image usage where practical.
+- [ ] Check whether duplicate copies exist across `public/`, `src/assets/`, and generated output, and remove unnecessary source duplication.
+- [ ] Exclude generated build output like `dist/` from any image-size audit so only source assets drive decisions.
+- [ ] Rebuild and visually compare updated images on desktop and mobile before committing format or compression changes.
+- [ ] Consider Git LFS only if the repository starts accumulating much larger binaries or frequent binary revisions; it helps Git storage, not served image quality.
