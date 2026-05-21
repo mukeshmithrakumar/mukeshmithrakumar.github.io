@@ -94,7 +94,7 @@ A strong next batch would be:
 - [x] Added Adhiraiyan blog redirects
 - [x] verify old-domain redirects after deployment.
 - [x] Wire up the newsletter form to a real backend or email workflow.
-- [ ] Wire up the contact form to a real backend or submission workflow.
+- [x] Wire up the contact form to a real backend or submission workflow.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
 - [ ] Commenting.
@@ -165,13 +165,8 @@ Important:
 - Do not use Change of Address before redirects are in place.
 - Redirects are the foundation; Search Console is the follow-up signal to Google.
 
-### Step 4: Remaining content decisions
 
-- [ ] Decide whether to migrate the remaining old posts into the personal site
-- [ ] If not migrating them now, keep their redirects pointed at `/blog/`
-- [ ] If migrating them later, update the redirect map so each old URL lands on the exact new post
-
-### Implementing Search
+## Implementing Search
 
 For this site, I would not use FAISS.
 

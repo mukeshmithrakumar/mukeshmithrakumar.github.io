@@ -86,10 +86,13 @@ const contactEmail = "newsletter@mukesh.ai";
 
 		const subject = fullName ? `Website contact from ${fullName}` : "Website contact";
 		const body = [
-			fullName ? `Name: ${fullName}` : null,
-			senderEmail ? `Email: ${senderEmail}` : null,
+			"Hi Mukesh,",
 			"",
 			message,
+			"",
+			"Best,",
+			fullName || "Website visitor",
+			senderEmail || null,
 		]
 			.filter((line) => line !== null)
 			.join("\n");
