@@ -7,6 +7,13 @@ const formAction = "https://formspree.io/f/mukesh@mukeshmithrakumar.com";
 
 <!-- create a contact me form where uses input their name, email, and message -->
 <section id="contact" class="mx-auto w-full">
+	<div
+		id="contact-success"
+		class="mb-4 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-800 dark:text-green-200"
+		hidden
+	>
+		Your message was sent successfully. I will get back to you soon.
+	</div>
 	<form
 		id="contact-form"
 		name="contact form"
@@ -69,3 +76,35 @@ const formAction = "https://formspree.io/f/mukesh@mukeshmithrakumar.com";
 		</div>
 	</form>
 </section>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>("#contact-form");
+	const successMessage = document.querySelector<HTMLElement>("#contact-success");
+
+	const syncSuccessState = () => {
+		const params = new URLSearchParams(window.location.search);
+		const sent = params.get("sent") === "true";
+
+		if (successMessage) {
+			successMessage.hidden = !sent;
+		}
+
+		if (sent) {
+			form?.reset();
+		}
+	};
+
+	window.addEventListener("pageshow", (event) => {
+		if (event.persisted) {
+			form?.reset();
+		}
+
+		syncSuccessState();
+	});
+
+	window.addEventListener("beforeunload", () => {
+		form?.reset();
+	});
+
+	syncSuccessState();
+</script>
