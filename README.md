@@ -91,12 +91,12 @@ A strong next batch would be:
 - [x] Removing left over content from the template
 - [x] Series support for multi-part topics like computer vision or deep learning.
 - [x] Setup Google Analytics
-- [ ] Added Adhiraiyan blog redirects
-- [ ] verify old-domain redirects after deployment.
+- [x] Added Adhiraiyan blog redirects
+- [x] verify old-domain redirects after deployment.
+- [x] Wire up the newsletter form to a real backend or email workflow.
+- [ ] Wire up the contact form to a real backend or submission workflow.
 - [ ] Newsletter or RSS subscribe callout after the article.
 - [ ] Bookmarkable footnotes or heading copy links for easier sharing.
-- [ ] Wire up the newsletter form to a real backend or email workflow.
-- [ ] Wire up the contact form to a real backend or submission workflow.
 - [ ] Commenting.
 - [ ] Search across blog posts, tags, and projects.
 

@@ -1,12 +1,18 @@
 ---
 // components
 import Button from "@components/Button/Button.astro";
+
+const contactEmail = "newsletter@mukesh.ai";
 ---
 
 <!-- create a contact me form where uses input their name, email, and message -->
 <section id="contact" class="mx-auto w-full">
-	<form id="contact-form" name="contact form" class="mt-4 flex flex-col gap-3">
-		<input type="hidden" name="form-name" value="contact" />
+	<form
+		id="contact-form"
+		name="contact form"
+		class="mt-4 flex flex-col gap-3"
+		data-contact-email={contactEmail}
+	>
 		<div>
 			<div class="grid gap-3 sm:grid-cols-2">
 				<div class="flex flex-col">
@@ -61,3 +67,33 @@ import Button from "@components/Button/Button.astro";
 		</div>
 	</form>
 </section>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>("#contact-form");
+
+	form?.addEventListener("submit", (event) => {
+		event.preventDefault();
+
+		const formData = new FormData(form);
+		const firstName = String(formData.get("fname") ?? "").trim();
+		const lastName = String(formData.get("lname") ?? "").trim();
+		const senderEmail = String(formData.get("email") ?? "").trim();
+		const message = String(formData.get("message") ?? "").trim();
+		const contactEmail = form.dataset.contactEmail;
+		const fullName = [firstName, lastName].filter(Boolean).join(" ");
+
+		if (!contactEmail) return;
+
+		const subject = fullName ? `Website contact from ${fullName}` : "Website contact";
+		const body = [
+			fullName ? `Name: ${fullName}` : null,
+			senderEmail ? `Email: ${senderEmail}` : null,
+			"",
+			message,
+		]
+			.filter((line) => line !== null)
+			.join("\n");
+
+		window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+	});
+</script>

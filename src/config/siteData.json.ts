@@ -73,14 +73,14 @@ const siteData: SiteDataProps = {
 		{
 			// you should always at least have an email
 			platform: "email",
-			link: "mailto:mukesh@mukeshmithrakumar.com",
+			link: "mailto:newsletter@mukesh.ai",
 		},
 	],
 
 	// Your information for blog post purposes
 	author: {
 		name: "Mukesh Mithrakumar",
-		email: "mailto@mukeshmithrakumar.com",
+		email: "newsletter@mukesh.ai",
 		twitter: "mithraics_",
 	},
 
